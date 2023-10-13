@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang=en>
+
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description"
+        content="TLDR;Thế giới bảo mật máy tính rất (rất) rộng, phức tạp lại còn thay đổi từng ngày.Tin buồn là không có một bài blog hay một con đường tắt nào sẽ giúp bạn từ new">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="TÓM LẠI LÀ, HỌC AN TOÀN THÔNG TIN BẮT ĐẦU TỪ ĐÂU?">
+    <meta property="og:url" content="https://blog.cyberjutsu.io/2021/08/09/hoc-an-toan-thong-tin/index.html">
+    <meta property="og:site_name" content="&#x2F; home &#x2F; cyberjutsu &#x2F; blog &#x2F;">
+    <meta property="og:description"
+        content="TLDR;Thế giới bảo mật máy tính rất (rất) rộng, phức tạp lại còn thay đổi từng ngày.Tin buồn là không có một bài blog hay một con đường tắt nào sẽ giúp bạn từ new">
+    <meta property="og:locale" content="en_US">
+    <meta property="article:published_time" content="2021-08-08T17:00:01.000Z">
+    <meta property="article:modified_time" content="2021-08-10T07:41:18.045Z">
+    <meta property="article:author" content="CyberJutsu Team">
+    <meta property="article:tag" content="computer security">
+    <meta property="article:tag" content="information security">
+    <meta property="article:tag" content="an toàn thông tin">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:image" content="https://blog.cyberjutsu.io/images/hoc-attt/banner.png">
+    <meta property="og:image" content="https://blog.cyberjutsu.io/images/hoc-attt/banner.png">
+
+
+
+
+    <link rel="shortcut icon" href="/images/favicon.ico">
+
+
+
+
+    <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+
+
+
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+
+
+
+    <!-- title -->
+    <title>TÓM LẠI LÀ, HỌC AN TOÀN THÔNG TIN BẮT ĐẦU TỪ ĐÂU?</title>
+    <!-- styles -->
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    <!-- fix bug: by bach' -->
+    <!-- 
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+     -->
+    <!-- rss -->
+
+
+    <meta name="generator" content="Hexo 5.2.0">
+</head>
+
+<body class="max-width mx-auto ltr">
+
+    <div id="header-post">
+        <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+        <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+        <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"
+            style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+        <span id="menu">
+            <span id="nav">
+                <ul>
+
+                    <li><a href="/">home</a></li>
+
+                    <li><a href="/about/">about</a></li>
+
+                    <li><a href="/archives/">articles</a></li>
+
+                    <li><a target="_blank" rel="noopener" href="https://cyberjutsu.io/publications/">publications</a>
+                    </li>
+
+                </ul>
+            </span>
+            <br />
+            <span id="actions">
+                <ul>
+
+
+                    <li><a class="icon" href="/2021/06/02/IDOL-streamer-vs-XSS/"><i class="fas fa-chevron-right"
+                                aria-hidden="true" onmouseover="$('#i-next').toggle();"
+                                onmouseout="$('#i-next').toggle();"></i></a></li>
+
+                    <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i
+                                class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();"
+                                onmouseout="$('#i-top').toggle();"></i></a></li>
+                    <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true"
+                                onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();"
+                                onclick="$('#share').toggle();return false;"></i></a></li>
+                </ul>
+                <span id="i-prev" class="info" style="display:none;">Previous post</span>
+                <span id="i-next" class="info" style="display:none;">Next post</span>
+                <span id="i-top" class="info" style="display:none;">Back to top</span>
+                <span id="i-share" class="info" style="display:none;">Share post</span>
+            </span>
+            <br />
+            <div id="share" style="display: none">
+                <ul>
+                    <li><a class="icon" target="_blank" rel="noopener"
+                            href="http://www.facebook.com/sharer.php?u=https://blog.cyberjutsu.io/2021/08/09/hoc-an-toan-thong-tin/"><i
+                                class="fab fa-facebook " aria-hidden="true"></i></a></li>
+                    <li><a class="icon" target="_blank" rel="noopener"
+                            href="https://twitter.com/share?url=https://blog.cyberjutsu.io/2021/08/09/hoc-an-toan-thong-tin/&text=TÓM LẠI LÀ, HỌC AN TOÀN THÔNG TIN BẮT ĐẦU TỪ ĐÂU?"><i
+                                class="fab fa-twitter " aria-hidden="true"></i></a></li>
+                    <li><a class="icon" target="_blank" rel="noopener"
+                            href="http://www.linkedin.com/shareArticle?url=https://blog.cyberjutsu.io/2021/08/09/hoc-an-toan-thong-tin/&title=TÓM LẠI LÀ, HỌC AN TOÀN THÔNG TIN BẮT ĐẦU TỪ ĐÂU?"><i
+                                class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+                    <li><a class="icon" target="_blank" rel="noopener"
+                            href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.cyberjutsu.io/2021/08/09/hoc-an-toan-thong-tin/&is_video=false&description=TÓM LẠI LÀ, HỌC AN TOÀN THÔNG TIN BẮT ĐẦU TỪ ĐÂU?"><i
+                                class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+                    <li><a class="icon"
+                            href="mailto:?subject=TÓM LẠI LÀ, HỌC AN TOÀN THÔNG TIN BẮT ĐẦU TỪ ĐÂU?&body=Check out this article: https://blog.cyberjutsu.io/2021/08/09/hoc-an-toan-thong-tin/"><i
+                                class="fas fa-envelope " aria-hidden="true"></i></a></li>
+                    <li><a class="icon" target="_blank" rel="noopener"
+                            href="https://getpocket.com/save?url=https://blog.cyberjutsu.io/2021/08/09/hoc-an-toan-thong-tin/&title=TÓM LẠI LÀ, HỌC AN TOÀN THÔNG TIN BẮT ĐẦU TỪ ĐÂU?"><i
+                                class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+                    <li><a class="icon" target="_blank" rel="noopener"
+                            href="http://reddit.com/submit?url=https://blog.cyberjutsu.io/2021/08/09/hoc-an-toan-thong-tin/&title=TÓM LẠI LÀ, HỌC AN TOÀN THÔNG TIN BẮT ĐẦU TỪ ĐÂU?"><i
+                                class="fab fa-reddit " aria-hidden="true"></i></a></li>
+                    <li><a class="icon" target="_blank" rel="noopener"
+                            href="http://www.stumbleupon.com/submit?url=https://blog.cyberjutsu.io/2021/08/09/hoc-an-toan-thong-tin/&title=TÓM LẠI LÀ, HỌC AN TOÀN THÔNG TIN BẮT ĐẦU TỪ ĐÂU?"><i
+                                class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+                    <li><a class="icon" target="_blank" rel="noopener"
+                            href="http://digg.com/submit?url=https://blog.cyberjutsu.io/2021/08/09/hoc-an-toan-thong-tin/&title=TÓM LẠI LÀ, HỌC AN TOÀN THÔNG TIN BẮT ĐẦU TỪ ĐÂU?"><i
+                                class="fab fa-digg " aria-hidden="true"></i></a></li>
+                    <li><a class="icon" target="_blank" rel="noopener"
+                            href="http://www.tumblr.com/share/link?url=https://blog.cyberjutsu.io/2021/08/09/hoc-an-toan-thong-tin/&name=TÓM LẠI LÀ, HỌC AN TOÀN THÔNG TIN BẮT ĐẦU TỪ ĐÂU?&description="><i
+                                class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+                    <li><a class="icon" target="_blank" rel="noopener"
+                            href="https://news.ycombinator.com/submitlink?u=https://blog.cyberjutsu.io/2021/08/09/hoc-an-toan-thong-tin/&t=TÓM LẠI LÀ, HỌC AN TOÀN THÔNG TIN BẮT ĐẦU TỪ ĐÂU?"><i
+                                class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+                </ul>
+
+            </div>
+            <div id="toc">
+                <ol class="toc">
+                    <li class="toc-item toc-level-2"><a class="toc-link" href="#TLDR"><span class="toc-number">1.</span>
+                            <span class="toc-text">TLDR;</span></a></li>
+                    <li class="toc-item toc-level-2"><a class="toc-link" href="#Intro"><span
+                                class="toc-number">2.</span> <span class="toc-text">Intro</span></a></li>
+                    <li class="toc-item toc-level-2"><a class="toc-link"
+                            href="#GIAI-DOAN-0-BAN-HOAN-TOAN-CHUA-BIET-AN-TOAN-THONG-TIN-BAO-MAT-MAY-TINH-CO-GI"><span
+                                class="toc-number">3.</span> <span class="toc-text">GIAI ĐOẠN 0: BẠN HOÀN TOÀN CHƯA BIẾT
+                                AN TOÀN THÔNG TIN &#x2F; BẢO MẬT MÁY TÍNH CÓ GÌ?</span></a></li>
+                    <li class="toc-item toc-level-2"><a class="toc-link"
+                            href="#GIAI-DOAN-1-O-BAN-DA-BIET-RANG-ATTT-CO-RAT-NHIEU-NHANH-KHAC-NHAU"><span
+                                class="toc-number">4.</span> <span class="toc-text">GIAI ĐOẠN 1: Ồ, BẠN ĐÃ BIẾT RẰNG
+                                ATTT CÓ RẤT NHIỀU NHÁNH KHÁC NHAU</span></a>
+                        <ol class="toc-child">
+                            <li class="toc-item toc-level-3"><a class="toc-link"
+                                    href="#Hanh-trang-co-ban-Starter-Pack"><span class="toc-number">4.1.</span> <span
+                                        class="toc-text">Hành trang cơ bản (Starter Pack)</span></a></li>
+                            <li class="toc-item toc-level-3"><a class="toc-link" href="#Video-%F0%9F%8E%AC"><span
+                                        class="toc-number">4.2.</span> <span class="toc-text">Video 🎬</span></a></li>
+                            <li class="toc-item toc-level-3"><a class="toc-link" href="#Blog-%F0%9F%93%9D"><span
+                                        class="toc-number">4.3.</span> <span class="toc-text">Blog 📝</span></a></li>
+                        </ol>
+                    </li>
+                    <li class="toc-item toc-level-2"><a class="toc-link" href="#GIAI-DOAN-2-THUC-HANH"><span
+                                class="toc-number">5.</span> <span class="toc-text">GIAI ĐOẠN 2: THỰC HÀNH</span></a>
+                        <ol class="toc-child">
+                            <li class="toc-item toc-level-3"><a class="toc-link"
+                                    href="#Capture-The-Flag-CTF-%F0%9F%8E%8C"><span class="toc-number">5.1.</span> <span
+                                        class="toc-text">Capture The Flag (CTF) 🎌</span></a></li>
+                            <li class="toc-item toc-level-3"><a class="toc-link"
+                                    href="#Lab-Challenge-site-%F0%9F%94%AC"><span class="toc-number">5.2.</span> <span
+                                        class="toc-text">Lab &#x2F; Challenge site 🔬</span></a></li>
+                        </ol>
+                    </li>
+                    <li class="toc-item toc-level-2"><a class="toc-link" href="#GIAI-DOAN-3-NO-LUC"><span
+                                class="toc-number">6.</span> <span class="toc-text">GIAI ĐOẠN 3: NỖ LỰC</span></a>
+                        <ol class="toc-child">
+                            <li class="toc-item toc-level-3"><a class="toc-link" href="#Luyen"><span
+                                        class="toc-number">6.1.</span> <span class="toc-text">Luyện</span></a></li>
+                            <li class="toc-item toc-level-3"><a class="toc-link" href="#Com-them"><span
+                                        class="toc-number">6.2.</span> <span class="toc-text">Cơm thêm</span></a></li>
+                        </ol>
+                    </li>
+                    <li class="toc-item toc-level-2"><a class="toc-link" href="#Bonus"><span
+                                class="toc-number">7.</span> <span class="toc-text">Bonus</span></a></li>
+                    <li class="toc-item toc-level-2"><a class="toc-link" href="#Loi-ket"><span
+                                class="toc-number">8.</span> <span class="toc-text">Lời kết</span></a></li>
+                </ol>
+            </div>
+        </span>
+    </div>
+
+
+    <div class="content index py4">
+
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+            <header>
+
+                <h1 class="posttitle" itemprop="name headline">
+                    TÓM LẠI LÀ, HỌC AN TOÀN THÔNG TIN BẮT ĐẦU TỪ ĐÂU?
+                </h1>
+
+
+
+                <div class="meta">
+                    <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+                        <span itemprop="name">l4w</span>
+                    </span>>>
+
+                    <div class="postdate">
+
+                        <time datetime="2021-08-08T17:00:01.000Z" itemprop="datePublished">2021-08-09</time>
+
+
+                    </div>
+
+
+
+
+
+                    <div class="article-tag">
+                        <i class="fas fa-tag">
+                           
+                        </i>
+                        <a class="tag-link-link" href="/tags/an-toan-thong-tin/" rel="tag">an toàn thông tin</a>, <a
+                            class="tag-link-link" href="/tags/computer-security/" rel="tag">computer security</a>, <a
+                            class="tag-link-link" href="/tags/information-security/" rel="tag">information security</a>
+                    </div>
+
+
+                </div>
+            </header>
+
+
+            <div class="content" itemprop="articleBody">
+                <main>
+                    <div class="c-glitch" style="background-image: url('/images/hoc-attt/banner.png');">
+                        <img src='/images/hoc-attt/banner.png' />
+                        <div class="c-glitch__img" style="background-image: url('/images/hoc-attt/banner.png');"></div>
+                        <div class="c-glitch__img" style="background-image: url('/images/hoc-attt/banner.png');"></div>
+                        <div class="c-glitch__img" style="background-image: url('/images/hoc-attt/banner.png');"></div>
+                        <div class="c-glitch__img" style="background-image: url('/images/hoc-attt/banner.png');"></div>
+                        <div class="c-glitch__img" style="background-image: url('/images/hoc-attt/banner.png');"></div>
+                    </div>
+                </main>
+
+                <h2 id="TLDR"><a href="#TLDR" class="headerlink" title="TLDR;">TLDR;</a></h2>
+                <p>Thế giới bảo mật máy tính rất (rất) rộng, phức tạp lại còn thay đổi từng ngày.<br>Tin buồn là không
+                    có một bài blog hay một con đường tắt nào sẽ giúp bạn từ newbie trở thành pro hacker đâu, nó sẽ là
+                    một quá trình.</p>
+                <img src="/images/hoc-attt/cry.jpg" width=150 height=150>
+
+                <p>Nhưng tin vui là ít nhất có những bài tổng hợp lại tài liệu, để các bạn có thể tham khảo mà không
+                    phải đi lan man quá nhiều. Hãy cố gắng trải nghiệm từng bài viết/video một cách chậm rãi, nắm những
+                    kiến thức/nguyên lý nền tảng thật chắc.</p>
+                <p>Kiến thức như một tòa nhà cao tầng, nền tảng là phần móng sẽ quyết định khả năng bạn có thể xây nó
+                    lên thật cao không hay liệu có thể đủ sức chinh phục được những kĩ thuật tấn công khó và lắt léo.
+                </p>
+                <p>Các anh tài hacker cũng đã bắt đầu như thế.</p>
+                <h2 id="Intro"><a href="#Intro" class="headerlink" title="Intro">Intro</a></h2>
+                <p>Dạo gần đây tụi mình có nhận được rất nhiều các câu hỏi từ các bạn trẻ đang có ý định theo học ngành
+                    An Toàn Thông Tin. Cho nên, bài này được viết ra dành cho các bạn ở ngưỡng cửa entry level, mới bắt
+                    đầu, hoặc có ý định tham gia ngành bảo mật.</p>
+                <p>Mình sẽ không cố gắng đi sâu vào từng ngóc ngách của nó, cộng thêm mỗi nhánh có những cách tiếp cận
+                    và phong cách học riêng, bài viết này chỉ là nơi tổng hợp lại những nguồn tài liệu mà CyberJutsu sản
+                    xuất và thu thập được (đã review qua chất lượng).</p>
+                <p>Ngoài bài blog này, các bạn hãy cố gắng tham khảo thêm các tài liệu khác nhau để có cái nhìn sát sao
+                    và thực tế hơn với một ngành nghề mới mẻ và đầy thú vị này nhé!</p>
+                <h2 id="GIAI-DOAN-0-BAN-HOAN-TOAN-CHUA-BIET-AN-TOAN-THONG-TIN-BAO-MAT-MAY-TINH-CO-GI"><a
+                        href="#GIAI-DOAN-0-BAN-HOAN-TOAN-CHUA-BIET-AN-TOAN-THONG-TIN-BAO-MAT-MAY-TINH-CO-GI"
+                        class="headerlink"
+                        title="GIAI ĐOẠN 0: BẠN HOÀN TOÀN CHƯA BIẾT AN TOÀN THÔNG TIN / BẢO MẬT MÁY TÍNH CÓ GÌ?">GIAI
+                        ĐOẠN 0: BẠN HOÀN TOÀN CHƯA BIẾT AN TOÀN THÔNG TIN / BẢO MẬT MÁY TÍNH CÓ GÌ?</a></h2>
+                <p>Hãy đọc 2 bài sau trước khi tham gia vào ngành này:</p>
+                <ul>
+                    <li><a target="_blank" rel="noopener"
+                            href="https://vnhacker.blogspot.com/2012/05/lam-toan-thong-tin-thi-hoc-gi.html">Làm an toàn
+                            thông tin thì học gì?</a> - by thaidn</li>
+                    <li><a target="_blank" rel="noopener"
+                            href="https://l4w.io/2017/07/bat-dau-hoc-an-toan-thong-tin-nhu-the-nao/">BẮT ĐẦU HỌC AN TOÀN
+                            THÔNG TIN NHƯ THẾ NÀO?</a> - by l4w</li>
+                </ul>
+                <p>Tập thói quen đọc và nghiền ngẫm 1 cuốn sách hay làm 1 cái lab chỉnh chu vì sau khi hoàn thành nó
+                    trọn vẹn, mình đảm bảo là bạn sẽ biết bản thân nên làm gì tiếp theo thôi. Mình đã từng như các bạn,
+                    tải hàng trăm cuốn ebooks, videos, nhưng chẳng bao giờ xem hết nó.</p>
+                <p>Keep calm, learn and practice!</p>
+                <h2 id="GIAI-DOAN-1-O-BAN-DA-BIET-RANG-ATTT-CO-RAT-NHIEU-NHANH-KHAC-NHAU"><a
+                        href="#GIAI-DOAN-1-O-BAN-DA-BIET-RANG-ATTT-CO-RAT-NHIEU-NHANH-KHAC-NHAU" class="headerlink"
+                        title="GIAI ĐOẠN 1: Ồ, BẠN ĐÃ BIẾT RẰNG ATTT CÓ RẤT NHIỀU NHÁNH KHÁC NHAU">GIAI ĐOẠN 1: Ồ, BẠN
+                        ĐÃ BIẾT RẰNG ATTT CÓ RẤT NHIỀU NHÁNH KHÁC NHAU</a></h2>
+                <p>Đây là giai đoạn mà mình hi vọng rằng bạn đã đảm bảo được những kiến thức cơ bản sau, không nhất
+                    thiết phải hiểu tường tận mọi thứ ngay tại thời điểm này (yên tâm đi, bạn còn một khoảng thời gian
+                    dài để tiếp tục học nó 😂). Nhưng ít nhất hãy trang bị cho mình một lượng kiến thức nhất định đủ để
+                    đọc hiểu và tự lập trình được những thứ căn bản.</p>
+                <h3 id="Hanh-trang-co-ban-Starter-Pack"><a href="#Hanh-trang-co-ban-Starter-Pack" class="headerlink"
+                        title="Hành trang cơ bản (Starter Pack)">Hành trang cơ bản (Starter Pack)</a></h3>
+                <ul>
+                    <li>Lập trình</li>
+                    <li>Hệ điều hành</li>
+                    <li>Cấu trúc dữ liệu và giải thuật</li>
+                    <li>Mạng máy tính</li>
+                    <li>Mật mã</li>
+                    <li>Computer Science nói chung</li>
+                    <li>…</li>
+                </ul>
+                <p>Mình hay học những thứ trên ở trang này: <a target="_blank" rel="noopener"
+                        href="https://www.geeksforgeeks.org/">geeksforgeek</a></p>
+                <p>Song đó, hãy chọn ra một nhánh mà mình thích và tập trung vào nó. Làm sao để tìm ra nhánh nào mình
+                    thích?<br>Câu trả lời là: Thử, thử hết những thứ đó và tìm xem mình thích cái nào.</p>
+                <p>Tùy vào nhánh (môn phái) bạn đã quyết định theo hãy chọn những tài liệu tương ứng.</p>
+                <h3 id="Video-🎬"><a href="#Video-🎬" class="headerlink" title="Video 🎬">Video 🎬</a></h3>
+                <ul>
+                    <li>Talkshow - <a target="_blank" rel="noopener"
+                            href="https://www.youtube.com/watch?v=3YUB2Yiwxx4">Làm hacker là làm gì?</a> (thaidn,
+                        PhươngGàCon, HieuPC, l4w)</li>
+                    <li>Săn lỗi bảo mật - Bug Hunter / Incident Response: <a target="_blank" rel="noopener"
+                            href="https://www.youtube.com/watch?v=PxsmBeXFHO4">CyberJutsu Talk#2 - Suto</a></li>
+                    <li>Dịch ngược (Reverse Engineer / Malware Analyst): <a target="_blank" rel="noopener"
+                            href="https://www.youtube.com/watch?v=k7LCgQEPtrA">CyberJutsu Talk#3 - Thug4lif3</a></li>
+                    <li>Mật mã (Cryptography): <a target="_blank" rel="noopener"
+                            href="https://www.facebook.com/watch/live/?v=926374671032123&ref=watch_permalink">CyberJutsu
+                            Talk#5 - thaidn</a></li>
+                    <li><a target="_blank" rel="noopener" href="https://www.youtube.com/CyberJutsuTV">Kênh video
+                            CyberJutsu TV</a></li>
+                </ul>
+                <h3 id="Blog-📝"><a href="#Blog-📝" class="headerlink" title="Blog 📝">Blog 📝</a></h3>
+                <ul>
+                    <li>Các bài viết về bảo mật của nhiều nhà nghiên cứu ở Việt Nam: <a target="_blank" rel="noopener"
+                            href="https://tradahacking.vn/">tradahacking</a></li>
+                    <li>Rerverse Engineering: <a target="_blank" rel="noopener"
+                            href="https://kienmanowar.wordpress.com/">kienmanowar</a></li>
+                    <li>Phân tích 1day: <a target="_blank" rel="noopener"
+                            href="https://testbnull.medium.com/">testbnull</a></li>
+                    <li>Những roadmap của các nhánh: <a target="_blank" rel="noopener"
+                            href="https://hackemall.live/">Hack ‘Em All</a></li>
+                    <li>Những team kĩ thuật của các tổ chức lớn: <a target="_blank" rel="noopener"
+                            href="https://blog.vincss.net/">VinCSS</a>, <a target="_blank" rel="noopener"
+                            href="https://blog.viettelcybersecurity.com/">Viettel Cyber Security</a>, <a target="_blank"
+                            rel="noopener" href="https://sec.vnpt.vn/blog/">VNPT</a>, <a target="_blank" rel="noopener"
+                            href="https://blog.khonggianmang.vn/">khonggianmang.vn</a> …</li>
+                    <li>Outline về Digital Forensics: <a target="_blank" rel="noopener"
+                            href="https://www.jaiminton.com/cheatsheet/DFIR/">Digital Forensics and Incident
+                            Response</a></li>
+                    <li>Công việc ở Security operations center: <a target="_blank" rel="noopener"
+                            href="https://4n6lady.medium.com/soc-analyst-the-experience-8c570244531e">SOC Analyst: The
+                            Experience</a></li>
+                    <li>Phân biệt Red Team vs Blue Team: <a target="_blank" rel="noopener"
+                            href="https://www.crowdstrike.com/cybersecurity-101/red-team-vs-blue-team/">RED TEAM VS BLUE
+                            TEAM CYBERSECURITY SIMULATION DEFINED</a></li>
+                </ul>
+                <h2 id="GIAI-DOAN-2-THUC-HANH"><a href="#GIAI-DOAN-2-THUC-HANH" class="headerlink"
+                        title="GIAI ĐOẠN 2: THỰC HÀNH">GIAI ĐOẠN 2: THỰC HÀNH</a></h2>
+                <p>Có nhiều cách thực hành khác nhau, có thể là đi làm va chạm bạn sẽ được tiếp xúc. Tuy nhiên, với các
+                    bạn còn đang trong môi trường học thì chúng ta lại có những cách sau đây.</p>
+                <p><em>Hướng dẫn sử dụng trước khi dùng nè: cố gắng hiểu về bản chất của từng thứ mình làm, đừng làm
+                        theo writeup y chang hay là chạy đua giải cho được nhiều challenge trong khi không nắm được
+                        nguyên căn. Làm thế sẽ không giúp bạn trau dồi được gì nhiều, mai mốt nghĩ lại chỉ thấy tốn thời
+                        gian thôi.</em></p>
+                <h3 id="Capture-The-Flag-CTF-🎌"><a href="#Capture-The-Flag-CTF-🎌" class="headerlink"
+                        title="Capture The Flag (CTF) 🎌">Capture The Flag (CTF) 🎌</a></h3>
+                <p>CTF là những cuộc thi mà nơi đó, ban tổ chức sẽ mô phỏng lại những ứng dụng/hệ thống bị lỗi bảo mật
+                    từ dễ đến khó để đưa người chơi vào môi trường thực tế, cho người chơi có cơ hội trải nghiệm qua quy
+                    trình làm việc của một hacker từ: reconnaissance (trinh sát), footprinting, suy luận, tìm lỗi, khai
+                    thác,… Thậm chí những cuộc thi gần đây, các ban tổ chức còn đưa cả những lỗi bảo mật có thật của các
+                    ứng dụng nổi tiếng vào nữa!<br>Các bạn cũng nên thử qua cảm giác khi chiến thắng và giải được một
+                    thử thách, rất thú vị đấy.<br>Tham khảo: <a target="_blank" rel="noopener"
+                        href="https://dev.to/atan/what-is-ctf-and-how-to-get-started-3f04">CTF for Beginners</a></p>
+                <p>Lựa những bài hay hoặc từ các CTFs uy tín, có rating cao ở <a target="_blank" rel="noopener"
+                        href="https://ctftime.org/">ctftime</a>, vì bạn không muốn mình sẽ tốn thời gian cho những thử
+                    thách không hay / guessing, vì nó sẽ không giúp mình trau dồi kĩ năng.<br>Đã có rất nhiều bài viết
+                    về nó, các bạn có thể search thêm. Riêng video thì mình cũng đã từng làm video: <a target="_blank"
+                        rel="noopener" href="https://youtu.be/gAhvLldwXgw?t=4942">LiveStreamCTF</a> (nhưng nó cũng lâu
+                    rồi, sẽ có chút outdated)</p>
+                <h3 id="Lab-Challenge-site-🔬"><a href="#Lab-Challenge-site-🔬" class="headerlink"
+                        title="Lab / Challenge site 🔬">Lab / Challenge site 🔬</a></h3>
+                <p>Ngoài những cuộc thi CTF, bạn cũng có thể tham gia giải đố các thử thách ở những challenges site hay,
+                    học hỏi nhiều kĩ thuật được phân loại rõ ràng và không bị áp lực chạy đua trong những lúc thi
+                    cử.<br>Giống như học võ, thì trước khi thi đấu, ta sẽ phải luyện với bao cát trước vậy.</p>
+                <ul>
+                    <li>Web Security: <a target="_blank" rel="noopener"
+                            href="https://portswigger.net/web-security/all-labs">PortSwigger</a>, <a target="_blank"
+                            rel="noopener" href="https://pentesterlab.com/">PentesterLab</a>, <a target="_blank"
+                            rel="noopener" href="https://www.root-me.org/en/Challenges/">RootMe</a></li>
+                    <li>Penetration Testing: <a target="_blank" rel="noopener"
+                            href="https://www.hackthebox.eu/">HackTheBox</a></li>
+                    <li>Reverse Engineering: <a target="_blank" rel="noopener"
+                            href="http://reversing.kr/">Reversing.kr</a>, <a target="_blank" rel="noopener"
+                            href="https://crackmes.one/">crackmes.one</a></li>
+                    <li>Software Exploitation: <a target="_blank" rel="noopener"
+                            href="https://overthewire.org/wargames/">OverTheWire</a>, <a target="_blank" rel="noopener"
+                            href="https://pwn.college/">pwn.college</a>, <a target="_blank" rel="noopener"
+                            href="https://pwnable.kr/">Pwnable.kr</a>, <a target="_blank" rel="noopener"
+                            href="https://pwnable.tw/">Pwnable.tw</a>, <a target="_blank" rel="noopener"
+                            href="https://exploit.education/">Exploit.education</a></li>
+                    <li>Cryptography: <a target="_blank" rel="noopener" href="https://cryptohack.org/">Cryptohack</a>,
+                        <a target="_blank" rel="noopener" href="https://cryptopals.com/">Cryptopals</a></li>
+                </ul>
+                <h2 id="GIAI-DOAN-3-NO-LUC"><a href="#GIAI-DOAN-3-NO-LUC" class="headerlink"
+                        title="GIAI ĐOẠN 3: NỖ LỰC">GIAI ĐOẠN 3: NỖ LỰC</a></h2><img src="/images/hoc-attt/brain.jpg"
+                    width=150 height=150>
+
+                <p>Sau khi bạn đã đọc và nghe những góc nhìn/kinh nghiệm từ những người đi trước, chọn cho mình vài cuốn
+                    sách/lab để làm theo.<br>Việc còn lại chỉ là khổ luyện! Nên bắt đầu với những thứ dễ và từ từ nâng
+                    cao. Đi chậm, nắm thật chắc căn bản trước khi bước lên level tiếp theo.</p>
+                <h3 id="Luyen"><a href="#Luyen" class="headerlink" title="Luyện">Luyện</a></h3>
+                <ul>
+                    <li>Luyện đề CTF/challenges, viết lời giải cho nó, tham gia các nhóm trong trường (nếu có). Vì CTF
+                        cũng là một cách để update kiến thức cũng như đọc writeup của những người khác học hỏi cách suy
+                        nghĩ và giải quyết vấn đề. Có đầy đủ mảng trong CTF nhé.</li>
+                    <li>Luyện đọc code nếu bạn muốn tìm lỗi trong các mã nguồn.</li>
+                    <li>Luyện fuzzing trên binary nếu bạn muốn tìm lỗi bảo mật tự động trên các ứng dụng phần mềm.</li>
+                    <li>Luyện dịch ngược, unpack, deobfuscate… nếu bạn muốn trở thành một chuyên gia làm lĩnh vực mã
+                        độc.</li>
+                    <li>Luyện sách, paper, thuật toán, lập trình nếu bạn muốn giỏi ở mảng Mật mã.</li>
+                    <li>Luyện lập trình, bổ sung góc nhìn security, thành thạo tool và các loại tấn công ở mức nhất định
+                        nếu bạn muốn tham gia Blue Team.</li>
+                    <li>Luyện đi thi chứng chỉ (uy tín và chất lượng) nếu bạn muốn thỏa một số điều kiện của nhà tuyển
+                        dụng, cũng như là một cách chứng minh năng lực. Nhưng cũng không nên quá “lậm” vào nó.</li>
+                    <li>Luyện ngoại ngữ để có thể tham khảo những bài viết của những chuyên gia nước ngoài.</li>
+                </ul>
+                <h3 id="Com-them"><a href="#Com-them" class="headerlink" title="Cơm thêm">Cơm thêm</a></h3>
+                <ul>
+                    <li>Viết blog nâng cao khả năng diễn đạt, cũng như chứng minh năng lực với cộng đồng.</li>
+                    <li>Tham gia twitter, follow những nhà nghiên cứu nổi tiếng khác.</li>
+                    <li>Trau dồi khả năng tự học.</li>
+                    <li>Tìm cho mình một đàn anh, mentor nào đó (chủ động lên, đừng ngại)</li>
+                    <li>Tìm bạn, nhóm đồng hành vì trong quá trình học dễ nản lắm nhé.</li>
+                    <li>…</li>
+                </ul>
+                <h2 id="Bonus"><a href="#Bonus" class="headerlink" title="Bonus">Bonus</a></h2>
+                <ul>
+                    <li><a target="_blank" rel="noopener"
+                            href="https://googleprojectzero.blogspot.com/p/working-at-project-zero.html">Working at
+                            Project Zero</a> (Một bài blog của nhóm hacker siêu sao Project Zero của Google, họ trả lời
+                        những câu hỏi về việc học và tiêu chí tuyển dụng của nhóm)</li>
+                    <li><a target="_blank" rel="noopener"
+                            href="https://lcamtuf.blogspot.com/2016/08/so-you-want-to-work-in-security-but-are.html">So
+                            you want to work in security (but are too lazy to read Parisa’s excellent essay)</a></li>
+                    <li><a target="_blank" rel="noopener"
+                            href="https://l4w.io/2019/05/kinh-nghiem-khi-tim-loi-bao-mat/">KINH NGHIỆM KHI TÌM LỖI BẢO
+                            MẬT</a></li>
+                </ul>
+                <h2 id="Loi-ket"><a href="#Loi-ket" class="headerlink" title="Lời kết">Lời kết</a></h2>
+                <p>Một lần nữa mình muốn chia sẻ rằng: ngành này còn rất mới và rộng, đổi lại nó rất thú vị và cho bạn
+                    một thu nhập tốt.</p>
+                <p>Cũng như không có một tài liệu, bài viết nào có thể bao hàm hết tất cả thứ bạn đang tìm, mà mỗi người
+                    học nó cần chủ động đi từng bước nhỏ, và có tinh thần tự học cao để có thể tiếp tục nhận ra mình cần
+                    gì và vạch ra hướng đi tiếp theo cho bản thân.</p>
+                <p>Nếu các bạn muốn biết thêm về bất kì chủ đề nào hay muốn nghe giải thích nó bởi chính CyberJutsu thì
+                    hãy để lại <a target="_blank" rel="noopener"
+                        href="https://www.facebook.com/CyberJutsu/posts/1456463524719098">comment</a> trên bài post
+                    facebook để tụi mình có thể biết chủ đề nào lên làm tiếp theo nhé.</p>
+                <p>Trong khi đó CyberJutsu đang cố gắng làm ra nhiều nội dung sinh động hơn về bảo mật máy tính
+                    ;)<br>Nếu bạn muốn support tụi mình? Hãy subscribe <a target="_blank" rel="noopener"
+                        href="https://www.youtube.com/CyberJutsuTV">Kênh Video CyberJutsu TV</a> và like fanpage <a
+                        target="_blank" rel="noopener" href="https://fb.com/CyberJutsu">CyberJutsu</a> để giúp nhóm có
+                    thêm động lực.</p>
+                <p>Chúc các bạn may mắn trên con đường mình chọn!</p>
+                <div style="text-align: right">Cheers.</div>
+                <br>
+                <img src="/images/hoc-attt/coin.png" width=150 height=150>
+                <div style="text-align: center"><strong>We make computer security easier to learn!</strong></div>
+
+            </div>
+        </article>
+
+
+
+
+        <div id="footer-post-container">
+            <div id="footer-post">
+
+                <div id="nav-footer" style="display: none">
+                    <ul>
+
+                        <li><a href="/">home</a></li>
+
+                        <li><a href="/about/">about</a></li>
+
+                        <li><a href="/archives/">articles</a></li>
+
+                        <li><a target="_blank" rel="noopener"
+                                href="https://cyberjutsu.io/publications/">publications</a></li>
+
+                    </ul>
+                </div>
+
+                <div id="toc-footer" style="display: none">
+                    <ol class="toc">
+                        <li class="toc-item toc-level-2"><a class="toc-link" href="#TLDR"><span
+                                    class="toc-number">1.</span> <span class="toc-text">TLDR;</span></a></li>
+                        <li class="toc-item toc-level-2"><a class="toc-link" href="#Intro"><span
+                                    class="toc-number">2.</span> <span class="toc-text">Intro</span></a></li>
+                        <li class="toc-item toc-level-2"><a class="toc-link"
+                                href="#GIAI-DOAN-0-BAN-HOAN-TOAN-CHUA-BIET-AN-TOAN-THONG-TIN-BAO-MAT-MAY-TINH-CO-GI"><span
+                                    class="toc-number">3.</span> <span class="toc-text">GIAI ĐOẠN 0: BẠN HOÀN TOÀN CHƯA
+                                    BIẾT AN TOÀN THÔNG TIN &#x2F; BẢO MẬT MÁY TÍNH CÓ GÌ?</span></a></li>
+                        <li class="toc-item toc-level-2"><a class="toc-link"
+                                href="#GIAI-DOAN-1-O-BAN-DA-BIET-RANG-ATTT-CO-RAT-NHIEU-NHANH-KHAC-NHAU"><span
+                                    class="toc-number">4.</span> <span class="toc-text">GIAI ĐOẠN 1: Ồ, BẠN ĐÃ BIẾT RẰNG
+                                    ATTT CÓ RẤT NHIỀU NHÁNH KHÁC NHAU</span></a>
+                            <ol class="toc-child">
+                                <li class="toc-item toc-level-3"><a class="toc-link"
+                                        href="#Hanh-trang-co-ban-Starter-Pack"><span class="toc-number">4.1.</span>
+                                        <span class="toc-text">Hành trang cơ bản (Starter Pack)</span></a></li>
+                                <li class="toc-item toc-level-3"><a class="toc-link" href="#Video-%F0%9F%8E%AC"><span
+                                            class="toc-number">4.2.</span> <span class="toc-text">Video 🎬</span></a>
+                                </li>
+                                <li class="toc-item toc-level-3"><a class="toc-link" href="#Blog-%F0%9F%93%9D"><span
+                                            class="toc-number">4.3.</span> <span class="toc-text">Blog 📝</span></a>
+                                </li>
+                            </ol>
+                        </li>
+                        <li class="toc-item toc-level-2"><a class="toc-link" href="#GIAI-DOAN-2-THUC-HANH"><span
+                                    class="toc-number">5.</span> <span class="toc-text">GIAI ĐOẠN 2: THỰC
+                                    HÀNH</span></a>
+                            <ol class="toc-child">
+                                <li class="toc-item toc-level-3"><a class="toc-link"
+                                        href="#Capture-The-Flag-CTF-%F0%9F%8E%8C"><span class="toc-number">5.1.</span>
+                                        <span class="toc-text">Capture The Flag (CTF) 🎌</span></a></li>
+                                <li class="toc-item toc-level-3"><a class="toc-link"
+                                        href="#Lab-Challenge-site-%F0%9F%94%AC"><span class="toc-number">5.2.</span>
+                                        <span class="toc-text">Lab &#x2F; Challenge site 🔬</span></a></li>
+                            </ol>
+                        </li>
+                        <li class="toc-item toc-level-2"><a class="toc-link" href="#GIAI-DOAN-3-NO-LUC"><span
+                                    class="toc-number">6.</span> <span class="toc-text">GIAI ĐOẠN 3: NỖ LỰC</span></a>
+                            <ol class="toc-child">
+                                <li class="toc-item toc-level-3"><a class="toc-link" href="#Luyen"><span
+                                            class="toc-number">6.1.</span> <span class="toc-text">Luyện</span></a></li>
+                                <li class="toc-item toc-level-3"><a class="toc-link" href="#Com-them"><span
+                                            class="toc-number">6.2.</span> <span class="toc-text">Cơm thêm</span></a>
+                                </li>
+                            </ol>
+                        </li>
+                        <li class="toc-item toc-level-2"><a class="toc-link" href="#Bonus"><span
+                                    class="toc-number">7.</span> <span class="toc-text">Bonus</span></a></li>
+                        <li class="toc-item toc-level-2"><a class="toc-link" href="#Loi-ket"><span
+                                    class="toc-number">8.</span> <span class="toc-text">Lời kết</span></a></li>
+                    </ol>
+                </div>
+
+                <div id="share-footer" style="display: none">
+                    <ul>
+                        <li><a class="icon" target="_blank" rel="noopener"
+                                href="http://www.facebook.com/sharer.php?u=https://blog.cyberjutsu.io/2021/08/09/hoc-an-toan-thong-tin/"><i
+                                    class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+                        <li><a class="icon" target="_blank" rel="noopener"
+                                href="https://twitter.com/share?url=https://blog.cyberjutsu.io/2021/08/09/hoc-an-toan-thong-tin/&text=TÓM LẠI LÀ, HỌC AN TOÀN THÔNG TIN BẮT ĐẦU TỪ ĐÂU?"><i
+                                    class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+                        <li><a class="icon" target="_blank" rel="noopener"
+                                href="http://www.linkedin.com/shareArticle?url=https://blog.cyberjutsu.io/2021/08/09/hoc-an-toan-thong-tin/&title=TÓM LẠI LÀ, HỌC AN TOÀN THÔNG TIN BẮT ĐẦU TỪ ĐÂU?"><i
+                                    class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+                        <li><a class="icon" target="_blank" rel="noopener"
+                                href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.cyberjutsu.io/2021/08/09/hoc-an-toan-thong-tin/&is_video=false&description=TÓM LẠI LÀ, HỌC AN TOÀN THÔNG TIN BẮT ĐẦU TỪ ĐÂU?"><i
+                                    class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+                        <li><a class="icon"
+                                href="mailto:?subject=TÓM LẠI LÀ, HỌC AN TOÀN THÔNG TIN BẮT ĐẦU TỪ ĐÂU?&body=Check out this article: https://blog.cyberjutsu.io/2021/08/09/hoc-an-toan-thong-tin/"><i
+                                    class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+                        <li><a class="icon" target="_blank" rel="noopener"
+                                href="https://getpocket.com/save?url=https://blog.cyberjutsu.io/2021/08/09/hoc-an-toan-thong-tin/&title=TÓM LẠI LÀ, HỌC AN TOÀN THÔNG TIN BẮT ĐẦU TỪ ĐÂU?"><i
+                                    class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+                        <li><a class="icon" target="_blank" rel="noopener"
+                                href="http://reddit.com/submit?url=https://blog.cyberjutsu.io/2021/08/09/hoc-an-toan-thong-tin/&title=TÓM LẠI LÀ, HỌC AN TOÀN THÔNG TIN BẮT ĐẦU TỪ ĐÂU?"><i
+                                    class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+                        <li><a class="icon" target="_blank" rel="noopener"
+                                href="http://www.stumbleupon.com/submit?url=https://blog.cyberjutsu.io/2021/08/09/hoc-an-toan-thong-tin/&title=TÓM LẠI LÀ, HỌC AN TOÀN THÔNG TIN BẮT ĐẦU TỪ ĐÂU?"><i
+                                    class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+                        <li><a class="icon" target="_blank" rel="noopener"
+                                href="http://digg.com/submit?url=https://blog.cyberjutsu.io/2021/08/09/hoc-an-toan-thong-tin/&title=TÓM LẠI LÀ, HỌC AN TOÀN THÔNG TIN BẮT ĐẦU TỪ ĐÂU?"><i
+                                    class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+                        <li><a class="icon" target="_blank" rel="noopener"
+                                href="http://www.tumblr.com/share/link?url=https://blog.cyberjutsu.io/2021/08/09/hoc-an-toan-thong-tin/&name=TÓM LẠI LÀ, HỌC AN TOÀN THÔNG TIN BẮT ĐẦU TỪ ĐÂU?&description="><i
+                                    class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+                        <li><a class="icon" target="_blank" rel="noopener"
+                                href="https://news.ycombinator.com/submitlink?u=https://blog.cyberjutsu.io/2021/08/09/hoc-an-toan-thong-tin/&t=TÓM LẠI LÀ, HỌC AN TOÀN THÔNG TIN BẮT ĐẦU TỪ ĐÂU?"><i
+                                    class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+                    </ul>
+
+                </div>
+
+                <div id="actions-footer">
+                    <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i
+                            class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+                    <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i
+                            class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+                    <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i
+                            class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+                    <a id="top" style="display:none" class="icon" href="#"
+                        onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg"
+                            aria-hidden="true"></i> Top</a>
+                </div>
+
+            </div>
+        </div>
+
+
+        <footer id="footer">
+            <div class="footer-left">
+                Copyright &copy;
+
+
+                2020-2021 -
+                CyberJutsu Team
+            </div>
+            <div class="footer-right">
+                <nav>
+                    <ul>
+
+                        <li><a href="/">home</a></li>
+
+                        <li><a href="/about/">about</a></li>
+
+                        <li><a href="/archives/">articles</a></li>
+
+                        <li><a target="_blank" rel="noopener"
+                                href="https://cyberjutsu.io/publications/">publications</a></li>
+
+                    </ul>
+                </nav>
+            </div>
+        </footer>
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-50645715-1"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+
+            function gtag() {
+                dataLayer.push(arguments);
+            }
+            gtag('js', new Date());
+
+            gtag('config', 'UA-50645715-1');
+        </script>
+
+    </div>
+    <!-- styles -->
+
+    <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
+    <link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+    <!-- jquery -->
+
+    <script src="/lib/jquery/jquery.min.js"></script>
+
+
+    <script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+    <!-- clipboard -->
+
+
+    <script src="/lib/clipboard/clipboard.min.js"></script>
+
+    <script type="text/javascript">
+        $(function () {
+            // copy-btn HTML
+            var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+            btn += '<i class="far fa-clone"></i>';
+            btn += '</span>';
+            // mount it!
+            $(".highlight table").before(btn);
+            var clip = new ClipboardJS('.btn-copy', {
+                text: function (trigger) {
+                    return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((
+                        str, it) => str + it.innerText + '\n', '')
+                }
+            });
+            clip.on('success', function (e) {
+                e.trigger.setAttribute('aria-label', "Copied!");
+                e.clearSelection();
+            })
+        })
+    </script>
+
+
+    <script src="/js/main.js"></script>
+
+    <!-- search -->
+
+    <!-- Google Analytics -->
+
+    <!-- Baidu Analytics -->
+
+    <!-- Umami Analytics -->
+
+    <!-- Disqus Comments -->
+
+
+</body>
+
+</html>
