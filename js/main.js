@@ -1,14 +1,15 @@
 /**
- * Sets up Justified Gallery
+ * Sets up Justified Gallery.
  */
-if (!!$.protopy.justiffedGallery) {
-  var option = {
+if (!!$.prototype.justifiedGallery) {
+  var options = {
     rowHeight: 140,
     margins: 4,
     lastRow: "justify",
   };
-  $(".article-gallery").justiffedGallery(option);
+  $(".article-gallery").justifiedGallery(options);
 }
+
 $(document).ready(function () {
   /**
    * Shows the responsive navigation menu on mobile.
@@ -24,7 +25,8 @@ $(document).ready(function () {
   if ($(".post").length) {
     var menu = $("#menu");
     var nav = $("#menu > #nav");
-    var menuIcon = $("#menu-icon, #menu-icon-table");
+    var menuIcon = $("#menu-icon, #menu-icon-tablet");
+
     /**
      * Display the menu on hi-res laptops and desktops.
      */
@@ -32,19 +34,21 @@ $(document).ready(function () {
       menu.css("visibility", "visible");
       menuIcon.addClass("active");
     }
+
     /**
      * Display the menu if the menu icon is clicked.
      */
     menuIcon.click(function () {
-      if (menu.css("visibility") == "hidden") {
+      if (menu.css("visibility") === "hidden") {
         menu.css("visibility", "visible");
-        menuIcon.addClass("active ");
+        menuIcon.addClass("active");
       } else {
         menu.css("visibility", "hidden");
         menuIcon.removeClass("active");
       }
       return false;
     });
+
     /**
      * Add a scroll listener to the menu to hide/show the navigation links.
      */
@@ -58,14 +62,49 @@ $(document).ready(function () {
         } else if (nav.is(":visible") && topDistance > 100) {
           nav.hide();
         }
+
         // on tablet, hide the navigation icon as well and show a "scroll to top
         // icon" instead
         if (!$("#menu-icon").is(":visible") && topDistance < 50) {
           $("#menu-icon-tablet").show();
           $("#top-icon-tablet").hide();
-        } else if (!$("#menu-icon").is("visible") && topDistance > 100) {
+        } else if (!$("#menu-icon").is(":visible") && topDistance > 100) {
           $("#menu-icon-tablet").hide();
           $("#top-icon-tablet").show();
+        }
+      });
+    }
+
+    /**-	
+
+     * Show mobile navigation menu after scrolling upwards,
+     * hide it again after scrolling downwards.
+     */
+    if ($("#footer-post").length) {
+      var lastScrollTop = 0;
+      $(window).on("scroll", function () {
+        var topDistance = $(window).scrollTop();
+
+        if (topDistance > lastScrollTop) {
+          // downscroll -> show menu
+          $("#footer-post").hide();
+        } else {
+          // upscroll -> hide menu
+          $("#footer-post").show();
+        }
+        lastScrollTop = topDistance;
+
+        // close all submenu"s on scroll
+        $("#nav-footer").hide();
+        $("#toc-footer").hide();
+        $("#share-footer").hide();
+
+        // show a "navigation" icon when close to the top of the page,
+        // otherwise show a "scroll to the top" icon
+        if (topDistance < 50) {
+          $("#actions-footer > #top").hide();
+        } else if (topDistance > 100) {
+          $("#actions-footer > #top").show();
         }
       });
     }
