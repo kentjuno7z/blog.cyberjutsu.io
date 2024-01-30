@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang=en>
+
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description"
+        content="Mở đầu Our story on XSS begins in late 1999 with a small group of Microsoft security engineers. The Microsoft Security Response Center and the Microsoft Internet">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="HTML SANITIZER vs. XSS (Case study)">
+    <meta property="og:url" content="https://blog.cyberjutsu.io/2021/05/13/HTML-sanitizer-vs-XSS/index.html">
+    <meta property="og:site_name" content="&#x2F; home &#x2F; cyberjutsu &#x2F; blog &#x2F;">
+    <meta property="og:description"
+        content="Mở đầu Our story on XSS begins in late 1999 with a small group of Microsoft security engineers. The Microsoft Security Response Center and the Microsoft Internet">
+    <meta property="og:locale" content="en_US">
+    <meta property="article:published_time" content="2021-05-12T17:00:01.000Z">
+    <meta property="article:modified_time" content="2021-06-04T02:27:58.708Z">
+    <meta property="article:author" content="CyberJutsu Team">
+    <meta property="article:tag" content="bug bounty">
+    <meta property="article:tag" content="xss">
+    <meta property="article:tag" content="sanitizer">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:image" content="https://blog.cyberjutsu.io/images/htmlsanitizer-vs-xss/banner.png">
+    <meta property="og:image" content="https://blog.cyberjutsu.io/images/htmlsanitizer-vs-xss/banner.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+
+    <link rel="shortcut icon" href="/images/favicon.ico">
+
+
+
+
+    <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+
+
+
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+
+
+
+    <!-- title -->
+    <title>HTML SANITIZER vs. XSS (Case study)</title>
+    <!-- styles -->
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    <!-- fix bug: by bach' -->
+    <!-- 
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+     -->
+    <!-- rss -->
+
+
+    <meta name="generator" content="Hexo 5.2.0">
+</head>
+
+<body class="max-width mx-auto ltr">
+
+    <div id="header-post">
+        <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+        <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+        <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"
+            style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+        <span id="menu">
+            <span id="nav">
+                <ul>
+
+                    <li><a href="/">home</a></li>
+
+                    <li><a href="/about/">about</a></li>
+
+                    <li><a href="/archives/">articles</a></li>
+
+                    <li><a target="_blank" rel="noopener" href="https://cyberjutsu.io/publications/">publications</a>
+                    </li>
+
+                </ul>
+            </span>
+            <br />
+            <span id="actions">
+                <ul>
+
+                    <li><a class="icon" href="/2021/06/02/IDOL-streamer-vs-XSS/"><i class="fas fa-chevron-left"
+                                aria-hidden="true" onmouseover="$('#i-prev').toggle();"
+                                onmouseout="$('#i-prev').toggle();"></i></a></li>
+
+
+                    <li><a class="icon" href="/2021/01/06/flareon-phan-3/"><i class="fas fa-chevron-right"
+                                aria-hidden="true" onmouseover="$('#i-next').toggle();"
+                                onmouseout="$('#i-next').toggle();"></i></a></li>
+
+                    <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i
+                                class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();"
+                                onmouseout="$('#i-top').toggle();"></i></a></li>
+                    <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true"
+                                onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();"
+                                onclick="$('#share').toggle();return false;"></i></a></li>
+                </ul>
+                <span id="i-prev" class="info" style="display:none;">Previous post</span>
+                <span id="i-next" class="info" style="display:none;">Next post</span>
+                <span id="i-top" class="info" style="display:none;">Back to top</span>
+                <span id="i-share" class="info" style="display:none;">Share post</span>
+            </span>
+            <br />
+            <div id="share" style="display: none">
+                <ul>
+                    <li><a class="icon" target="_blank" rel="noopener"
+                            href="http://www.facebook.com/sharer.php?u=https://blog.cyberjutsu.io/2021/05/13/HTML-sanitizer-vs-XSS/"><i
+                                class="fab fa-facebook " aria-hidden="true"></i></a></li>
+                    <li><a class="icon" target="_blank" rel="noopener"
+                            href="https://twitter.com/share?url=https://blog.cyberjutsu.io/2021/05/13/HTML-sanitizer-vs-XSS/&text=HTML SANITIZER vs. XSS (Case study)"><i
+                                class="fab fa-twitter " aria-hidden="true"></i></a></li>
+                    <li><a class="icon" target="_blank" rel="noopener"
+                            href="http://www.linkedin.com/shareArticle?url=https://blog.cyberjutsu.io/2021/05/13/HTML-sanitizer-vs-XSS/&title=HTML SANITIZER vs. XSS (Case study)"><i
+                                class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+                    <li><a class="icon" target="_blank" rel="noopener"
+                            href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.cyberjutsu.io/2021/05/13/HTML-sanitizer-vs-XSS/&is_video=false&description=HTML SANITIZER vs. XSS (Case study)"><i
+                                class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+                    <li><a class="icon"
+                            href="mailto:?subject=HTML SANITIZER vs. XSS (Case study)&body=Check out this article: https://blog.cyberjutsu.io/2021/05/13/HTML-sanitizer-vs-XSS/"><i
+                                class="fas fa-envelope " aria-hidden="true"></i></a></li>
+                    <li><a class="icon" target="_blank" rel="noopener"
+                            href="https://getpocket.com/save?url=https://blog.cyberjutsu.io/2021/05/13/HTML-sanitizer-vs-XSS/&title=HTML SANITIZER vs. XSS (Case study)"><i
+                                class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+                    <li><a class="icon" target="_blank" rel="noopener"
+                            href="http://reddit.com/submit?url=https://blog.cyberjutsu.io/2021/05/13/HTML-sanitizer-vs-XSS/&title=HTML SANITIZER vs. XSS (Case study)"><i
+                                class="fab fa-reddit " aria-hidden="true"></i></a></li>
+                    <li><a class="icon" target="_blank" rel="noopener"
+                            href="http://www.stumbleupon.com/submit?url=https://blog.cyberjutsu.io/2021/05/13/HTML-sanitizer-vs-XSS/&title=HTML SANITIZER vs. XSS (Case study)"><i
+                                class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+                    <li><a class="icon" target="_blank" rel="noopener"
+                            href="http://digg.com/submit?url=https://blog.cyberjutsu.io/2021/05/13/HTML-sanitizer-vs-XSS/&title=HTML SANITIZER vs. XSS (Case study)"><i
+                                class="fab fa-digg " aria-hidden="true"></i></a></li>
+                    <li><a class="icon" target="_blank" rel="noopener"
+                            href="http://www.tumblr.com/share/link?url=https://blog.cyberjutsu.io/2021/05/13/HTML-sanitizer-vs-XSS/&name=HTML SANITIZER vs. XSS (Case study)&description="><i
+                                class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+                    <li><a class="icon" target="_blank" rel="noopener"
+                            href="https://news.ycombinator.com/submitlink?u=https://blog.cyberjutsu.io/2021/05/13/HTML-sanitizer-vs-XSS/&t=HTML SANITIZER vs. XSS (Case study)"><i
+                                class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+                </ul>
+
+            </div>
+            <div id="toc">
+                <ol class="toc">
+                    <li class="toc-item toc-level-1"><a class="toc-link" href="#Mo-dau"><span
+                                class="toc-number">1.</span> <span class="toc-text">Mở đầu</span></a>
+                        <ol class="toc-child">
+                            <li class="toc-item toc-level-2"><a class="toc-link" href="#Storyline"><span
+                                        class="toc-number">1.1.</span> <span class="toc-text">Storyline</span></a></li>
+                            <li class="toc-item toc-level-2"><a class="toc-link" href="#Com-them"><span
+                                        class="toc-number">1.2.</span> <span class="toc-text">Cơm thêm</span></a></li>
+                            <li class="toc-item toc-level-2"><a class="toc-link" href="#Di-sau-vao-HTML-spec"><span
+                                        class="toc-number">1.3.</span> <span class="toc-text">Đi sâu vào HTML
+                                        spec</span></a></li>
+                            <li class="toc-item toc-level-2"><a class="toc-link" href="#Ket-hop-moi-thu-lai"><span
+                                        class="toc-number">1.4.</span> <span class="toc-text">Kết hợp mọi thứ
+                                        lại</span></a></li>
+                        </ol>
+                    </li>
+                    <li class="toc-item toc-level-1"><a class="toc-link" href="#Ket-luan"><span
+                                class="toc-number">2.</span> <span class="toc-text">Kết luận</span></a>
+                        <ol class="toc-child">
+                            <li class="toc-item toc-level-2"><a class="toc-link" href="#References"><span
+                                        class="toc-number">2.1.</span> <span class="toc-text">References:</span></a>
+                            </li>
+                        </ol>
+                    </li>
+                </ol>
+            </div>
+        </span>
+    </div>
+
+
+    <div class="content index py4">
+
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+            <header>
+
+                <h1 class="posttitle" itemprop="name headline">
+                    HTML SANITIZER vs. XSS (Case study)
+                </h1>
+
+
+
+                <div class="meta">
+                    <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+                        <span itemprop="name">l4w</span>
+                    </span>>>
+
+                    <div class="postdate">
+
+                        <time datetime="2021-05-12T17:00:01.000Z" itemprop="datePublished">2021-05-13</time>
+
+
+                    </div>
+
+
+
+
+
+                    <div class="article-tag">
+                        <i class="fas fa-tag"></i>
+                        <a class="tag-link-link" href="/tags/bug-bounty/" rel="tag">bug bounty</a>, <a
+                            class="tag-link-link" href="/tags/sanitizer/" rel="tag">sanitizer</a>, <a
+                            class="tag-link-link" href="/tags/xss/" rel="tag">xss</a>
+                    </div>
+
+
+                </div>
+            </header>
+
+
+            <div class="content" itemprop="articleBody">
+                <main>
+                    <div class="c-glitch" style="background-image: url('/images/htmlsanitizer-vs-xss/banner.png');">
+                        <img src='/images/htmlsanitizer-vs-xss/banner.png' />
+                        <div class="c-glitch__img"
+                            style="background-image: url('/images/htmlsanitizer-vs-xss/banner.png');"></div>
+                        <div class="c-glitch__img"
+                            style="background-image: url('/images/htmlsanitizer-vs-xss/banner.png');"></div>
+                        <div class="c-glitch__img"
+                            style="background-image: url('/images/htmlsanitizer-vs-xss/banner.png');"></div>
+                        <div class="c-glitch__img"
+                            style="background-image: url('/images/htmlsanitizer-vs-xss/banner.png');"></div>
+                        <div class="c-glitch__img"
+                            style="background-image: url('/images/htmlsanitizer-vs-xss/banner.png');"></div>
+                    </div>
+                </main>
+
+                <h1 id="Mo-dau"><a href="#Mo-dau" class="headerlink" title="Mở đầu">Mở đầu</a></h1>
+                <blockquote>
+                    Our story on XSS begins in late 1999 with a small group of Microsoft security engineers. The
+                    Microsoft Security Response Center and the Microsoft Internet Explorer Security Team had been
+                    hearing of attacks some sites were experiencing wherein script and image tags were being maliciously
+                    injected into html pages
+
+
+                    <p>Ref: <a target="_blank" rel="noopener"
+                            href="https://medium.com/@ryoberfelder/describing-xss-the-story-hidden-in-time-80c3600ffe81">https://medium.com/@ryoberfelder/describing-xss-the-story-hidden-in-time-80c3600ffe81</a>
+                    </p>
+                </blockquote>
+
+                <p>Đã 22 năm kể từ lần đầu tiên có người thấy sự xuất hiện và ghi nhận lại lỗi bảo mật Cross-Site
+                    Scripting (XSS) như bài blog ở trên đã đề cập. Nhưng cho đến khi mình đi hội thảo OWASP AppSec 2019,
+                    đa số các bài nói vẫn bàn về XSS và làm sao có thể phòng chống nó: áp dụng Content-Security-Policy
+                    (CSP) như thế nào để chống XSS, chi phí khi áp dụng CSP, …</p>
+                <p>Đủ để chúng ta thấy rằng, để sửa một loại lỗi bảo mật rất đơn giản nhưng lại không hề đơn giản. </p>
+                <p>Có rất nhiều cách phổ biến để chống loại lỗi XSS này:</p>
+                <ul>
+                    <li>Escaping</li>
+                    <li>Sanitizer</li>
+                    <li>Filter</li>
+                    <li>WAF</li>
+                    <li>Content-Security-Policy</li>
+                    <li>…</li>
+                </ul>
+                <p>Riêng bài hôm nay mình muốn chia sẻ một case khá hay khi việc tự tạo một Sanitizer bỏ sót những
+                    trường hợp ngách của HTML dẫn đến việc bị có thể bị bypass. </p>
+                <p>Để dễ liên tưởng hơn, mình cũng đã setup một playground mô phỏng lại lỗi này (không hoàn toàn chính
+                    xác 100% như case study vì mình không biết chính xác các thuật toán đằng sau) tại: <a
+                        target="_blank" rel="noopener"
+                        href="https://vulnerable-sanitizer.cyberjutsu-lab.tech/">https://vulnerable-sanitizer.cyberjutsu-lab.tech/</a>
+                </p>
+                <p>Các bạn có thể vừa đọc và thực hành trên đấy nhé!</p>
+                <p><img src="/images/htmlsanitizer-vs-xss/sanitizer_playground.png"></p>
+                <p>P/S: Nếu bạn còn mới lạ với XSS thì nên xem video <a target="_blank" rel="noopener"
+                        href="https://www.youtube.com/watch?v=X6QaMATKGMg">XSS Hacking</a> để nắm một số khái niệm nhé.
+                </p>
+                <h2 id="Storyline"><a href="#Storyline" class="headerlink" title="Storyline">Storyline</a></h2>
+                <p>Lỗi bảo mật này được tìm ra trong khi tụi mình đang trong một dự án nhỏ là thử nghiệm một số tool mà
+                    CyberJutsu.Team7 tạo ra để hỗ trợ việc tìm lỗi Client-side cũng như công cụ log tập trung để giúp
+                    quá trình teamwork khi săn lỗi bảo mật.</p>
+                <p>Nhớ hôm đó là vào buổi khuya tháng 08/2020, mình truy cập trang <code>https://███████/</code> (Vì yêu
+                    cầu của bên chương trình bounty, bên mình không được phép disclose tên ra) và thực hiện các bước
+                    kiểm tra cơ bản.</p>
+                <p>Sau một khoảng thời gian ngắn, có một chức năng ngay lập tức mình chú ý đó là khung Tìm kiếm.</p>
+                <p><img src="/images/htmlsanitizer-vs-xss/1.png"></p>
+                <p>Vẫn như thói quen mình đặt vào ô tìm kiếm một chuỗi HTML đơn giản để kiểm chứng:
+                    <code>bbbbb&lt;h1&gt;abc&lt;/h1&gt;</code></p>
+                <p><img src="/images/htmlsanitizer-vs-xss/2.png"></p>
+                <p>Gotcha, một khởi đầu suôn sẻ khi nhận thấy rằng bộ lọc (sanitizer/filter) của trang này không lấy mất
+                    đi tag HTML <code>&lt;h1&gt;</code> của mình, có vẻ đây là một chỗ có khả năng khai thác lỗi
+                    Reflected-XSS.</p>
+                <p>Mình bèn thử thêm một vài tag HTML ví như: <code>bbbbbb&lt;img src=&quot;cyberjutsu&quot;&gt;</code>
+                </p>
+                <p><img src="/images/htmlsanitizer-vs-xss/3.png"></p>
+                <p>Vẫn ổn, mình đã nghĩ trong đầu: “Ồ thế thì chắc bị XSS rồi, không lẫn vào đâu được”</p>
+                <p>Tiếp đến, mình khai thác sâu hơn bằng cách đưa một event handler của tag <code>&lt;img&gt;</code> vào
+                    có thể trigger JavaScript lên: <code>&lt;img src=&quot;cyberjutsu&quot;
+                        onerror=&quot;alert(1)&quot;&gt;</code> (nôm na là: khi tấm ảnh này load không thành công, sự
+                    kiện <a target="_blank" rel="noopener"
+                        href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement/onerror">onerror</a> sẽ
+                    được kích hoạt và chạy lệnh JavaScript mà ta đã gán cho nó, đây là một attack vector khá nổi tiếng
+                    của XSS)</p>
+                <p>Nhưng kết quả lại không như mong muốn, dễ thấy rằng, attribute <code>onerror</code> trong payload của
+                    mình đã bị <code>removed</code>. Tới lúc này, mình nhận ra trang web này thật sự có một bộ lọc gì đó
+                    đằng sau:</p>
+                <p><img src="/images/htmlsanitizer-vs-xss/4.png"></p>
+                <p>Không bỏ cuộc ở đó, vì rõ ràng chúng ta đã có thể chèn tag HTML vào được rồi, vì vậy cánh cửa tuy hẹp
+                    nhưng mình tin vẫn có thể lách được. </p>
+                <p>Mình thử một vài trường hợp khác để tìm hiểu sâu thêm nguyên lý của bộ lọc này:</p>
+                <figure class="highlight plain">
+                    <table>
+                        <tr>
+                            <td class="gutter">
+                                <pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre>
+                            </td>
+                            <td class="code">
+                                <pre><span class="line">Thử những attribute không nguy hiểm:</span><br><span class="line">  &lt;img src&#x3D;&quot;a&quot;&gt;       → ✅ &lt;img src&#x3D;&quot;a&quot;&gt;</span><br><span class="line">  &lt;p title&#x3D;&quot;a&quot;&gt;       → ✅ &lt;p title&#x3D;&quot;a&quot;&gt;</span><br><span class="line">  &lt;input type&#x3D;&quot;text&quot;&gt; → ✅ &lt;input type&#x3D;&quot;text&quot;&gt;</span><br><span class="line"></span><br><span class="line">Thử những tag HTML nguy hiểm:</span><br><span class="line">  &lt;script&gt;aaa&lt;&#x2F;script&gt;            → ❌ removed</span><br><span class="line">  &lt;svg&gt;aaa&lt;&#x2F;svg&gt;                  → ❌ removed</span><br><span class="line">  &lt;iframe srcdoc&#x3D;&quot;aaa&quot;&gt;           → ❌ removed</span><br><span class="line">  &lt;meta http-equiv&#x3D;&quot;refresh&quot;..&#x2F;&gt;  → ❌ removed</span><br><span class="line"></span><br><span class="line">Thử những attribute nguy hiểm có thể trigger JavaScript:</span><br><span class="line">  &lt;input autofocus&gt;               → ❌ &lt;input removed&gt;</span><br><span class="line">  &lt;input onfocus&#x3D;&quot;a&quot;&gt;             → ❌ &lt;intput xss&#x3D;removed&gt;</span><br><span class="line">  &lt;a href&#x3D;&quot;javascript:alert(1)&quot;&gt;  → ❌ &lt;a xss&#x3D;removed&gt;</span><br></pre>
+                            </td>
+                        </tr>
+                    </table>
+                </figure>
+
+                <p>Mọi thứ nguy hiểm đều đã bị lọc đi và không khai thác được gì, nhưng, mình dần bắt đầu hiểu được cách
+                    thức hoạt động của bộ lọc đằng sau trang web này.</p>
+                <p>Điểm đặc biệt là bộ lọc này không cố gắng lấy đi hết tất cả các tag HTML như chúng ta thường thấy mà
+                    nó chỉ loại đi những attributes có thể trigger được JavaScript
+                    (<code>onerror|onclick|onfocus|...</code>) hoặc những tag HTML nguy hiểm (như <code>&lt;script&gt; |
+                        &lt;svg&gt; | &lt;iframe&gt;</code>)</p>
+                <h2 id="Com-them"><a href="#Com-them" class="headerlink" title="Cơm thêm">Cơm thêm</a></h2>
+                <p>Minh họa thêm về quá trình parse và tạo ra cây DOM, thì đây là một diễn biến khi trình duyệt gặp
+                    những tag HTML, sẽ xử lý nó để tạo ra các nodes trong cây <code>Document Object Model</code>. Sau đó
+                    trình duyệt mới tiến tới bước tiếp theo là render ra những hình ảnh dựa trên cây DOM này [1]</p>
+                <p><img src="/images/htmlsanitizer-vs-xss/DOMtree.png"></p>
+                <h2 id="Di-sau-vao-HTML-spec"><a href="#Di-sau-vao-HTML-spec" class="headerlink"
+                        title="Đi sâu vào HTML spec">Đi sâu vào HTML spec</a></h2>
+                <p>Có vẻ không làm được gì khác, thì bỗng mình có một ý tưởng khác.<br>Vì trong dạo thời gian tháng
+                    08/2020, có rât nhiều bài blog nói về một số kĩ thuật XSS mới làm mình nhớ về một số tag HTML đặc
+                    biệt đó là:<br><code>&lt;style&gt;</code></p>
+                <p>Vì sao nó đặc biệt? Nhìn vào <a target="_blank" rel="noopener"
+                        href="https://html.spec.whatwg.org/multipage/semantics.html#the-style-element">HTML spec</a> của
+                    tag <code>&lt;style&gt;</code> này ta thấy rằng Content Model của tag này là <a target="_blank"
+                        rel="noopener" href="https://html.spec.whatwg.org/multipage/dom.html#text-content">Text</a></p>
+                <p>Nó mang ý nghĩa là gì, mình có một ví dụ để ta có thể dễ thấy.</p>
+                <p>Mở trình duyệt và thử tạo một chuỗi HTML bằng cách truy cập đường dẫn như sau: </p>
+                <p><code>data:text/html,&lt;style&gt;&lt;h1&gt;Hello world&lt;/h1&gt;&lt;/style&gt;</code></p>
+                <p><img src="/images/htmlsanitizer-vs-xss/5.png"></p>
+                <p>Ta có thể thấy element <code>&lt;h1&gt;</code> không hề hiện diện trên <a target="_blank"
+                        rel="noopener" href="https://javascript.info/dom-nodes">DOM-tree</a>. Nhìn kĩ ta cũng sẽ thấy là
+                    đoạn chuỗi <code>&lt;h1&gt;Hello world&lt;/h1&gt;</code> cũng không hề được highlight trong
+                    DevTools, chứng tỏ nó chỉ được coi là một chuỗi text đơn thuần và được highlight là màu đen.</p>
+                <p>Ý nghĩa rằng tất cả mọi thứ nằm trong tag <code>&lt;style&gt;...</code> sẽ được đối xử như là
+                    <code>Text</code> đơn thuần và HTML parser sẽ ngưng parse <em>khi và chỉ</em> khi gặp một tag đóng
+                    của chính nó là <code>&lt;/style&gt;</code></p>
+                <p>Đặt ra một tình huống phức tạp hơn khi kết hợp nhiều thứ lại: Khi ta cố gắng thử lồng tag đóng
+                    <code>&lt;/style&gt;</code> vào trong một attribute của tag <code>&lt;p&gt;</code> như sau:</p>
+                <p><code>data:text/html,&lt;style&gt;&lt;p title=&quot;&lt;/style&gt;&lt;h1&gt;Hello
+                        world&lt;/h1&gt;&quot;&gt;</code></p>
+                <p><img src="/images/htmlsanitizer-vs-xss/6.png"></p>
+                <p>Nó hoạt động đúng như nguyên lý mình vừa đề cập: <code>&lt;p title=&quot;...&quot;&gt;</code> không
+                    hề được coi là một tag HTML mà chỉ là một chuỗi text đơn thuần, dẫn đến việc, ngay sau khi tag
+                    <code>&lt;/style&gt;</code> được đóng lại. Trình duyệt lập tức duyệt tới tag tiếp theo là
+                    <code>&lt;h1&gt;</code> và xem nó là một element HTML hợp lệ. Và như các bạn thấy chuỗi “Hello
+                    world” đã được tô đậm với tag <code>&lt;h1&gt;</code></p>
+                <p>Còn nếu ta bỏ tag <code>&lt;style&gt;</code> ở đầu đi, thì rõ ràng trình duyệt sẽ xem tất cả dữ liệu
+                    trong nháy kép <code>&quot;...&quot;</code> là nội dung attribute <code>title</code> và không hề
+                    render tag <code>&lt;h1&gt;Hello world&lt;/h1&gt;</code> (được DevTools highlight như là màu xanh)
+                </p>
+                <p><code>data:text/html,&lt;p title=&quot;&lt;/style&gt;&lt;h1&gt;Hello
+                        world&lt;/h1&gt;&quot;&gt;</code></p>
+                <p><img src="/images/htmlsanitizer-vs-xss/7.png"></p>
+                <p>Điều này càng chứng minh rõ là HTML parser của trình duyệt sẽ vẫn cứ tuân theo nguyên tắc ta đã bàn ở
+                    trên, xem tất cả nội dung ở trong tag <code>&lt;style&gt;</code> là text, không parse chúng thành
+                    HTML nodes và quá trình này chỉ ngưng khi gặp tag đóng <code>&lt;/style&gt;</code></p>
+                <p>Ngoài <code>&lt;style&gt;</code> có đặc điểm như vậy, ta cũng có thêm tag <code>&lt;script&gt;</code>
+                    có nguyên lý tương tự.</p>
+                <p><img src="/images/htmlsanitizer-vs-xss/8.png"></p>
+                <p>Đợi đã, như vậy thì nó giúp gì cho trường hợp này?</p>
+                <p><img src="/images/htmlsanitizer-vs-xss/thinking.jpg"></p>
+                <h2 id="Ket-hop-moi-thu-lai"><a href="#Ket-hop-moi-thu-lai" class="headerlink"
+                        title="Kết hợp mọi thứ lại">Kết hợp mọi thứ lại</a></h2>
+                <p>Như ta đã khám phá ra, nguyên lý hoạt động của bộ lọc này là cố gắng chạy qua và scan hết tất cả các
+                    tag HTML và attribute của nó, tìm ra những thành tố nguy hiểm có thể bị khai thác và loại bỏ đi.</p>
+                <p>Lỗi bảo mật xuất hiện khi mà những trường hợp ngách xuất hiện.</p>
+                <p>Sẽ ra sao nếu mình đặt vào khung tìm kiếm của website ███████ một câu như sau: </p>
+                <p><code>&lt;style&gt;&lt;p title=&#39;&lt;/style&gt;&lt;img src=&quot;a&quot;
+                        onerror=&quot;alert(1)&quot;&gt;&#39;&gt;</code></p>
+                <p>Như ta đã test ở đầu bài, chuỗi <code>&lt;p title=&quot;...&quot;&gt;</code> được xem là một tag HTML
+                    với attribute <code>title</code> ✅ hợp lệ, không nguy hiểm gì, cho nên bộ lọc đã cho phép đi qua.
+                </p>
+                <p>Vì dù tag <code>&lt;img onerror&gt;</code> có xuất hiện ở trong chuỗi nhưng vì bản chất của bộ lọc là
+                    đi qua hết tất cả các tag HTML và attribute để tìm ra những thành tố nguy hiểm.</p>
+                <p>Tuy nhiên… cách hoạt động của bộ lọc không hề giống với những gì trình duyệt <em>thật sự làm</em> vì
+                    do cách trình duyệt xử lý tag <code>&lt;style&gt;</code> như mình đã nói phần trên là rất đặc biệt.
+                    Bộ lọc không hề biết điều này… vì thế mà chuỗi payload: <code>&lt;style&gt;&lt;p
+                        title=&#39;&lt;/style&gt;&lt;img src=&quot;a&quot;
+                        onerror=&quot;alert(1)&quot;&gt;&#39;&gt;</code> đã được cho qua ✅</p>
+                <p>Đến đây mình khá chắc về ý tưởng của mình sẽ thành công, tuy nhiên tag <code>&lt;style&gt;</code>
+                    cũng bị bộ lọc trên website ███████ xem là nguy hiểm nên đã lọc đi…</p>
+                <p>Không dừng lại ở đó, mình đi tìm thêm những tag HTML mà có tính chất tương tự (vì rõ ràng tag
+                    <code>&lt;script&gt;</code> cũng đã bị cấm). Một lúc sau và mình đã phát hiện ra một tag khác mà có
+                    Content Model là <code>Text</code> node đó chính là: <code>&lt;noscript&gt;</code></p>
+                <p>Liền thử và BAM: <code>&lt;noscript&gt;&lt;p title=&#39;&lt;/noscript&gt;&lt;img src=&quot;a&quot;
+                        onerror=&quot;alert(origin)&quot;&gt;&#39;&gt;</code></p>
+                <p><img src="/images/htmlsanitizer-vs-xss/9.png"></p>
+                <p>Mình đã thành công chèn vào nội dung page với tag <code>&lt;img src=&quot;a&quot;
+                        onerror=&quot;alert(origin)&quot;&gt;</code> và thực thi được mã JavaScript trên trình duyệt của
+                    nạn nhân nếu họ click vào đường link: </p>
+                <figure class="highlight plain">
+                    <table>
+                        <tr>
+                            <td class="gutter">
+                                <pre><span class="line">1</span><br></pre>
+                            </td>
+                            <td class="code">
+                                <pre><span class="line">https:&#x2F;&#x2F;███████&#x2F;search?q&#x3D;bbbbbb%3Cnoscript%3E%3Cp%20title%3D&#39;%3C%2Fnoscript%3E%3Cimg%20src%3D%22a%22%20onerror%3D%22alert(origin)%22%3E&#39;%3E</span><br></pre>
+                            </td>
+                        </tr>
+                    </table>
+                </figure>
+
+                <h1 id="Ket-luan"><a href="#Ket-luan" class="headerlink" title="Kết luận">Kết luận</a></h1>
+                <p>Chúng ta có thể thấy việc tạo ra một bộ lọc để chống lại một lỗi bảo mật là đầy thách thức vì kiến
+                    thức của mỗi người là có hạn (mình cũng đã không thể bypass case này nếu không đọc những nghiên cứu
+                    của người khác). Giải pháp ở đây có thể là chúng ta nên tham khảo những cách làm/thư viện đã có sẵn
+                    của các tổ chức bảo mật uy tín.<br>Ví dụ như: <a target="_blank" rel="noopener"
+                        href="https://github.com/cure53/DOMPurify">DOMPurify</a>, hoặc thậm chí sắp tới các trình duyệt
+                    đều sẽ có <a target="_blank" rel="noopener" href="https://wicg.github.io/sanitizer-api/">Sanitizer
+                        API</a> cho mình. Cùng chờ xem, liệu giải pháp mới có xin ra những vấn đề mới nào khác không nhé
+                    ;)</p>
+                <h2 id="References"><a href="#References" class="headerlink" title="References:">References:</a></h2>
+                <p>1 - <a target="_blank" rel="noopener"
+                        href="https://developers.google.com/web/fundamentals/performance/critical-rendering-path/constructing-the-object-model">https://developers.google.com/web/fundamentals/performance/critical-rendering-path/constructing-the-object-model</a>
+                </p>
+
+            </div>
+        </article>
+
+
+
+
+        <div id="footer-post-container">
+            <div id="footer-post">
+
+                <div id="nav-footer" style="display: none">
+                    <ul>
+
+                        <li><a href="/">home</a></li>
+
+                        <li><a href="/about/">about</a></li>
+
+                        <li><a href="/archives/">articles</a></li>
+
+                        <li><a target="_blank" rel="noopener"
+                                href="https://cyberjutsu.io/publications/">publications</a></li>
+
+                    </ul>
+                </div>
+
+                <div id="toc-footer" style="display: none">
+                    <ol class="toc">
+                        <li class="toc-item toc-level-1"><a class="toc-link" href="#Mo-dau"><span
+                                    class="toc-number">1.</span> <span class="toc-text">Mở đầu</span></a>
+                            <ol class="toc-child">
+                                <li class="toc-item toc-level-2"><a class="toc-link" href="#Storyline"><span
+                                            class="toc-number">1.1.</span> <span class="toc-text">Storyline</span></a>
+                                </li>
+                                <li class="toc-item toc-level-2"><a class="toc-link" href="#Com-them"><span
+                                            class="toc-number">1.2.</span> <span class="toc-text">Cơm thêm</span></a>
+                                </li>
+                                <li class="toc-item toc-level-2"><a class="toc-link" href="#Di-sau-vao-HTML-spec"><span
+                                            class="toc-number">1.3.</span> <span class="toc-text">Đi sâu vào HTML
+                                            spec</span></a></li>
+                                <li class="toc-item toc-level-2"><a class="toc-link" href="#Ket-hop-moi-thu-lai"><span
+                                            class="toc-number">1.4.</span> <span class="toc-text">Kết hợp mọi thứ
+                                            lại</span></a></li>
+                            </ol>
+                        </li>
+                        <li class="toc-item toc-level-1"><a class="toc-link" href="#Ket-luan"><span
+                                    class="toc-number">2.</span> <span class="toc-text">Kết luận</span></a>
+                            <ol class="toc-child">
+                                <li class="toc-item toc-level-2"><a class="toc-link" href="#References"><span
+                                            class="toc-number">2.1.</span> <span class="toc-text">References:</span></a>
+                                </li>
+                            </ol>
+                        </li>
+                    </ol>
+                </div>
+
+                <div id="share-footer" style="display: none">
+                    <ul>
+                        <li><a class="icon" target="_blank" rel="noopener"
+                                href="http://www.facebook.com/sharer.php?u=https://blog.cyberjutsu.io/2021/05/13/HTML-sanitizer-vs-XSS/"><i
+                                    class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+                        <li><a class="icon" target="_blank" rel="noopener"
+                                href="https://twitter.com/share?url=https://blog.cyberjutsu.io/2021/05/13/HTML-sanitizer-vs-XSS/&text=HTML SANITIZER vs. XSS (Case study)"><i
+                                    class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+                        <li><a class="icon" target="_blank" rel="noopener"
+                                href="http://www.linkedin.com/shareArticle?url=https://blog.cyberjutsu.io/2021/05/13/HTML-sanitizer-vs-XSS/&title=HTML SANITIZER vs. XSS (Case study)"><i
+                                    class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+                        <li><a class="icon" target="_blank" rel="noopener"
+                                href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.cyberjutsu.io/2021/05/13/HTML-sanitizer-vs-XSS/&is_video=false&description=HTML SANITIZER vs. XSS (Case study)"><i
+                                    class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+                        <li><a class="icon"
+                                href="mailto:?subject=HTML SANITIZER vs. XSS (Case study)&body=Check out this article: https://blog.cyberjutsu.io/2021/05/13/HTML-sanitizer-vs-XSS/"><i
+                                    class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+                        <li><a class="icon" target="_blank" rel="noopener"
+                                href="https://getpocket.com/save?url=https://blog.cyberjutsu.io/2021/05/13/HTML-sanitizer-vs-XSS/&title=HTML SANITIZER vs. XSS (Case study)"><i
+                                    class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+                        <li><a class="icon" target="_blank" rel="noopener"
+                                href="http://reddit.com/submit?url=https://blog.cyberjutsu.io/2021/05/13/HTML-sanitizer-vs-XSS/&title=HTML SANITIZER vs. XSS (Case study)"><i
+                                    class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+                        <li><a class="icon" target="_blank" rel="noopener"
+                                href="http://www.stumbleupon.com/submit?url=https://blog.cyberjutsu.io/2021/05/13/HTML-sanitizer-vs-XSS/&title=HTML SANITIZER vs. XSS (Case study)"><i
+                                    class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+                        <li><a class="icon" target="_blank" rel="noopener"
+                                href="http://digg.com/submit?url=https://blog.cyberjutsu.io/2021/05/13/HTML-sanitizer-vs-XSS/&title=HTML SANITIZER vs. XSS (Case study)"><i
+                                    class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+                        <li><a class="icon" target="_blank" rel="noopener"
+                                href="http://www.tumblr.com/share/link?url=https://blog.cyberjutsu.io/2021/05/13/HTML-sanitizer-vs-XSS/&name=HTML SANITIZER vs. XSS (Case study)&description="><i
+                                    class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+                        <li><a class="icon" target="_blank" rel="noopener"
+                                href="https://news.ycombinator.com/submitlink?u=https://blog.cyberjutsu.io/2021/05/13/HTML-sanitizer-vs-XSS/&t=HTML SANITIZER vs. XSS (Case study)"><i
+                                    class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+                    </ul>
+
+                </div>
+
+                <div id="actions-footer">
+                    <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i
+                            class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+                    <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i
+                            class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+                    <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i
+                            class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+                    <a id="top" style="display:none" class="icon" href="#"
+                        onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg"
+                            aria-hidden="true"></i> Top</a>
+                </div>
+
+            </div>
+        </div>
+
+
+        <footer id="footer">
+            <div class="footer-left">
+                Copyright &copy;
+
+
+                2020-2021 -
+                CyberJutsu Team
+            </div>
+            <div class="footer-right">
+                <nav>
+                    <ul>
+
+                        <li><a href="/">home</a></li>
+
+                        <li><a href="/about/">about</a></li>
+
+                        <li><a href="/archives/">articles</a></li>
+
+                        <li><a target="_blank" rel="noopener"
+                                href="https://cyberjutsu.io/publications/">publications</a></li>
+
+                    </ul>
+                </nav>
+            </div>
+        </footer>
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-50645715-1"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+
+            function gtag() {
+                dataLayer.push(arguments);
+            }
+            gtag('js', new Date());
+
+            gtag('config', 'UA-50645715-1');
+        </script>
+
+    </div>
+    <!-- styles -->
+
+    <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
+    <link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+    <!-- jquery -->
+
+    <script src="/lib/jquery/jquery.min.js"></script>
+
+
+    <script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+    <!-- clipboard -->
+
+
+    <script src="/lib/clipboard/clipboard.min.js"></script>
+
+    <script type="text/javascript">
+        $(function () {
+            // copy-btn HTML
+            var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+            btn += '<i class="far fa-clone"></i>';
+            btn += '</span>';
+            // mount it!
+            $(".highlight table").before(btn);
+            var clip = new ClipboardJS('.btn-copy', {
+                text: function (trigger) {
+                    return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((
+                        str, it) => str + it.innerText + '\n', '')
+                }
+            });
+            clip.on('success', function (e) {
+                e.trigger.setAttribute('aria-label', "Copied!");
+                e.clearSelection();
+            })
+        })
+    </script>
+
+
+    <script src="/js/main.js"></script>
+
+    <!-- search -->
+
+    <!-- Google Analytics -->
+
+    <!-- Baidu Analytics -->
+
+    <!-- Umami Analytics -->
+
+    <!-- Disqus Comments -->
+
+
+</body>
+
+</html>
