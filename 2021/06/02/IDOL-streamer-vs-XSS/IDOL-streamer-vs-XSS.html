@@ -23,8 +23,10 @@
     <meta name="twitter:card" content="summary">
     <meta name="twitter:image" content="https://blog.cyberjutsu.io/images/streamer-vs-xss/banner.png">
     <meta property="og:image" content="https://blog.cyberjutsu.io/images/streamer-vs-xss/banner.png">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-   
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+        integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
 
 
     <link rel="shortcut icon" href="/images/favicon.ico">
@@ -71,11 +73,11 @@
             <span id="nav">
                 <ul>
 
-                    <li><a href="/">home</a></li>
+                    <li><a href="/home.html">home</a></li>
 
-                    <li><a href="/about/">about</a></li>
+                    <li><a href="/about/about.html">about</a></li>
 
-                    <li><a href="/archives/">articles</a></li>
+                    <li><a href="/archives/archives.html">articles</a></li>
 
                     <li><a target="_blank" rel="noopener" href="https://cyberjutsu.io/publications/">publications</a>
                     </li>
@@ -86,12 +88,12 @@
             <span id="actions">
                 <ul>
 
-                    <li><a class="icon" href="/2021/08/09/hoc-an-toan-thong-tin/"><i class="fas fa-chevron-left"
-                                aria-hidden="true" onmouseover="$('#i-prev').toggle();"
+                    <li><a class="icon" href="/2021/08/09/hoc-an-toan-thong-tin/hoc-an-toan-thong-tin.html"><i
+                                class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();"
                                 onmouseout="$('#i-prev').toggle();"></i></a></li>
 
 
-                    <li><a class="icon" href="/2021/05/13/HTML-sanitizer-vs-XSS/"><i class="fas fa-chevron-right"
+                    <li><a class="icon" href="/2021/05/13/HTML-sanitizer-vs-XSS/HTML-sanitizer-vs-XSS.html"><i class="fas fa-chevron-right"
                                 aria-hidden="true" onmouseover="$('#i-next').toggle();"
                                 onmouseout="$('#i-next').toggle();"></i></a></li>
 
@@ -239,7 +241,8 @@
                     phức tạp và rất thú vị. Thú vị vì nó thay đổi từng ngày, gắn chặt với sự phát triển và nguyên lý
                     hoạt động của trình duyệt (mình thống kê được thì 1 ngày sẽ có khoảng 400 commits khác nhau vào nhân
                     <a target="_blank" rel="noopener" href="https://github.com/chromium/chromium/commits">Chromium</a>).
-                    Các features liên tục sinh ra cũng đồng thời mang lại những rủi ro mới.</p>
+                    Các features liên tục sinh ra cũng đồng thời mang lại những rủi ro mới.
+                </p>
                 <p>Sau này còn có các loại tấn công khác liên quan đến nguyên lý của trình duyệt như: XS-Leaks, Cache,
                     DNS, …</p>
                 <p>P/S: Nếu bạn còn mới lạ với XSS thì nên xem video <a target="_blank" rel="noopener"
@@ -295,7 +298,8 @@
                 <p>–</p>
                 <p>Nói nôm na đó là, unghotoi sẽ cung cấp cho các streamer những đường dẫn hình thù tựa như
                     sau:<br><code>https://unghotoi.com/alert-donation-skin1/&#123;secret_token&#125;</code> mà trong đó
-                    <code>&#123;secret_token&#125;</code> sẽ là duy nhất và bí mật đối với mỗi tài khoản.</p>
+                    <code>&#123;secret_token&#125;</code> sẽ là duy nhất và bí mật đối với mỗi tài khoản.
+                </p>
                 <p>Ví dụ của mình sẽ trông
                     như:<br><code>https://unghotoi.com/alert-donation-skin1/tk-foLHaVs....22011750</code></p>
                 <p><img src="/images/streamer-vs-xss/obs_2.png"></p>
@@ -315,7 +319,8 @@
                 <p>Ngay lập tức mình <code>view-source</code> HTML của trang link
                     <code>https://unghotoi.com/alert-donation-skin1/tk-foLHaVs....22011750</code> khi có một thông điệp
                     tới, thì phát hiện ra là THÔNG ĐIỆP KHI DONATE sẽ được truyền vào giữa một hàm tên
-                    <code>responsiveVoice.speak(...)</code> (dòng 9)</p>
+                    <code>responsiveVoice.speak(...)</code> (dòng 9)
+                </p>
                 <figure class="highlight html">
                     <table>
                         <tr>

@@ -25,7 +25,9 @@
     <meta name="twitter:card" content="summary">
     <meta name="twitter:image" content="https://blog.cyberjutsu.io/images/htmlsanitizer-vs-xss/banner.png">
     <meta property="og:image" content="https://blog.cyberjutsu.io/images/htmlsanitizer-vs-xss/banner.png">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+        integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 
 
@@ -73,11 +75,11 @@
             <span id="nav">
                 <ul>
 
-                    <li><a href="/">home</a></li>
+                    <li><a href="/home.html">home</a></li>
 
-                    <li><a href="/about/">about</a></li>
+                    <li><a href="/about/about.html">about</a></li>
 
-                    <li><a href="/archives/">articles</a></li>
+                    <li><a href="/archives/archives.html">articles</a></li>
 
                     <li><a target="_blank" rel="noopener" href="https://cyberjutsu.io/publications/">publications</a>
                     </li>
@@ -88,12 +90,12 @@
             <span id="actions">
                 <ul>
 
-                    <li><a class="icon" href="/2021/06/02/IDOL-streamer-vs-XSS/"><i class="fas fa-chevron-left"
+                    <li><a class="icon" href="/2021/06/02/IDOL-streamer-vs-XSS/IDOL-streamer-vs-XSS.html"><i class="fas fa-chevron-left"
                                 aria-hidden="true" onmouseover="$('#i-prev').toggle();"
                                 onmouseout="$('#i-prev').toggle();"></i></a></li>
 
 
-                    <li><a class="icon" href="/2021/01/06/flareon-phan-3/"><i class="fas fa-chevron-right"
+                    <li><a class="icon" href="/2021/01/06/flareon-phan-3.html"><i class="fas fa-chevron-right"
                                 aria-hidden="true" onmouseover="$('#i-next').toggle();"
                                 onmouseout="$('#i-next').toggle();"></i></a></li>
 
@@ -284,7 +286,8 @@
                 <p>Sau một khoảng thời gian ngắn, có một chức năng ngay lập tức mình chú ý đó là khung Tìm kiếm.</p>
                 <p><img src="/images/htmlsanitizer-vs-xss/1.png"></p>
                 <p>Vẫn như thói quen mình đặt vào ô tìm kiếm một chuỗi HTML đơn giản để kiểm chứng:
-                    <code>bbbbb&lt;h1&gt;abc&lt;/h1&gt;</code></p>
+                    <code>bbbbb&lt;h1&gt;abc&lt;/h1&gt;</code>
+                </p>
                 <p><img src="/images/htmlsanitizer-vs-xss/2.png"></p>
                 <p>Gotcha, một khởi đầu suôn sẻ khi nhận thấy rằng bộ lọc (sanitizer/filter) của trang này không lấy mất
                     đi tag HTML <code>&lt;h1&gt;</code> của mình, có vẻ đây là một chỗ có khả năng khai thác lỗi
@@ -350,9 +353,11 @@
                     DevTools, chứng tỏ nó chỉ được coi là một chuỗi text đơn thuần và được highlight là màu đen.</p>
                 <p>Ý nghĩa rằng tất cả mọi thứ nằm trong tag <code>&lt;style&gt;...</code> sẽ được đối xử như là
                     <code>Text</code> đơn thuần và HTML parser sẽ ngưng parse <em>khi và chỉ</em> khi gặp một tag đóng
-                    của chính nó là <code>&lt;/style&gt;</code></p>
+                    của chính nó là <code>&lt;/style&gt;</code>
+                </p>
                 <p>Đặt ra một tình huống phức tạp hơn khi kết hợp nhiều thứ lại: Khi ta cố gắng thử lồng tag đóng
-                    <code>&lt;/style&gt;</code> vào trong một attribute của tag <code>&lt;p&gt;</code> như sau:</p>
+                    <code>&lt;/style&gt;</code> vào trong một attribute của tag <code>&lt;p&gt;</code> như sau:
+                </p>
                 <p><code>data:text/html,&lt;style&gt;&lt;p title=&quot;&lt;/style&gt;&lt;h1&gt;Hello
                         world&lt;/h1&gt;&quot;&gt;</code></p>
                 <p><img src="/images/htmlsanitizer-vs-xss/6.png"></p>
@@ -360,7 +365,8 @@
                     hề được coi là một tag HTML mà chỉ là một chuỗi text đơn thuần, dẫn đến việc, ngay sau khi tag
                     <code>&lt;/style&gt;</code> được đóng lại. Trình duyệt lập tức duyệt tới tag tiếp theo là
                     <code>&lt;h1&gt;</code> và xem nó là một element HTML hợp lệ. Và như các bạn thấy chuỗi “Hello
-                    world” đã được tô đậm với tag <code>&lt;h1&gt;</code></p>
+                    world” đã được tô đậm với tag <code>&lt;h1&gt;</code>
+                </p>
                 <p>Còn nếu ta bỏ tag <code>&lt;style&gt;</code> ở đầu đi, thì rõ ràng trình duyệt sẽ xem tất cả dữ liệu
                     trong nháy kép <code>&quot;...&quot;</code> là nội dung attribute <code>title</code> và không hề
                     render tag <code>&lt;h1&gt;Hello world&lt;/h1&gt;</code> (được DevTools highlight như là màu xanh)
@@ -398,12 +404,14 @@
                     cũng bị bộ lọc trên website ███████ xem là nguy hiểm nên đã lọc đi…</p>
                 <p>Không dừng lại ở đó, mình đi tìm thêm những tag HTML mà có tính chất tương tự (vì rõ ràng tag
                     <code>&lt;script&gt;</code> cũng đã bị cấm). Một lúc sau và mình đã phát hiện ra một tag khác mà có
-                    Content Model là <code>Text</code> node đó chính là: <code>&lt;noscript&gt;</code></p>
+                    Content Model là <code>Text</code> node đó chính là: <code>&lt;noscript&gt;</code>
+                </p>
                 <p>Liền thử và BAM: <code>&lt;noscript&gt;&lt;p title=&#39;&lt;/noscript&gt;&lt;img src=&quot;a&quot;
                         onerror=&quot;alert(origin)&quot;&gt;&#39;&gt;</code></p>
                 <p><img src="/images/htmlsanitizer-vs-xss/9.png"></p>
                 <p>Mình đã thành công chèn vào nội dung page với tag <code>&lt;img src=&quot;a&quot;
-                        onerror=&quot;alert(origin)&quot;&gt;</code> và thực thi được mã JavaScript trên trình duyệt của
+                        onerror=&quot;alert(origin)&quot;&gt;</code> và thực thi được mã JavaScript trên trình duyệt
+                    của
                     nạn nhân nếu họ click vào đường link: </p>
                 <figure class="highlight plain">
                     <table>
