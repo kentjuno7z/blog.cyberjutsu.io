@@ -2123,7 +2123,7 @@ svg {
 }
 
 .content>h1::after {
-  content: "â–Š";
+  content: "▊";
   animation: blink-animation 1s infinite;
 }
 
