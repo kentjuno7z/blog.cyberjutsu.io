@@ -1,0 +1,1507 @@
+<!DOCTYPE html>
+<html lang=en>
+
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description"
+        content="Phần 2Chúc mọi người một giáng sinh vui vẻ 🎄Cùng đến với phần 2 của series bài với 5 thử thách:  report (solution) TKApp (solution) codeit (solution) re_crowd (">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="FLAREON 2020 - WRITEUP PHẦN 2">
+    <meta property="og:url" content="https://blog.cyberjutsu.io/2020/12/24/flareon-phan-2/index.html">
+    <meta property="og:site_name" content="&#x2F; home &#x2F; cyberjutsu &#x2F; blog &#x2F;">
+    <meta property="og:description"
+        content="Phần 2Chúc mọi người một giáng sinh vui vẻ 🎄Cùng đến với phần 2 của series bài với 5 thử thách:  report (solution) TKApp (solution) codeit (solution) re_crowd (">
+    <meta property="og:locale" content="en_US">
+    <meta property="article:published_time" content="2020-12-23T17:00:01.000Z">
+    <meta property="article:modified_time" content="2021-06-04T02:28:13.902Z">
+    <meta property="article:author" content="CyberJutsu Team">
+    <meta property="article:tag" content="flareon">
+    <meta property="article:tag" content="reverse engineering">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:image" content="https://blog.cyberjutsu.io/images/flareon/FlareOn@2x.jpg">
+    <meta property="og:image" content="https://blog.cyberjutsu.io/images/flareon/FlareOn@2x.jpg">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+
+
+
+    <link rel="shortcut icon" href="/images/favicon.ico">
+
+
+
+
+    <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+
+
+
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+
+
+
+    <!-- title -->
+    <title>FLAREON 2020 - WRITEUP PHẦN 2</title>
+    <!-- styles -->
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    <!-- fix bug: by bach' -->
+    <!-- 
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+     -->
+    <!-- rss -->
+
+
+    <meta name="generator" content="Hexo 5.2.0">
+</head>
+
+<body class="max-width mx-auto ltr">
+
+    <div id="header-post">
+        <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+        <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+        <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"
+            style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+        <span id="menu">
+            <span id="nav">
+                <ul>
+
+                    <li><a href="/home.html">home</a></li>
+
+                    <li><a href="/about/about.html">about</a></li>
+
+                    <li><a href="/archives/archives.html">articles</a></li>
+
+                    <li><a target="_blank" rel="noopener" href="https://cyberjutsu.io/publications/">publications</a>
+                    </li>
+
+                </ul>
+            </span>
+            <br />
+            <span id="actions">
+                <ul>
+
+                    <li><a class="icon" href="/2021/01/06/flareon-phan-3.html"><i class="fas fa-chevron-left"
+                                aria-hidden="true" onmouseover="$('#i-prev').toggle();"
+                                onmouseout="$('#i-prev').toggle();"></i></a></li>
+
+
+                    <li><a class="icon" href="/2020/12/03/flareon-phan-1.html"><i class="fas fa-chevron-right"
+                                aria-hidden="true" onmouseover="$('#i-next').toggle();"
+                                onmouseout="$('#i-next').toggle();"></i></a></li>
+
+                    <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i
+                                class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();"
+                                onmouseout="$('#i-top').toggle();"></i></a></li>
+                    <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true"
+                                onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();"
+                                onclick="$('#share').toggle();return false;"></i></a></li>
+                </ul>
+                <span id="i-prev" class="info" style="display:none;">Previous post</span>
+                <span id="i-next" class="info" style="display:none;">Next post</span>
+                <span id="i-top" class="info" style="display:none;">Back to top</span>
+                <span id="i-share" class="info" style="display:none;">Share post</span>
+            </span>
+            <br />
+            <div id="share" style="display: none">
+                <ul>
+                    <li><a class="icon" target="_blank" rel="noopener"
+                            href="http://www.facebook.com/sharer.php?u=https://blog.cyberjutsu.io/2020/12/24/flareon-phan-2/"><i
+                                class="fab fa-facebook " aria-hidden="true"></i></a></li>
+                    <li><a class="icon" target="_blank" rel="noopener"
+                            href="https://twitter.com/share?url=https://blog.cyberjutsu.io/2020/12/24/flareon-phan-2/&text=FLAREON 2020 - WRITEUP PHẦN 2"><i
+                                class="fab fa-twitter " aria-hidden="true"></i></a></li>
+                    <li><a class="icon" target="_blank" rel="noopener"
+                            href="http://www.linkedin.com/shareArticle?url=https://blog.cyberjutsu.io/2020/12/24/flareon-phan-2/&title=FLAREON 2020 - WRITEUP PHẦN 2"><i
+                                class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+                    <li><a class="icon" target="_blank" rel="noopener"
+                            href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.cyberjutsu.io/2020/12/24/flareon-phan-2/&is_video=false&description=FLAREON 2020 - WRITEUP PHẦN 2"><i
+                                class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+                    <li><a class="icon"
+                            href="mailto:?subject=FLAREON 2020 - WRITEUP PHẦN 2&body=Check out this article: https://blog.cyberjutsu.io/2020/12/24/flareon-phan-2/"><i
+                                class="fas fa-envelope " aria-hidden="true"></i></a></li>
+                    <li><a class="icon" target="_blank" rel="noopener"
+                            href="https://getpocket.com/save?url=https://blog.cyberjutsu.io/2020/12/24/flareon-phan-2/&title=FLAREON 2020 - WRITEUP PHẦN 2"><i
+                                class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+                    <li><a class="icon" target="_blank" rel="noopener"
+                            href="http://reddit.com/submit?url=https://blog.cyberjutsu.io/2020/12/24/flareon-phan-2/&title=FLAREON 2020 - WRITEUP PHẦN 2"><i
+                                class="fab fa-reddit " aria-hidden="true"></i></a></li>
+                    <li><a class="icon" target="_blank" rel="noopener"
+                            href="http://www.stumbleupon.com/submit?url=https://blog.cyberjutsu.io/2020/12/24/flareon-phan-2/&title=FLAREON 2020 - WRITEUP PHẦN 2"><i
+                                class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+                    <li><a class="icon" target="_blank" rel="noopener"
+                            href="http://digg.com/submit?url=https://blog.cyberjutsu.io/2020/12/24/flareon-phan-2/&title=FLAREON 2020 - WRITEUP PHẦN 2"><i
+                                class="fab fa-digg " aria-hidden="true"></i></a></li>
+                    <li><a class="icon" target="_blank" rel="noopener"
+                            href="http://www.tumblr.com/share/link?url=https://blog.cyberjutsu.io/2020/12/24/flareon-phan-2/&name=FLAREON 2020 - WRITEUP PHẦN 2&description="><i
+                                class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+                    <li><a class="icon" target="_blank" rel="noopener"
+                            href="https://news.ycombinator.com/submitlink?u=https://blog.cyberjutsu.io/2020/12/24/flareon-phan-2/&t=FLAREON 2020 - WRITEUP PHẦN 2"><i
+                                class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+                </ul>
+
+            </div>
+            <div id="toc">
+                <ol class="toc">
+                    <li class="toc-item toc-level-2"><a class="toc-link" href="#Phan-2"><span
+                                class="toc-number">1.</span> <span class="toc-text">Phần 2</span></a></li>
+                </ol>
+                </li>
+                <li class="toc-item toc-level-1"><a class="toc-link" href="#4-report"><span class="toc-number"></span>
+                        <span class="toc-text">4 - report</span></a></li>
+                <li class="toc-item toc-level-1"><a class="toc-link" href="#5-TKApp"><span class="toc-number"></span>
+                        <span class="toc-text">5 - TKApp</span></a></li>
+                <li class="toc-item toc-level-1"><a class="toc-link" href="#6-codeit"><span class="toc-number"></span>
+                        <span class="toc-text">6 - codeit</span></a></li>
+                <li class="toc-item toc-level-1"><a class="toc-link" href="#7-re-crowd"><span class="toc-number"></span>
+                        <span class="toc-text">7 - re_crowd</span></a></li>
+                <li class="toc-item toc-level-1"><a class="toc-link" href="#8-Aardvark"><span class="toc-number"></span>
+                        <span class="toc-text">8 - Aardvark</span></a>
+            </div>
+        </span>
+    </div>
+
+
+    <div class="content index py4">
+
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+            <header>
+
+                <h1 class="posttitle" itemprop="name headline">
+                    FLAREON 2020 - WRITEUP PHẦN 2
+                </h1>
+
+
+
+                <div class="meta">
+                    <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+                        <span itemprop="name">xikhud</span>
+                    </span>>>
+
+                    <div class="postdate">
+
+                        <time datetime="2020-12-23T17:00:01.000Z" itemprop="datePublished">2020-12-24</time>
+
+
+                    </div>
+
+
+
+
+
+                    <div class="article-tag">
+                        <i class="fas fa-tag"></i>
+                        <a class="tag-link-link" href="/tags/flareon/" rel="tag">flareon</a>, <a class="tag-link-link"
+                            href="/tags/reverse-engineering/" rel="tag">reverse engineering</a>
+                    </div>
+
+
+                </div>
+            </header>
+
+
+            <div class="content" itemprop="articleBody">
+                <main>
+                    <div class="c-glitch" style="background-image: url('/images/flareon/FlareOn@2x.jpg');">
+                        <img src='/images/flareon/FlareOn@2x.jpg' />
+                        <div class="c-glitch__img" style="background-image: url('/images/flareon/FlareOn@2x.jpg');">
+                        </div>
+                        <div class="c-glitch__img" style="background-image: url('/images/flareon/FlareOn@2x.jpg');">
+                        </div>
+                        <div class="c-glitch__img" style="background-image: url('/images/flareon/FlareOn@2x.jpg');">
+                        </div>
+                        <div class="c-glitch__img" style="background-image: url('/images/flareon/FlareOn@2x.jpg');">
+                        </div>
+                        <div class="c-glitch__img" style="background-image: url('/images/flareon/FlareOn@2x.jpg');">
+                        </div>
+                    </div>
+                </main>
+
+                <h2 id="Phan-2"><a href="#Phan-2" class="headerlink" title="Phần 2">Phần 2</a></h2>
+                <p>Chúc mọi người một giáng sinh vui vẻ 🎄<br>Cùng đến với phần 2 của series bài với 5 thử thách:</p>
+                <ul>
+                    <li><code>report</code> (<a href="/static/flareon2020/solution4.zip">solution</a>)</li>
+                    <li><code>TKApp</code> (<a href="/static/flareon2020/solution5.zip">solution</a>)</li>
+                    <li><code>codeit</code> (<a href="/static/flareon2020/solution6.zip">solution</a>)</li>
+                    <li><code>re_crowd</code> (<a href="/static/flareon2020/solution7.zip">solution</a>)</li>
+                    <li><code>Aardvark</code> </li>
+                </ul>
+                <h1 id="4-report"><a href="#4-report" class="headerlink" title="4 - report">4 - report</a></h1>
+                <figure class="highlight plain">
+                    <table>
+                        <tr>
+                            <td class="gutter">
+                                <pre><span class="line">1</span><br></pre>
+                            </td>
+                            <td class="code">
+                                <pre><span class="line">Nobody likes analysing infected documents, but it pays the bills. Reverse this macro thrill-ride to discover how to get it to show you the key.</span><br></pre>
+                            </td>
+                        </tr>
+                    </table>
+                </figure>
+
+                <p>Ở challenge này, chúng ta có 1 file excel:</p>
+                <p><img src="/images/flareon/4/1.png"></p>
+                <p>Mờ file report.xls bằng Microsoft Excel:</p>
+                <p><img src="/images/flareon/4/3.png"></p>
+                <p>Khi làm việc với các file office, có 1 tool để extract VBA macro từ chúng, đó là tool “olevba”.</p>
+                <blockquote>
+                    <p>VBA macro: khi phải làm các công việc thường xuyên lặp đi lặp lại trong excel, bạn có thể viết 1
+                        script để tự động các công việc đó. Script đó được veiét bằng Visual Basic for Applications
+                        (VBA).</p>
+                    <p>Lợi dụng điều này, malware cũng thường hay chứa các VBA macro độc hại trong các file excel để tấn
+                        công người dùng.</p>
+                    <p>olevba là một tool dùng để extract các VBA macro trong file excel.</p>
+                </blockquote>
+                <figure class="highlight plain">
+                    <table>
+                        <tr>
+                            <td class="gutter">
+                                <pre><span class="line">1</span><br></pre>
+                            </td>
+                            <td class="code">
+                                <pre><span class="line">C:\Users\admin\Desktop\Mat\4_-_report&gt;olevba report.xls</span><br></pre>
+                            </td>
+                        </tr>
+                    </table>
+                </figure>
+
+                <p><img src="/images/flareon/4/2.png"></p>
+                <p>Sau khi chạy xong, ta đã có được code VBA và sẵn sàng phân tích, nhưng ở dưới cùng có 1 dòng đáng để
+                    ý:</p>
+                <figure class="highlight plain">
+                    <table>
+                        <tr>
+                            <td class="gutter">
+                                <pre><span class="line">1</span><br></pre>
+                            </td>
+                            <td class="code">
+                                <pre><span class="line">VBA Stomping was detected: the VBA source code and P-code are different, this may have been used to hide malicious code</span><br></pre>
+                            </td>
+                        </tr>
+                    </table>
+                </figure>
+
+                <p>Trước tiên ta cần hiểu về VBA source code và P-code, đoạn giải thích gốc nằm ở <a target="_blank"
+                        rel="noopener" href="https://github.com/bontchev/pcodedmp">đây</a></p>
+                <figure class="highlight plain">
+                    <table>
+                        <tr>
+                            <td class="gutter">
+                                <pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre>
+                            </td>
+                            <td class="code">
+                                <pre><span class="line">It is not widely known, but macros written in VBA (Visual Basic for Applications; the macro programming language used in Microsoft Office) exist in three different executable forms, each of which can be what is actually executed at run time, depending on the circumstances. These forms are:</span><br><span class="line"></span><br><span class="line">Source code. The original source code of the macro module is compressed and stored at the end of the module stream. This makes it relatively easy to locate and extract and most free DFIR tools for macro analysis like oledump or olevba or even many professional anti-virus tools look only at this form. However, most of the time the source code is completely ignored by Office. In fact, it is possible to remove the source code (and therefore make all these tools think that there are no macros present), yet the macros will still execute without any problems. I have created a proof of concept illustrating this. Most tools will not see any macros in the documents in this archive it but if opened with the corresponding Word version (that matches the document name), it will display a message and will launch calc.exe. It is surprising that malware authors are not using this trick more widely.</span><br><span class="line"></span><br><span class="line">P-code. As each VBA line is entered into the VBA editor, it is immediately compiled into p-code (a pseudo code for a stack machine) and stored in a different place in the module stream. The p-code is precisely what is executed most of the time. In fact, even when you open the source of a macro module in the VBA editor, what is displayed is not the decompressed source code but the p-code decompiled into source. Only if the document is opened under a version of Office that uses a different VBA version from the one that has been used to create the document, the stored compressed source code is re-compiled into p-code and then that p-code is executed. This makes it possible to open a VBA-containing document on any version of Office that supports VBA and have the macros inside remain executable, despite the fact that the different versions of VBA use different (incompatible) p-code instructions.</span><br><span class="line"></span><br><span class="line">... truncated</span><br></pre>
+                            </td>
+                        </tr>
+                    </table>
+                </figure>
+
+                <p>Như giải thích ở trên thì:</p>
+                <ul>
+                    <li>VBA macro có thể tồn tại ở 3 dạng khác nhau.</li>
+                    <li>Dạng 1 là source code, source code sẽ bị nén lại và đặt ở cuối module. Và ta có thể bỏ source
+                        code khỏi module mà macro vẫn có thể chạy bình thường.</li>
+                    <li>Dạng 2 là p-code: VBA macro sẽ được biên dịch thành p-code, là một dạng mã giả của Microsoft.
+                        Code này mới là code được thực thi thật sự, và code này cũng được đặt ở trong module.</li>
+                    <li>Dạng 3 mình không đề cập ở đây.</li>
+                </ul>
+                <p>Về VBA Stomping: <a target="_blank" rel="noopener"
+                        href="https://medium.com/walmartglobaltech/vba-stomping-advanced-maldoc-techniques-612c484ab278">có
+                        thể đọc thêm ở đây</a>, nhưng cơ bản ta có thể hiểu là:</p>
+                <ul>
+                    <li>Khi lưu 1 file excel, nó sẽ chứa cả source code và p-code trong đó.</li>
+                    <li>Nhưng source code và p-code này không match nhau, tức là p-code hoặc source code đã bị thay đổi.
+                    </li>
+                </ul>
+                <p>Để khôi phục VBA code từ P-code, ta có thể dùng <a target="_blank" rel="noopener"
+                        href="https://pypi.org/project/pcode2code/">pcode2code</a> (hoặc đọc p-code luôn).</p>
+                <figure class="highlight plain">
+                    <table>
+                        <tr>
+                            <td class="gutter">
+                                <pre><span class="line">1</span><br></pre>
+                            </td>
+                            <td class="code">
+                                <pre><span class="line">C:\Users\admin\Desktop\Mat\4_-_report&gt;pcode2code report.xls</span><br></pre>
+                            </td>
+                        </tr>
+                    </table>
+                </figure>
+
+                <p>So sánh code mới và code cũ (code mới ở bên trái)</p>
+                <p><img src="/images/flareon/4/4.png"></p>
+                <p>Hàm <code>rigmarole</code> dùng để decrypt string:</p>
+                <figure class="highlight vbscript">
+                    <table>
+                        <tr>
+                            <td class="gutter">
+                                <pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre>
+                            </td>
+                            <td class="code">
+                                <pre><span class="line"><span class="keyword">Function</span> rigmarole(es As <span class="built_in">String</span>, id_FFFE As <span class="built_in">String</span>) As <span class="built_in">String</span></span><br><span class="line">    <span class="keyword">Dim</span> furphy As <span class="built_in">String</span></span><br><span class="line">    <span class="keyword">Dim</span> c As Integer</span><br><span class="line">    <span class="keyword">Dim</span> s As <span class="built_in">String</span></span><br><span class="line">    <span class="keyword">Dim</span> cc As Integer</span><br><span class="line">    furphy = <span class="string">&quot;&quot;</span></span><br><span class="line">    <span class="keyword">For</span> i = <span class="number">1</span> <span class="keyword">To</span> <span class="built_in">Len</span>(es) <span class="keyword">Step</span> <span class="number">4</span></span><br><span class="line">        c = CDec(<span class="string">&quot;&amp;H&quot;</span> &amp; <span class="built_in">Mid</span>(es, i, <span class="number">2</span>))</span><br><span class="line">        s = CDec(<span class="string">&quot;&amp;H&quot;</span> &amp; <span class="built_in">Mid</span>(es, i + <span class="number">2</span>, <span class="number">2</span>))</span><br><span class="line">        cc = c - s</span><br><span class="line">        furphy = furphy + <span class="built_in">Chr</span>(cc)</span><br><span class="line">    <span class="keyword">Next</span> i</span><br><span class="line">    rigmarole = furphy</span><br><span class="line"><span class="keyword">End</span> <span class="keyword">Function</span></span><br></pre>
+                            </td>
+                        </tr>
+                    </table>
+                </figure>
+
+                <p>List string decrypt được là:</p>
+                <figure class="highlight plain">
+                    <table>
+                        <tr>
+                            <td class="gutter">
+                                <pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre>
+                            </td>
+                            <td class="code">
+                                <pre><span class="line">AppData</span><br><span class="line">\Microsoft\stomp.mp3</span><br><span class="line">play </span><br><span class="line">FLARE-ON</span><br><span class="line">Sorry, this machine is not supported.</span><br><span class="line">FLARE-ON</span><br><span class="line">Error</span><br><span class="line">winmgmts:\\.\root\CIMV2</span><br><span class="line">SELECT Name FROM Win32_Process</span><br><span class="line">vbox</span><br><span class="line">WScript.Network</span><br><span class="line">\Microsoft\v.png</span><br></pre>
+                            </td>
+                        </tr>
+                    </table>
+                </figure>
+
+                <p>Mình tạo 1 file excel mới, thêm VBA macro mới vào, copy các Form y chang từ file excel cũ để debug,
+                    ta sẽ phân tích hàm <code>folderol</code>.</p>
+                <figure class="highlight vbscript">
+                    <table>
+                        <tr>
+                            <td class="gutter">
+                                <pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre>
+                            </td>
+                            <td class="code">
+                                <pre><span class="line"><span class="keyword">If</span> GetInternetConnectedState() = <span class="literal">False</span> <span class="keyword">Then</span></span><br><span class="line">    <span class="built_in">MsgBox</span> <span class="string">&quot;Cannot establish Internet connection.&quot;</span>, vbCritical, <span class="string">&quot;Error&quot;</span></span><br><span class="line">    <span class="keyword">End</span></span><br><span class="line"><span class="keyword">End</span> <span class="keyword">If</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">Set</span> fudgel = <span class="built_in">GetObject</span>(rigmarole(onzo(<span class="number">7</span>)))</span><br><span class="line"><span class="keyword">Set</span> twattling = fudgel.ExecQuery(rigmarole(onzo(<span class="number">8</span>)), , <span class="number">48</span>)</span><br><span class="line"><span class="keyword">For</span> <span class="keyword">Each</span> p <span class="keyword">In</span> twattling</span><br><span class="line">    <span class="keyword">Dim</span> pos As Integer</span><br><span class="line">    pos = <span class="built_in">InStr</span>(<span class="built_in">LCase</span>(p.Name), <span class="string">&quot;vmw&quot;</span>) + <span class="built_in">InStr</span>(<span class="built_in">LCase</span>(p.Name), <span class="string">&quot;vmt&quot;</span>) + <span class="built_in">InStr</span>(<span class="built_in">LCase</span>(p.Name), rigmarole(onzo(<span class="number">9</span>)))</span><br><span class="line">    <span class="keyword">If</span> pos &gt; <span class="number">0</span> <span class="keyword">Then</span></span><br><span class="line">        <span class="built_in">MsgBox</span> rigmarole(onzo(<span class="number">4</span>)), vbCritical, rigmarole(onzo(<span class="number">6</span>))</span><br><span class="line">        <span class="keyword">End</span></span><br><span class="line">    <span class="keyword">End</span> <span class="keyword">If</span></span><br><span class="line"><span class="keyword">Next</span></span><br></pre>
+                            </td>
+                        </tr>
+                    </table>
+                </figure>
+
+                <p>Đoạn code trên kiểm tra xem máy có được kết nối internet hay không, ngoài ra còn kiểm tra trong list
+                    process xem có process nào có chứa “vmw”, “vmt”, “vbox” trong tên không, đây chính là cơ chế anti-vm
+                    của nó. (ví dụ, “vmware” có chứa “vmw”, còn cụm “vbox” có thể được tìm thấy nếu bạn dùng
+                    virtualbox).</p>
+                <figure class="highlight vbscript">
+                    <table>
+                        <tr>
+                            <td class="gutter">
+                                <pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre>
+                            </td>
+                            <td class="code">
+                                <pre><span class="line">xertz = <span class="built_in">Array</span>(&amp;H11, &amp;H22, &amp;H33, &amp;H44, &amp;H55, &amp;H66, &amp;H77, &amp;H88, &amp;H99, &amp;HAA, &amp;HBB, &amp;HCC, &amp;HDD, &amp;HEE)</span><br><span class="line"><span class="keyword">Set</span> groke = <span class="built_in">CreateObject</span>(rigmarole(onzo(<span class="number">10</span>)))</span><br><span class="line">firkin = groke.UserDomain</span><br><span class="line"><span class="keyword">If</span> firkin &lt;&gt; rigmarole(onzo(<span class="number">3</span>)) <span class="keyword">Then</span></span><br><span class="line">    <span class="built_in">MsgBox</span> rigmarole(onzo(<span class="number">4</span>)), vbCritical, rigmarole(onzo(<span class="number">6</span>))</span><br><span class="line"><span class="keyword">End</span></span><br><span class="line"><span class="keyword">End</span> <span class="keyword">If</span></span><br></pre>
+                            </td>
+                        </tr>
+                    </table>
+                </figure>
+
+                <p>Đoạn trên kiểm tra user domain có phải là “FLARE-ON” hay không, sau khi vượt qua các đoạn check,
+                    program sẽ decrypt 1 đoạn nhị phân và lưu ở “%appdata%\Microsoft\v.png”</p>
+                <p><img src="/images/flareon/4/v.png"></p>
+                <figure class="highlight plain">
+                    <table>
+                        <tr>
+                            <td class="gutter">
+                                <pre><span class="line">1</span><br></pre>
+                            </td>
+                            <td class="code">
+                                <pre><span class="line">thi5_cou1d_h4v3_b33n_b4d@flare-on.com</span><br></pre>
+                            </td>
+                        </tr>
+                    </table>
+                </figure>
+
+
+                <h1 id="5-TKApp"><a href="#5-TKApp" class="headerlink" title="5 - TKApp">5 - TKApp</a></h1>
+                <figure class="highlight plain">
+                    <table>
+                        <tr>
+                            <td class="gutter">
+                                <pre><span class="line">1</span><br></pre>
+                            </td>
+                            <td class="code">
+                                <pre><span class="line">Now you can play Flare-On on your watch! As long as you still have an arm left to put a watch on, or emulate the watch&#39;s operating system with sophisticated developer tools.</span><br></pre>
+                            </td>
+                        </tr>
+                    </table>
+                </figure>
+
+                <p><img src="/images/flareon/5/1.png"></p>
+                <p>Đề bài cho 1 file .tpk, sau 1 lúc google, mình phát hiện đây là file chạy trên hệ điều hành <a
+                        target="_blank" rel="noopener" href="https://www.tizen.org/">Tizen</a>. Tải giả lập Tizen Studio
+                    về, chạy thử file, thì đây trông giống 1 app trên đồng hồ thông minh, có các chức năng định vị, đo
+                    nhịp tim, v.v…</p>
+                <blockquote>
+                    <p>Bài này không cần chạy file, chỉ cần phân tích tĩnh cũng có thể giải được.</p>
+                </blockquote>
+                <p>Hai byte đầu của file .tpk là <code>PK</code>, nên mình đổi định dạng file thành “.zip” rồi giải nén.
+                </p>
+                <p><img src="/images/flareon/5/2.png"></p>
+                <p><img src="/images/flareon/5/3.png"></p>
+                <p>Dùng “Detect it easy”:</p>
+                <p><img src="/images/flareon/5/4.png"></p>
+                <p>File được nhận diện là .net, dùng “dnspy” để mở lên và phân tích.</p>
+                <blockquote>
+                    <p>dnspy là một tool dùng để phân tích các file .net.</p>
+                </blockquote>
+                <figure class="highlight c#">
+                    <table>
+                        <tr>
+                            <td class="gutter">
+                                <pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre>
+                            </td>
+                            <td class="code">
+                                <pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">PedDataUpdate</span>(<span class="params"><span class="built_in">object</span> sender, PedometerDataUpdatedEventArgs e</span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (e.StepCount &gt; <span class="number">50U</span> &amp;&amp; <span class="built_in">string</span>.IsNullOrEmpty(App.Step))</span><br><span class="line">    &#123;</span><br><span class="line">        App.Step = Application.Current.ApplicationInfo.Metadata[<span class="string">&quot;its&quot;</span>];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (!<span class="built_in">string</span>.IsNullOrEmpty(App.Password) &amp;&amp; !<span class="built_in">string</span>.IsNullOrEmpty(App.Note) &amp;&amp; !<span class="built_in">string</span>.IsNullOrEmpty(App.Step) &amp;&amp; !<span class="built_in">string</span>.IsNullOrEmpty(App.Desc))</span><br><span class="line">    &#123;</span><br><span class="line">        HashAlgorithm hashAlgorithm = SHA256.Create();</span><br><span class="line">        <span class="built_in">byte</span>[] bytes = Encoding.ASCII.GetBytes(App.Password + App.Note + App.Step + App.Desc);</span><br><span class="line">        <span class="built_in">byte</span>[] first = hashAlgorithm.ComputeHash(bytes);</span><br><span class="line">        <span class="built_in">byte</span>[] second = <span class="keyword">new</span> <span class="built_in">byte</span>[] &#123; <span class="comment">/* a lot of bytes here */</span>   &#125;;</span><br><span class="line">        <span class="keyword">if</span> (first.SequenceEqual(second))</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">this</span>.btn.Source = <span class="string">&quot;img/tiger2.png&quot;</span>;</span><br><span class="line">            <span class="keyword">this</span>.btn.Clicked += <span class="keyword">this</span>.Clicked;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">this</span>.btn.Source = <span class="string">&quot;img/tiger1.png&quot;</span>;</span><br><span class="line">        <span class="keyword">this</span>.btn.Clicked -= <span class="keyword">this</span>.Clicked;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre>
+                            </td>
+                        </tr>
+                    </table>
+                </figure>
+
+                <figure class="highlight c#">
+                    <table>
+                        <tr>
+                            <td class="gutter">
+                                <pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre>
+                            </td>
+                            <td class="code">
+                                <pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="built_in">bool</span> <span class="title">GetImage</span>(<span class="params"><span class="built_in">object</span> sender, EventArgs e</span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">string</span>.IsNullOrEmpty(App.Password) || <span class="built_in">string</span>.IsNullOrEmpty(App.Note) || <span class="built_in">string</span>.IsNullOrEmpty(App.Step) || <span class="built_in">string</span>.IsNullOrEmpty(App.Desc))</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">this</span>.btn.Source = <span class="string">&quot;img/tiger1.png&quot;</span>;</span><br><span class="line">        <span class="keyword">this</span>.btn.Clicked -= <span class="keyword">this</span>.Clicked;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">string</span> text = <span class="keyword">new</span> <span class="built_in">string</span>(<span class="keyword">new</span> <span class="built_in">char</span>[]</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// a lot of chars here, take from App.Password/Note/Step/Desc</span></span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="built_in">byte</span>[] key = SHA256.Create().ComputeHash(Encoding.ASCII.GetBytes(text));</span><br><span class="line">    <span class="built_in">byte</span>[] bytes = Encoding.ASCII.GetBytes(<span class="string">&quot;NoSaltOfTheEarth&quot;</span>);</span><br><span class="line">    <span class="keyword">try</span></span><br><span class="line">    &#123;</span><br><span class="line">        App.ImgData = Convert.FromBase64String(Util.GetString(Runtime.Runtime_dll, key, bytes));</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    catch (Exception ex)</span><br><span class="line">    &#123;</span><br><span class="line">        Toast.DisplayText(<span class="string">&quot;Failed: &quot;</span> + ex.Message, <span class="number">1000</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br></pre>
+                            </td>
+                        </tr>
+                    </table>
+                </figure>
+
+                <p>Về cơ bản, chương trình lấy 4 string <code>App.Password, App.Note, App.Step, App.Desc</code> nối lại
+                    với nhau, tính SHA256 rồi lấy hash đó để giải mã file “Runtime.dll” với thuật toán AES256.</p>
+                <p>Để tìm xem <code>App.Password</code> được dùng ở chỗ nào, ta chuột phải vào <code>App.Password</code>
+                    trong hàm <code>PedDataUpdate</code>, chọn “Analyze”:</p>
+                <p><img src="/images/flareon/5/7.png"></p>
+                <p>Sau đó ta có thể thấy nó được “set” (tức là được gán) ở hàm <code>OnLoginButtonClicked</code>:</p>
+                <p><img src="/images/flareon/5/8.png"></p>
+                <p>Ta đến hàm này xem code:</p>
+                <figure class="highlight c#">
+                    <table>
+                        <tr>
+                            <td class="gutter">
+                                <pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre>
+                            </td>
+                            <td class="code">
+                                <pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">async</span> <span class="keyword">void</span> <span class="title">OnLoginButtonClicked</span>(<span class="params"><span class="built_in">object</span> sender, EventArgs e</span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span>.IsPasswordCorrect(<span class="keyword">this</span>.passwordEntry.Text))</span><br><span class="line">    &#123;</span><br><span class="line">        App.IsLoggedIn = <span class="literal">true</span>;</span><br><span class="line">        App.Password = <span class="keyword">this</span>.passwordEntry.Text;</span><br><span class="line">        <span class="keyword">base</span>.Navigation.InsertPageBefore(<span class="keyword">new</span> MainPage(), <span class="keyword">this</span>);</span><br><span class="line">        <span class="keyword">await</span> <span class="keyword">base</span>.Navigation.PopAsync();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        Toast.DisplayText(<span class="string">&quot;Unlock failed!&quot;</span>, <span class="number">2000</span>);</span><br><span class="line">        <span class="keyword">this</span>.passwordEntry.Text = <span class="built_in">string</span>.Empty;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre>
+                            </td>
+                        </tr>
+                    </table>
+                </figure>
+
+                <p>Hàm này lại dùng hàm <code>IsPasswordCorrect</code>, ta tới hàm này xem:</p>
+                <figure class="highlight c#">
+                    <table>
+                        <tr>
+                            <td class="gutter">
+                                <pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre>
+                            </td>
+                            <td class="code">
+                                <pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="built_in">byte</span>[] Password = <span class="keyword">new</span> <span class="built_in">byte</span>[] &#123;<span class="number">62</span>, <span class="number">38</span>, <span class="number">63</span>, <span class="number">63</span>, <span class="number">54</span>, <span class="number">39</span>, <span class="number">59</span>, <span class="number">50</span>, <span class="number">39</span>&#125;;</span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="built_in">bool</span> <span class="title">IsPasswordCorrect</span>(<span class="params"><span class="built_in">string</span> password</span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> password == Util.Decode(TKData.Password);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="built_in">string</span> <span class="title">Decode</span>(<span class="params"><span class="built_in">byte</span>[] e</span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">string</span> text = <span class="string">&quot;&quot;</span>;</span><br><span class="line">    <span class="keyword">foreach</span> (<span class="built_in">byte</span> b <span class="keyword">in</span> e)</span><br><span class="line">    &#123;</span><br><span class="line">        text += Convert.ToChar((<span class="built_in">int</span>)(b ^ <span class="number">83</span>)).ToString();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> text;</span><br><span class="line">&#125;</span><br></pre>
+                            </td>
+                        </tr>
+                    </table>
+                </figure>
+
+                <p>Với <code>App.Password</code>, ta tính ra được chuỗi “mullethat”. Ta tiếp tục làm tương tự (chuột
+                    phải -&gt; analyze với <code>App.Note, App.Step, App.Desc</code>).</p>
+                <figure class="highlight c#">
+                    <table>
+                        <tr>
+                            <td class="gutter">
+                                <pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre>
+                            </td>
+                            <td class="code">
+                                <pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">SetupList</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    List&lt;TodoPage.Todo&gt; list = <span class="keyword">new</span> List&lt;TodoPage.Todo&gt;();</span><br><span class="line">    <span class="keyword">if</span> (!<span class="keyword">this</span>.isHome)</span><br><span class="line">    &#123;</span><br><span class="line">        list.Add(<span class="keyword">new</span> TodoPage.Todo(<span class="string">&quot;go home&quot;</span>, <span class="string">&quot;and enable GPS&quot;</span>, <span class="literal">false</span>));</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        TodoPage.Todo[] collection = <span class="keyword">new</span> TodoPage.Todo[]</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">new</span> TodoPage.Todo(<span class="string">&quot;hang out in tiger cage&quot;</span>, <span class="string">&quot;and survive&quot;</span>, <span class="literal">true</span>),</span><br><span class="line">            <span class="keyword">new</span> TodoPage.Todo(<span class="string">&quot;unload Walmart truck&quot;</span>, <span class="string">&quot;keep steaks for dinner&quot;</span>, <span class="literal">false</span>),</span><br><span class="line">            <span class="keyword">new</span> TodoPage.Todo(<span class="string">&quot;yell at staff&quot;</span>, <span class="string">&quot;maybe fire someone&quot;</span>, <span class="literal">false</span>),</span><br><span class="line">            <span class="keyword">new</span> TodoPage.Todo(<span class="string">&quot;say no to drugs&quot;</span>, <span class="string">&quot;unless it&#x27;s a drinking day&quot;</span>, <span class="literal">false</span>),</span><br><span class="line">            <span class="keyword">new</span> TodoPage.Todo(<span class="string">&quot;listen to some tunes&quot;</span>, <span class="string">&quot;https://youtu.be/kTmZnQOfAF8&quot;</span>, <span class="literal">true</span>)</span><br><span class="line">        &#125;;</span><br><span class="line">        list.AddRange(collection);</span><br><span class="line">    &#125;</span><br><span class="line">    List&lt;TodoPage.Todo&gt; list2 = <span class="keyword">new</span> List&lt;TodoPage.Todo&gt;();</span><br><span class="line">    <span class="keyword">foreach</span> (TodoPage.Todo todo <span class="keyword">in</span> list)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (!todo.Done)</span><br><span class="line">        &#123;</span><br><span class="line">            list2.Add(todo);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">this</span>.mylist.ItemsSource = list2;</span><br><span class="line">    App.Note = list2[<span class="number">0</span>].Note;</span><br><span class="line">&#125;</span><br></pre>
+                            </td>
+                        </tr>
+                    </table>
+                </figure>
+
+                <p>Với <code>App.Note</code>, ta có thể thấy được nó là chuỗi “keep steaks for dinner”.</p>
+                <figure class="highlight c#">
+                    <table>
+                        <tr>
+                            <td class="gutter">
+                                <pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre>
+                            </td>
+                            <td class="code">
+                                <pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">PedDataUpdate</span>(<span class="params"><span class="built_in">object</span> sender, PedometerDataUpdatedEventArgs e</span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (e.StepCount &gt; <span class="number">50U</span> &amp;&amp; <span class="built_in">string</span>.IsNullOrEmpty(App.Step))</span><br><span class="line">    &#123;</span><br><span class="line">        App.Step = Application.Current.ApplicationInfo.Metadata[<span class="string">&quot;its&quot;</span>];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// truncated ...</span></span><br><span class="line">&#125;</span><br></pre>
+                            </td>
+                        </tr>
+                    </table>
+                </figure>
+
+                <p><img src="/images/flareon/5/5.png"></p>
+                <p>Với <code>App.Step</code>, nó chính là chuỗi “magic”.</p>
+                <figure class="highlight c#">
+                    <table>
+                        <tr>
+                            <td class="gutter">
+                                <pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre>
+                            </td>
+                            <td class="code">
+                                <pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">IndexPage_CurrentPageChanged</span>(<span class="params"><span class="built_in">object</span> sender, EventArgs e</span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">base</span>.Children.IndexOf(<span class="keyword">base</span>.CurrentPage) == <span class="number">4</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">using</span> (ExifReader exifReader = <span class="keyword">new</span> ExifReader(Path.Combine(Application.Current.DirectoryInfo.Resource, <span class="string">&quot;gallery&quot;</span>, <span class="string">&quot;05.jpg&quot;</span>)))</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="built_in">string</span> desc;</span><br><span class="line">            <span class="keyword">if</span> (exifReader.GetTagValue&lt;<span class="built_in">string</span>&gt;(ExifTags.ImageDescription, <span class="keyword">out</span> desc))</span><br><span class="line">            &#123;</span><br><span class="line">                App.Desc = desc;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    App.Desc = <span class="string">&quot;&quot;</span>;</span><br><span class="line">&#125;</span><br></pre>
+                            </td>
+                        </tr>
+                    </table>
+                </figure>
+
+                <p>Với <code>App.Desc</code>, ta có thể cài đặt thư viện <a target="_blank" rel="noopener"
+                        href="https://www.nuget.org/packages/ExifLib/">ExifLib</a>, viết lại một đoạn code như trên và
+                    lấy được chuỗi “water”, còn file ảnh “05.jpg” có thể lấy từ các file có được sau khi giải nén
+                    TKApp.tpk.</p>
+                <p>Tất cả mọi thứ đã có, ta viết đoạn script để decrypt file:</p>
+                <figure class="highlight python">
+                    <table>
+                        <tr>
+                            <td class="gutter">
+                                <pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre>
+                            </td>
+                            <td class="code">
+                                <pre><span class="line"><span class="keyword">import</span> hashlib</span><br><span class="line"><span class="keyword">from</span> base64 <span class="keyword">import</span> b64decode</span><br><span class="line"><span class="keyword">from</span> Crypto.Cipher <span class="keyword">import</span> AES</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">sha256</span>(<span class="params">text: <span class="built_in">str</span></span>) -&gt; tuple:</span></span><br><span class="line">    h = hashlib.sha256()</span><br><span class="line">    h.update(text.encode())</span><br><span class="line">    <span class="keyword">return</span> h.hexdigest(), h.digest()</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">aes_dec</span>(<span class="params">data: <span class="built_in">bytes</span>, key: <span class="built_in">bytes</span>, iv: <span class="built_in">bytes</span></span>) -&gt; bytes:</span></span><br><span class="line">    key_size = <span class="number">32</span></span><br><span class="line">    <span class="keyword">assert</span> <span class="built_in">len</span>(key) == key_size <span class="keyword">and</span> <span class="built_in">len</span>(iv) == <span class="number">16</span></span><br><span class="line">    cipher = AES.new(key, AES.MODE_CBC, iv=iv)</span><br><span class="line">    s = cipher.decrypt(data)</span><br><span class="line">    <span class="keyword">return</span> s[:-<span class="built_in">ord</span>(s[<span class="built_in">len</span>(s)<span class="number">-1</span>:])]</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    Password = <span class="string">&quot;mullethat&quot;</span></span><br><span class="line">    Note =<span class="string">&quot;keep steaks for dinner&quot;</span></span><br><span class="line">    Step = <span class="string">&quot;magic&quot;</span></span><br><span class="line">    Desc = <span class="string">&quot;water&quot;</span></span><br><span class="line">    </span><br><span class="line">    final = Password + Note + Step + Desc</span><br><span class="line">    </span><br><span class="line">    text = [Desc[<span class="number">2</span>], Password[<span class="number">6</span>], Password[<span class="number">4</span>], Note[<span class="number">4</span>], Note[<span class="number">0</span>], Note[<span class="number">17</span>], Note[<span class="number">18</span>], Note[<span class="number">16</span>],</span><br><span class="line">            Note[<span class="number">11</span>], Note[<span class="number">13</span>], Note[<span class="number">12</span>], Note[<span class="number">15</span>], Step[<span class="number">4</span>], Password[<span class="number">6</span>], Desc[<span class="number">1</span>], Password[<span class="number">2</span>],</span><br><span class="line">            Password[<span class="number">2</span>], Password[<span class="number">4</span>], Note[<span class="number">18</span>], Step[<span class="number">2</span>], Password[<span class="number">4</span>], Note[<span class="number">5</span>], Note[<span class="number">4</span>], Desc[<span class="number">0</span>],</span><br><span class="line">            Desc[<span class="number">3</span>], Note[<span class="number">15</span>], Note[<span class="number">8</span>], Desc[<span class="number">4</span>], Desc[<span class="number">3</span>], Note[<span class="number">4</span>], Step[<span class="number">2</span>], Note[<span class="number">13</span>], Note[<span class="number">18</span>],</span><br><span class="line">            Note[<span class="number">18</span>], Note[<span class="number">8</span>], Note[<span class="number">4</span>], Password[<span class="number">0</span>], Password[<span class="number">7</span>], Note[<span class="number">0</span>], Password[<span class="number">4</span>], Note[<span class="number">11</span>],</span><br><span class="line">            Password[<span class="number">6</span>], Password[<span class="number">4</span>], Desc[<span class="number">4</span>], Desc[<span class="number">3</span>]</span><br><span class="line">    ]</span><br><span class="line">    text = <span class="string">&#x27;&#x27;</span>.join(text)</span><br><span class="line">    data = <span class="string">b&#x27;&#x27;</span></span><br><span class="line">    <span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&#x27;Runtime.dll&#x27;</span>, <span class="string">&#x27;rb&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">        data = f.read()</span><br><span class="line">    dec = aes_dec(data, sha256(text)[<span class="number">1</span>], <span class="string">b&#x27;NoSaltOfTheEarth&#x27;</span>)</span><br><span class="line">    dec = b64decode(dec)</span><br><span class="line">    <span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&#x27;out.bin&#x27;</span>, <span class="string">&#x27;wb&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">        f.write(dec)</span><br><span class="line">        <span class="built_in">print</span> (<span class="string">&#x27;[+] Done&#x27;</span>)</span><br></pre>
+                            </td>
+                        </tr>
+                    </table>
+                </figure>
+
+                <p>Sau khi chạy xong đoạn code trên ta được 1 file mới, có chứa JFIF trong phần header.</p>
+                <p><img src="/images/flareon/5/6.png"></p>
+                <p>Đổi tên file mới thành “out.jpg”, ta được ảnh sau:</p>
+                <p><img src="/images/flareon/5/out.jpg"></p>
+                <figure class="highlight plain">
+                    <table>
+                        <tr>
+                            <td class="gutter">
+                                <pre><span class="line">1</span><br></pre>
+                            </td>
+                            <td class="code">
+                                <pre><span class="line">n3ver_go1ng_to_recov3r@flare-on.com</span><br></pre>
+                            </td>
+                        </tr>
+                    </table>
+                </figure>
+
+
+
+                <h1 id="6-codeit"><a href="#6-codeit" class="headerlink" title="6 - codeit">6 - codeit</a></h1>
+                <figure class="highlight plain">
+                    <table>
+                        <tr>
+                            <td class="gutter">
+                                <pre><span class="line">1</span><br></pre>
+                            </td>
+                            <td class="code">
+                                <pre><span class="line">Reverse engineer this little compiled script to figure out what you need to do to make it give you the flag (as a QR code).</span><br></pre>
+                            </td>
+                        </tr>
+                    </table>
+                </figure>
+
+                <p><img src="/images/flareon/6/1.png"></p>
+                <p>Ở bài này, chúng ta có 1 file .exe</p>
+                <p><img src="/images/flareon/6/2.png"></p>
+                <p>“Detect it easy” đã nhận ra đây là file thực thi được viết bằng AutoIt. Chạy file thử:</p>
+                <p><img src="/images/flareon/6/3.png"></p>
+                <p>Dùng “Exe2Aut” để convert file này về dạng code AutoIt, ta được:</p>
+                <p><img src="/images/flareon/6/4.png"></p>
+                <blockquote>
+                    <p>Exe2Aut là một tool dùng để convert binary được viết bằng AutoIT về dạng source code của nó.</p>
+                </blockquote>
+                <p>Có vẻ như file này đã bị <code>obfuscated</code> để làm khó việc RE. Đến đây có 2 lựa chọn, ta có thể
+                    dùng chức năng “Find and replace” của editor để sửa lại đống này, hoặc viết 1 đoạn regex để rename
+                    lại toàn bộ chúng. Ở đây mình chọn cách viết regex bằng python, lý do là vì:</p>
+                <ul>
+                    <li>Mình thấy tên biến sau khi source code bị obfuscate có quy luật, nên có thể dùng regex.</li>
+                    <li>Giả sử có hai hàm, gọi là hàm A và hàm B cho dễ, hai hàm này đều có biến local tên là “x” chẳng
+                        hạn. Dùng “Find and Replace” để đổi tên biến “x”, thì ta sẽ thay đổi biến “x” ở cả hai hàm, còn
+                        dùng regex thì có thể thay đổi “x” của chỉ một hàm (hoặc cả hai hàm luôn cũng được).</li>
+                </ul>
+                <p>Ý tưởng viết regex như sau:</p>
+                <p>Ví dụ, trong đoạn code có một số chỗ như sau:</p>
+                <figure class="highlight plain">
+                    <table>
+                        <tr>
+                            <td class="gutter">
+                                <pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre>
+                            </td>
+                            <td class="code">
+                                <pre><span class="line">Global $flavekolca &#x3D; Number(&quot; 0 &quot;)</span><br><span class="line">Global $flwecmddtc &#x3D; Number(&quot; 1 &quot;)</span><br><span class="line">...</span><br></pre>
+                            </td>
+                        </tr>
+                    </table>
+                </figure>
+
+                <p>Mình thấy tên biến (bên trái dấu bằng) lúc nào cũng gồm 10 ký tự (<code>flavekolca</code>,
+                    <code>flwecmddtc</code>, …), hơn nữa tên biến luôn bắt đầu bằng chuỗi <code>fl</code>. Còn vế phải
+                    dấu bằng thì luôn là <code>Number(&quot;</code>, tiếp đến là một dấu cách, rồi đến một hằng số, rồi
+                    theo sau đó là một dấu cách và <code>&quot;)</code>. Nhận ra được quy luật trên, mình có thể dùng
+                    đoạn regex sau để match các đoạn string như trên:
+                </p>
+                <figure class="highlight python">
+                    <table>
+                        <tr>
+                            <td class="gutter">
+                                <pre><span class="line">1</span><br></pre>
+                            </td>
+                            <td class="code">
+                                <pre><span class="line">template = <span class="string">rb&#x27;(?P&lt;name&gt;\$fl[a-z]&#123;8&#125;) = Number\(&quot; (?P&lt;num&gt;[0-9]+) &quot;\)&#x27;</span></span><br></pre>
+                            </td>
+                        </tr>
+                    </table>
+                </figure>
+
+                <p><img src="/images/flareon/6/11.png"></p>
+                <p>Sau đó mình chỉ việc replace lại thành cái gì đó đơn giản hơn là xong, ví dụ mình sẽ dùng python để
+                    sửa đoạn trên thành:</p>
+                <figure class="highlight plain">
+                    <table>
+                        <tr>
+                            <td class="gutter">
+                                <pre><span class="line">1</span><br><span class="line">2</span><br></pre>
+                            </td>
+                            <td class="code">
+                                <pre><span class="line">Global $global_0_0 &#x3D; 0</span><br><span class="line">...</span><br></pre>
+                            </td>
+                        </tr>
+                    </table>
+                </figure>
+
+                <p>Ở trên chỉ là ý tưởng, còn code mình sẽ để ở file đính kèm. Sau khi chạy code xong, ta được file
+                    source code AutoIt mới, dễ đọc hơn nhiều.</p>
+                <p><img src="/images/flareon/6/5.png"></p>
+                <p>Đoạn code mới không quá dài, ta có thể đọc và hiểu các function của nó. Về cơ bản, chương trình nhận
+                    input từ người dùng, sau đó tạo ra mã QR dưới dạng hình ảnh rồi hiện lên màn hình.</p>
+                <p><img src="/images/flareon/6/6.png"></p>
+                <p>Ở <code>func_08</code>, chương trình nhận vào input của người dùng để xử lý, sau đó đưa data đã được
+                    xử lý vào <code>func_05</code>.</p>
+                <p><img src="/images/flareon/6/7.png"></p>
+                <p>Ở <code>func_05</code>, chương trình lấy <code>computer_name</code> (ở chỗ số 6), sau đó encrypt nó ở
+                    hàm <code>func_04</code> (số 7). Tiếp theo, đoạn <code>computer_name</code> được mã hóa sẽ được tính
+                    hash để làm key cho bước <code>CryptDecrypt</code> ở dưới (số 5).</p>
+                <ul>
+                    <li>Hash được dùng trong bài này là <code>32780 (CALG_SHA_256)</code> (số 2) , và thuật toán mã hóa
+                        được dùng là <code>24 (AES)</code> (số 1).</li>
+                    <li>Ở hình trên, đoạn code có đánh số 3 chính là khởi tạo <code>$local_5</code> để lưu trữ data bị
+                        mã hoá, còn đoạn code đánh số 4 là gán <code>$local_5</code> vào struct để chuẩn bị decrypt.
+                    </li>
+                    <li>Điều kiện để có thể đi vào trong nhánh <code>If</code> cuối cùng (số 8 ở trong hình trên) đó
+                        chính là, sau khi decrypt data chứa ở <code>$local_5</code>, thì 5 byte đầu phải là
+                        <code>&quot;FLARE&quot;</code> và 5 byte cuối cùng là <code>&quot;ERALF&quot;</code>.
+                    </li>
+                </ul>
+                <p>Và cuối cùng, ta phải xem lại hàm <code>func_04</code>, vì nó biến đổi <code>computer_name</code>
+                    trước khi tính hash.</p>
+                <p><img src="/images/flareon/6/8.png"></p>
+                <p>Đoạn code trên biến đổi <code>$arg_0</code> dựa vào nội dung của file .bmp (file này được drop ra
+                    trong lúc chương trình xử lý ảnh QR).</p>
+                <p><strong>Tóm lại tới lúc này ta biết được rằng input từ người dùng không có tác dụng gì đối với việc
+                        lấy flag, quan trọng là <code>computer_name</code> phải thoả mãn những điều sau:</strong></p>
+                <ul>
+                    <li><code>key = sha256(func_04(computer_name))</code></li>
+                    <li><code>data = AES.decrypt(encrypted_data, key, IV = 0000000...)</code></li>
+                    <li><code>data.startswith(b&#39;FLARE&#39;) == True</code></li>
+                    <li><code>data.endswith(b&#39;ERALF&#39;) == True</code></li>
+                </ul>
+                <p>Tuy nhiên chúng ta không thể biết được <code>computer_name</code> là gì, cũng không thể bruteforce
+                    dựa trên 2 điều kiện “FLARE” và “ERALF” vì AES không bị “Known plain-text attack”.</p>
+                <p>Vì không có điều kiện nào để giải ra <code>computer_name</code> nên mình đoán rằng:</p>
+                <figure class="highlight plain">
+                    <table>
+                        <tr>
+                            <td class="gutter">
+                                <pre><span class="line">1</span><br></pre>
+                            </td>
+                            <td class="code">
+                                <pre><span class="line">func_04(computer_name) &#x3D;&#x3D; computer_name</span><br></pre>
+                            </td>
+                        </tr>
+                    </table>
+                </figure>
+
+                <p>Tức là, <code>computer_name</code> sẽ là một chuỗi đặc biệt mà sẽ không bị biến đổi khi qua hàm
+                    <code>func_04</code>. Đến đây mình sẽ bruteforce để tìm ra <code>computer_name</code> như sau:
+                </p>
+                <ul>
+                    <li>Mình nhận thấy hàm <code>func_04</code> biến đổi chuỗi bằng cách biến đổi từng ký tự một, nên
+                        mình sẽ bruteforce một ký tự một lần.</li>
+                    <li>Thuật toán: với mỗi ký tự trong <code>computer_name</code>, cho <code>c</code> chạy trong tập ký
+                        tự, nếu <code>bruteforce_function(c) == c</code> thì “chọn” <code>c</code>, trong đó
+                        <code>bruteforce_function</code> là hàm biến đổi chuỗi, nói thẳng ra nó chính là hàm
+                        <code>func_04</code> (có sửa đổi 1 chút).
+                    </li>
+                </ul>
+                <p>Code bruteforce:</p>
+                <figure class="highlight python">
+                    <table>
+                        <tr>
+                            <td class="gutter">
+                                <pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre>
+                            </td>
+                            <td class="code">
+                                <pre><span class="line"><span class="comment"># python3</span></span><br><span class="line"></span><br><span class="line">chars = <span class="string">&#x27;0123456789abcdefghijklmnopqrstuvwxyz-&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">ror8</span>(<span class="params">n: <span class="built_in">int</span>, i: <span class="built_in">int</span></span>) -&gt; str:</span></span><br><span class="line">    i = i % <span class="number">8</span></span><br><span class="line">    n = n &amp; <span class="number">0xFF</span></span><br><span class="line">    <span class="keyword">return</span> (n &gt;&gt; i) + ((n &lt;&lt; (<span class="number">8</span> - i)) &amp; <span class="number">0xFF</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">brute_one</span>(<span class="params">index: <span class="built_in">int</span></span>) -&gt; str:</span></span><br><span class="line">    <span class="keyword">assert</span> index &gt;= <span class="number">1</span> <span class="comment"># AutoIT uses 1-based index .</span></span><br><span class="line">    <span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&#x27;sprite.bmp&#x27;</span>, <span class="string">&#x27;rb&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">        f.read(<span class="number">54</span>) <span class="comment"># discard</span></span><br><span class="line">        data = f.read()</span><br><span class="line">    start = <span class="number">7</span> * (index - <span class="number">1</span>)</span><br><span class="line">    tmp = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">7</span>):</span><br><span class="line">        tmp += ((data[start + i] &amp; <span class="number">1</span>) &lt;&lt; (<span class="number">7</span> - i))</span><br><span class="line">    tmp = ror8(tmp, <span class="number">1</span>)</span><br><span class="line">    <span class="keyword">for</span> c <span class="keyword">in</span> chars:</span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">ord</span>(c) == tmp:</span><br><span class="line">            <span class="keyword">return</span> c</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    r = <span class="string">&#x27;&#x27;</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">16</span>):</span><br><span class="line">        r = r + brute_one(i + <span class="number">1</span>)</span><br><span class="line">    <span class="built_in">print</span> (r)</span><br></pre>
+                            </td>
+                        </tr>
+                    </table>
+                </figure>
+
+                <figure class="highlight plain">
+                    <table>
+                        <tr>
+                            <td class="gutter">
+                                <pre><span class="line">1</span><br></pre>
+                            </td>
+                            <td class="code">
+                                <pre><span class="line">aut01tfan1999</span><br></pre>
+                            </td>
+                        </tr>
+                    </table>
+                </figure>
+
+                <p>Sau đó, ta patch hàm <code>func_03</code> (hàm này lấy <code>computer_name</code>), cho hàm này luôn
+                    return <code>&quot;aut01tfan1999&quot;</code>.</p>
+                <p><img src="/images/flareon/6/9.png"></p>
+                <p>Chạy thử chương trình, nhập 1 chuỗi bất kỳ, rồi bấm “Can haz code?”, ta sẽ nhận được 1 ảnh QR, quét
+                    ảnh này ta được:</p>
+                <p><img src="/images/flareon/6/10.png"></p>
+                <figure class="highlight plain">
+                    <table>
+                        <tr>
+                            <td class="gutter">
+                                <pre><span class="line">1</span><br></pre>
+                            </td>
+                            <td class="code">
+                                <pre><span class="line">L00ks_L1k3_Y0u_D1dnt_Run_Aut0_Tim3_0n_Th1s_0ne!@flare-on.com</span><br></pre>
+                            </td>
+                        </tr>
+                    </table>
+                </figure>
+
+
+                <h1 id="7-re-crowd"><a href="#7-re-crowd" class="headerlink" title="7 - re_crowd">7 - re_crowd</a></h1>
+                <figure class="highlight plain">
+                    <table>
+                        <tr>
+                            <td class="gutter">
+                                <pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre>
+                            </td>
+                            <td class="code">
+                                <pre><span class="line">Hello,</span><br><span class="line"></span><br><span class="line">Here at Reynholm Industries we pride ourselves on everything. It&#39;s not easy to admit, but recently one of our most valuable servers was breached. We don&#39;t believe in host monitoring so all we have is a network packet capture. We need you to investigate and determine what data was extracted from the server, if any.</span><br><span class="line"></span><br><span class="line">Thank you</span><br></pre>
+                            </td>
+                        </tr>
+                    </table>
+                </figure>
+
+                <p><img src="/images/flareon/7/1.png"></p>
+                <p>Ở bài này chúng ta có 1 file .pcap, dùng wireshark để xem file này:</p>
+                <p><img src="/images/flareon/7/2.png"></p>
+                <p>Ở đây mình thấy gói số 7 có protocol là HTTP, nên mình sẽ extract các http object capture được như
+                    hình sau:</p>
+                <p><img src="/images/flareon/7/3.png"></p>
+                <p>Sau khi extract hết ra, ta có được file “5c” là file nặng nhất (11 kb), mở nó lên bằng Google chrome,
+                    ta được một webpage về đoạn chat của một số nhân viên trong công ty.</p>
+                <p><img src="/images/flareon/7/4.png"></p>
+                <p>Ở gần cuối của đoạn chat có 1 đoạn nói chuyện khá thú vị</p>
+                <p><img src="/images/flareon/7/5.png"></p>
+                <p>Theo hình trên thì Jen đã lưu danh sách account ở “C:\accounts.txt”, nên mình đoán là, máy công ty đã
+                    bị nhiễm malware này, con malware này đã lấy cắp file “accounts.txt” và gửi về cho attacker.</p>
+                <p>Bây giờ ta sẽ vào phân tích các gói tin trong wireshark.</p>
+                <p><img src="/images/flareon/7/6.png"></p>
+                <p>Ở trên là một gói tin được gửi đến server, phương thức PROPFIND cũng khá lạ so với mình, nên mình đã
+                    google để tìm PROPFIND và tìm được một số bài viết hay ho.</p>
+                <ul>
+                    <li><a target="_blank" rel="noopener"
+                            href="https://www.fortinet.com/blog/threat-research/buffer-overflow-attack-targeting-microsoft-iis-6-0-returns">Buffer
+                            Overflow Attack Targeting Microsoft IIS 6.0 Returns</a></li>
+                    <li><a target="_blank" rel="noopener"
+                            href="https://www.trendmicro.com/en_us/research/17/c/iis-6-0-vulnerability-leads-code-execution.html">IIS
+                            6.0 Vulnerability Leads to Code Execution</a></li>
+                    <li><a target="_blank" rel="noopener"
+                            href="https://github.com/edwardz246003/IIS_exploit/blob/master/exploit.py">Exploit
+                            github</a></li>
+                </ul>
+                <p>Trong loạt bài trên có phân tích rõ về lỗi Buffer Overflow dẫn đến RCE. Vì vậy ta chỉ cần tập trung
+                    vào đoạn shellcode bắt đầu từ “VVYAIAI…”.</p>
+                <p>Đoạn shellcode này chỉ bao gồm các kí tự chữ số, chữ thường và chữ in hoa nên mình nghĩ ngay tới
+                    Alphanumeric shellcode. Đoạn shellcode trên được tạo ra bằng thư viện <a target="_blank"
+                        rel="noopener"
+                        href="https://github.com/un4ckn0wl3z/Alpha2-encoder/blob/master/alpha2.c">alpha2</a>.</p>
+                <p><img src="/images/flareon/7/7.png"></p>
+                <p>Ta viết 1 đoạn code để decode đoạn shellcode này (lưu ý đoạn shellcode này là Unicode shellcode):</p>
+                <figure class="highlight python">
+                    <table>
+                        <tr>
+                            <td class="gutter">
+                                <pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre>
+                            </td>
+                            <td class="code">
+                                <pre><span class="line"><span class="comment"># python3</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    <span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&#x27;shell.txt&#x27;</span>, <span class="string">&#x27;rb&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">        text = f.read().decode(<span class="string">&#x27;utf-16le&#x27;</span>)</span><br><span class="line">    text = text[text.find(<span class="string">&#x27;ZBABABABABkMAGB9u4JB&#x27;</span>) + <span class="built_in">len</span>(<span class="string">&#x27;ZBABABABABkMAGB9u4JB&#x27;</span>)::]</span><br><span class="line">    r = <span class="string">&#x27;&#x27;</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(text) // <span class="number">2</span>):</span><br><span class="line">        x, y = <span class="built_in">ord</span>(text[<span class="number">2</span>*i]), <span class="built_in">ord</span>(text[<span class="number">2</span>*i+<span class="number">1</span>])</span><br><span class="line">        c, d = (x &amp; <span class="number">0xF0</span>) &gt;&gt; <span class="number">4</span>, x &amp; <span class="number">0xF</span></span><br><span class="line">        e, f = (y &amp; <span class="number">0xF0</span>) &gt;&gt; <span class="number">4</span>, y &amp; <span class="number">0xF</span></span><br><span class="line">        b = f</span><br><span class="line">        a = d + e</span><br><span class="line">        <span class="keyword">while</span> a &gt;= <span class="number">16</span>:</span><br><span class="line">            a = a - <span class="number">16</span></span><br><span class="line">        r += <span class="built_in">chr</span>((a&lt;&lt;<span class="number">4</span>) | b)</span><br><span class="line">    <span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&#x27;dec.bin&#x27;</span>, <span class="string">&#x27;wb&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">        f.write(<span class="built_in">bytearray</span>([<span class="built_in">ord</span>(i) <span class="keyword">for</span> i <span class="keyword">in</span> r]))</span><br><span class="line">        <span class="built_in">print</span> (<span class="string">&#x27;Done&#x27;</span>)</span><br></pre>
+                            </td>
+                        </tr>
+                    </table>
+                </figure>
+
+                <p>Trong đó, shell.txt chính là đoạn shellcode copy ra từ file .pcap.</p>
+                <p>Tiếp theo ta dùng <a target="_blank" rel="noopener"
+                        href="https://github.com/OALabs/BlobRunner">blobrunner</a> để chạy và debug đoạn shellcode mới.
+                </p>
+                <blockquote>
+                    <p>blobrunner là tool dùng để chạy 1 đoạn shellcode, dùng để debug các shellcode dễ dàng hơn.</p>
+                </blockquote>
+                <p><img src="/images/flareon/7/8.png"></p>
+                <p>shellcode mới có 1 pattern lặp đi lặp lại rất nhiều
+                    <code>(push arg, push arg, push hash, call ebp)</code>:
+                </p>
+                <p><img src="/images/flareon/7/9.png"></p>
+                <p>Chỗ “call ebp” sẽ nhảy đến hàm ở 0x10000006, hàm này sẽ tính hash của các hàm Windows API, so sánh
+                    với hash được push lên stack. Sau khi tìm được hàm có hash tương ứng, shellcode sẽ nhảy tới hàm
+                    Windows API đó qua lệnh “jmp eax”.</p>
+                <p>Đoạn shellcode này không dài quá, nhưng mình lười đọc nên đã làm như sau:</p>
+                <ul>
+                    <li>Breakpoint tại “jmp eax”.</li>
+                    <li>Chạy shellcode.</li>
+                    <li>Log lại những hàm và tham số được gọi để có cái nhìn tổng quát về chương trình.</li>
+                </ul>
+                <p>Và thứ tự các hàm và tham số được gọi như sau:</p>
+                <ul>
+                    <li><code>LoadLibraryA</code> , <code>&quot;ws2_32&quot;</code>.</li>
+                    <li><code>WSAStartup</code>.</li>
+                    <li><code>WSASocketA</code>, <code>AF_INET</code>, <code>SOCK_STREAM</code>, …</li>
+                    <li><code>WSAConnect</code>, <code>(random number) socket handle</code>,
+                        <code>sockaddr (family: AF_INET, port: 4444, IP: 192.168.68.21)</code>.
+                    </li>
+                    <li>Đến đây chương trình không chạy nữa, lý do là vì nó cố gắng kết nối đến 192.168.68.21:4444 nhưng
+                        không có server nào ở địa chỉ này cả.</li>
+                </ul>
+                <p>Ta thử tìm port 4444 trong wireshark.</p>
+                <p><img src="/images/flareon/7/10.png"></p>
+                <p>Có 1 gói tin từ 192.168.68.21:4444 gửi về server với độ dài phần data là 1243 bytes.</p>
+                <p>Vậy ta dựng lại server để giả lập gói tin đó, làm lại 1 lần như trên, nhưng đến đoạn
+                    <code>WSAConnect</code> thì patch IP thành 127.0.0.1 để theo dõi tiếp xem nó gọi thêm hàm WinAPI
+                    nào.
+                </p>
+                <p>Code server:</p>
+                <figure class="highlight python">
+                    <table>
+                        <tr>
+                            <td class="gutter">
+                                <pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre>
+                            </td>
+                            <td class="code">
+                                <pre><span class="line"><span class="comment"># python3</span></span><br><span class="line"><span class="keyword">import</span> socket</span><br><span class="line"><span class="keyword">from</span> binascii <span class="keyword">import</span> a2b_hex</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)</span><br><span class="line">    s.bind((<span class="string">&#x27;0.0.0.0&#x27;</span>, <span class="number">4444</span>))</span><br><span class="line">    s.listen(<span class="number">5</span>)</span><br><span class="line">    c, v = s.accept()</span><br><span class="line">    data = <span class="string">&#x27;9c5c4f52a4b1037390e4c88e...&#x27;</span> <span class="comment"># truncated</span></span><br><span class="line">    data = a2b_hex(data)</span><br><span class="line">    c.send(data)</span><br><span class="line">    c.close()</span><br><span class="line">    s.close()</span><br><span class="line">    <span class="built_in">print</span> (<span class="string">&#x27;[+] Done&#x27;</span>)</span><br></pre>
+                            </td>
+                        </tr>
+                    </table>
+                </figure>
+
+                <p>Chạy lại và quan sát danh sách các hàm WinAPI được gọi (chỉ liệt kê hàm được gọi sau
+                    <code>WSAConnect</code>):
+                </p>
+                <ul>
+                    <li><code>recv</code>, <code>(random number above) socket handle</code>, <code>buffer</code>,
+                        <code>4</code>, <code>0</code>.
+                    </li>
+                    <li><code>VirtualAlloc</code>, <code>lpBase = 0</code>, <code>size = 0x4D7</code>,
+                        <code>MEM_COMMIT</code>, <code>PAGE_EXECUTE_READWRITE</code>.
+                    </li>
+                    <li><code>recv</code>, <code>(random number above) socket handle</code>, <code>buffer</code>,
+                        <code>0x4D7</code>, <code>0</code>.
+                    </li>
+                    <li>Đến đây chương trình lại không chạy nữa, đã đến lúc ta phải phân tích đoạn shellcode này.</li>
+                </ul>
+                <p><img src="/images/flareon/7/11.png"></p>
+                <p>Sau khi nhận 0x4D7 byte, thì dữ liệu đó được đưa vào trong hàm mà mình đặt tên là “decr” ở
+                    0x10000143. Ta thử xem hàm “decr” này có gì.</p>
+                <p><img src="/images/flareon/7/12.png"></p>
+                <p>Đoạn code trên chính là RC4.</p>
+                <blockquote>
+                    <p>Mẹo nhận biết RC4: nhìn thấy đoạn code tương tự như
+                        <code>for (i = 0; i &lt; 256; ++i) a[i] = i</code> , thì gần như chắc chắn là RC4, đó chính là 1
+                        trong các bước tạo key của RC4.
+                    </p>
+                    <p>Trong đoạn code trên, dòng asm ở địa chỉ <strong>0x10000144</strong> chính là pattern nói ở trên.
+                    </p>
+                </blockquote>
+                <p>Key ở lần RC4 này là “killervulture123” , được lấy ở thanh ghi esi (hình ở dưới):</p>
+                <p><img src="/images/flareon/7/14.png"></p>
+                <p>Sau khi RC4 decrypt đoạn data, thì ta nhận được một đoạn shellcode mới, đoạn shellcode này cũng thực
+                    hiện việc dynamically resolve các function để phục vụ việc gọi các hàm WinAPI. Sau đó, nó thực hiện
+                    1 số công việc hay ho:</p>
+                <p><img src="/images/flareon/7/15.png"></p>
+                <p>Đầu tiên là <code>CreateFile</code> <code>C:\\accounts.txt</code> với quyền đọc (GENERIC_READ). Ta
+                    cũng fake file “C:\accounts.txt” để program có thể đọc.</p>
+                <p><img src="/images/flareon/7/16.png"></p>
+                <p>Tiếp theo, <code>ReadFile</code> để đọc 0x100 bytes từ file này.</p>
+                <p>Sau đó đoạn data vừa được đọc bởi hàm <code>ReadFile</code> lại được đưa vào 1 hàm khác để mã hoá, và
+                    hàm này rất quen thuộc:</p>
+                <p><img src="/images/flareon/7/17.png"></p>
+                <p>Không biết bạn đọc có thấy pattern <code>&quot;for (i = 0; i &lt; 256; ++i) a[i] = i&quot;</code>
+                    trong đoạn trên không nhỉ ^^!.</p>
+                <p>Lần này key được push trên stack: “intrepidmango”.</p>
+                <p>Tiếp theo, một socket mới lại được tạo ra, connect tới 192.168.68.21:1337</p>
+                <p><img src="/images/flareon/7/19.png"></p>
+                <p>Như vậy, nội dung của file sẽ được RC4 encrypt trước khi gửi về port 1337 cho attacker.</p>
+                <p><strong>Tóm lại, luồng thực thi của chương trình như sau:</strong></p>
+                <ul>
+                    <li>Connect tới 192.168.68.21:4444 để nhận 1243 bytes dữ liệu.</li>
+                    <li>Dữ liệu vừa nhận được sẽ được giải mã RC4 bằng key “killervulture123”.</li>
+                    <li>Đoạn dữ liệu vừa giải mã được chính là một shellcode.</li>
+                </ul>
+                <p><strong>Sau đó, đoạn shellcode trên sẽ được thực thi, luồng thực thi của đoạn shellcode như
+                        sau:</strong></p>
+                <ul>
+                    <li>Đọc file “C:\accounts.txt”.</li>
+                    <li>Dữ liệu vừa đọc sẽ được mã hoá RC4 bằng key “intrepidmango”.</li>
+                    <li>Dữ liệu vừa được mã hoá sẽ được gửi đến server ở 192.168.68.21:1337.</li>
+                    <li>Kết thúc.</li>
+                </ul>
+                <p>Vậy việc cuối cùng cần làm là, lấy data được gửi (ở port 1337) trong wireshark ra, decrypt và lấy
+                    flag.</p>
+                <figure class="highlight python">
+                    <table>
+                        <tr>
+                            <td class="gutter">
+                                <pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre>
+                            </td>
+                            <td class="code">
+                                <pre><span class="line"><span class="comment"># python3</span></span><br><span class="line"><span class="keyword">from</span> binascii <span class="keyword">import</span> a2b_hex</span><br><span class="line"><span class="keyword">from</span> Crypto.Cipher <span class="keyword">import</span> ARC4</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    key = <span class="string">b&#x27;intrepidmango&#x27;</span></span><br><span class="line">    data = a2b_hex(<span class="string">b&#x27;truncated ...&#x27;</span>)</span><br><span class="line">    rc4 = ARC4.new(key)</span><br><span class="line">    d = rc4.decrypt(data)</span><br><span class="line">    <span class="built_in">print</span> (d)</span><br></pre>
+                            </td>
+                        </tr>
+                    </table>
+                </figure>
+
+                <p>Run:</p>
+                <figure class="highlight plain">
+                    <table>
+                        <tr>
+                            <td class="gutter">
+                                <pre><span class="line">1</span><br></pre>
+                            </td>
+                            <td class="code">
+                                <pre><span class="line">b&#39;roy:h4ve_you_tri3d_turning_1t_0ff_and_0n_ag4in@flare-on.com:goat\r\nmoss:Pot-Pocket-Pigeon-Hunt-8:narwhal\r\njen:Straighten-Effective-Gift-Pity-1:bunny\r\nrichmond:Inventor-Hut-Autumn-Tray-6:bird\r\ndenholm:123:dog&#39;</span><br></pre>
+                            </td>
+                        </tr>
+                    </table>
+                </figure>
+
+                <figure class="highlight plain">
+                    <table>
+                        <tr>
+                            <td class="gutter">
+                                <pre><span class="line">1</span><br></pre>
+                            </td>
+                            <td class="code">
+                                <pre><span class="line">h4ve_you_tri3d_turning_1t_0ff_and_0n_ag4in@flare-on.com</span><br></pre>
+                            </td>
+                        </tr>
+                    </table>
+                </figure>
+
+                <blockquote>
+                    <p>Fact: vì RC4 là thuật toán mã hoá đối xứng nên ta có thể lấy file bị mã hoá trong wireshark ra để
+                        làm giả file “C:\accounts.txt”, khi đó program sẽ mã hoá file này 1 lần nữa và cho ra luôn file
+                        gốc.</p>
+                </blockquote>
+                <h1 id="8-Aardvark"><a href="#8-Aardvark" class="headerlink" title="8 - Aardvark">8 - Aardvark</a></h1>
+                <figure class="highlight plain">
+                    <table>
+                        <tr>
+                            <td class="gutter">
+                                <pre><span class="line">1</span><br></pre>
+                            </td>
+                            <td class="code">
+                                <pre><span class="line">Expect difficulty running this one. I suggest investigating why each error is occuring. Or not, whatever. You do you.</span><br></pre>
+                            </td>
+                        </tr>
+                    </table>
+                </figure>
+
+                <p><img src="/images/flareon/8/1.png"></p>
+                <p>Ở challenge này ta có 1 file .exe, giải nén file này và chạy thử (windows 7 VM):</p>
+                <p><img src="/images/flareon/8/2.png"></p>
+                <p>Dùng Detect it easy để nhận diện file:</p>
+                <p><img src="/images/flareon/8/3.png"></p>
+                <p>Đến đây ta mở file bằng IDA để tìm xem nguyên nhân gây ra lỗi “socket failed” như trên hình là gì.
+                </p>
+                <figure class="highlight c++">
+                    <table>
+                        <tr>
+                            <td class="gutter">
+                                <pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre>
+                            </td>
+                            <td class="code">
+                                <pre><span class="line"><span class="function"><span class="keyword">int</span> __stdcall <span class="title">WinMain</span><span class="params">(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, <span class="keyword">int</span> nShowCmd)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="comment">// [COLLAPSED LOCAL DECLARATIONS. PRESS KEYPAD CTRL-&quot;+&quot; TO EXPAND]</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// truncated ...</span></span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">  v8 = socket(<span class="number">1</span>, <span class="number">1</span>, <span class="number">0</span>);</span><br><span class="line">  v6 = v8;</span><br><span class="line">  <span class="keyword">if</span> ( v8 == <span class="number">-1</span>i64 )</span><br><span class="line">  &#123;</span><br><span class="line">    MessageBoxA(<span class="number">0</span>i64, <span class="string">&quot;socket failed&quot;</span>, <span class="string">&quot;Error&quot;</span>, <span class="number">0x10</span>u);</span><br><span class="line">    v9 = <span class="string">&quot;Error creating Unix domain socket&quot;</span>;</span><br><span class="line">LABEL_16:</span><br><span class="line">    MessageBoxA(<span class="number">0</span>i64, v9, <span class="string">&quot;Error&quot;</span>, <span class="number">0x10</span>u);</span><br><span class="line">    <span class="keyword">goto</span> LABEL_17;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// truncated ...</span></span><br><span class="line">&#125;</span><br></pre>
+                            </td>
+                        </tr>
+                    </table>
+                </figure>
+
+                <p>Ta để ý dòng:</p>
+                <figure class="highlight c">
+                    <table>
+                        <tr>
+                            <td class="gutter">
+                                <pre><span class="line">1</span><br></pre>
+                            </td>
+                            <td class="code">
+                                <pre><span class="line">v8 = socket(<span class="number">1</span>, <span class="number">1</span>, <span class="number">0</span>); <span class="comment">// socket(AF_UNIX, SOCK_STREAM, 0);</span></span><br></pre>
+                            </td>
+                        </tr>
+                    </table>
+                </figure>
+
+                <p>Theo mình biết thì AF_UNIX chỉ xuất hiện trên các hệ điều hành UNIX, nhưng ở các bản cập nhật Windows
+                    gần đây, Microsoft đã thêm nó vào hệ điều hành Windows 10, <a target="_blank" rel="noopener"
+                        href="https://devblogs.microsoft.com/commandline/af_unix-comes-to-windows/">xem ở đây</a>.</p>
+                <p>Vì vậy mình đã tải bản Windows 10 version 1909 về để chạy lại file này, và nhận được kết quả:</p>
+                <p><img src="/images/flareon/8/4.png"></p>
+                <p>Ta quay lại IDA, xem strings window để tìm dòng trên:</p>
+                <p><img src="/images/flareon/8/5.png"></p>
+                <p>Dùng xref để đi tới hàm <code>sub_140001B10</code> (hàm này sử dụng chuỗi “CoCreateInstance failed”).
+                </p>
+                <figure class="highlight c++">
+                    <table>
+                        <tr>
+                            <td class="gutter">
+                                <pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre>
+                            </td>
+                            <td class="code">
+                                <pre><span class="line">__int64 __usercall sub_140001B10@&lt;rax&gt;(__int64 a1@&lt;rcx&gt;, <span class="keyword">unsigned</span> <span class="keyword">int</span> a2@&lt;edx&gt;, __int64 a3@&lt;r8&gt;, __int128 *_XMM0@&lt;xmm0&gt;)</span><br><span class="line">&#123;</span><br><span class="line">  <span class="comment">// [COLLAPSED LOCAL DECLARATIONS. PRESS KEYPAD CTRL-&quot;+&quot; TO EXPAND]</span></span><br><span class="line"></span><br><span class="line">  v4 = <span class="number">0</span>;</span><br><span class="line">  v5 = a3;</span><br><span class="line">  ppv = <span class="number">0</span>i64;</span><br><span class="line">  v6 = a2;</span><br><span class="line">  v13 = <span class="number">0</span>i64;</span><br><span class="line">  v7 = a1;</span><br><span class="line">  <span class="keyword">if</span> ( CoCreateInstance(&amp;rclsid, <span class="number">0</span>i64, <span class="number">4u</span>, &amp;riid, &amp;ppv) )</span><br><span class="line">  &#123;</span><br><span class="line">    MessageBoxA(<span class="number">0</span>i64, <span class="string">&quot;CoCreateInstance failed&quot;</span>, <span class="string">&quot;Error&quot;</span>, <span class="number">0x10</span>u);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span> <span class="keyword">if</span> ( (*(*ppv + <span class="number">96</span>i64))(ppv, &amp;v14) )</span><br><span class="line">  &#123;</span><br><span class="line">    MessageBoxA(<span class="number">0</span>i64, <span class="string">&quot;GetDefaultDistribution failed&quot;</span>, <span class="string">&quot;Error&quot;</span>, <span class="number">0x10</span>u);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span> <span class="keyword">if</span> ( (*(*ppv + <span class="number">24</span>i64))(ppv, &amp;v14, <span class="number">0</span>i64, &amp;unk_14001E028, &amp;v13) )</span><br><span class="line">  &#123;</span><br><span class="line">    MessageBoxA(<span class="number">0</span>i64, <span class="string">&quot;CreateInstance failed&quot;</span>, <span class="string">&quot;Error&quot;</span>, <span class="number">0x10</span>u);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">  &#123;</span><br><span class="line">    v11 = <span class="number">0</span>;</span><br><span class="line">    v10 = <span class="number">0</span>;</span><br><span class="line">    GetCurrentDirectoryW(<span class="number">0x105</span>u, &amp;Buffer);</span><br><span class="line">    v15 = <span class="number">0</span>i64;</span><br><span class="line">    v16 = <span class="number">0</span>i64;</span><br><span class="line">    v12 = *(*(*(__readgsqword(<span class="number">0x30</span>u) + <span class="number">96</span>) + <span class="number">32</span>i64) + <span class="number">16</span>i64);</span><br><span class="line">    <span class="keyword">if</span> ( (*(*v13 + <span class="number">48</span>i64))(v13, v7, v6, v5, <span class="number">0</span>, <span class="number">0</span>i64, &amp;Buffer, <span class="number">0</span>i64, <span class="number">0</span>i64, <span class="number">0</span>, <span class="number">0</span>, &amp;v15, &amp;v12, <span class="number">0</span>, &amp;v11, &amp;v10) )</span><br><span class="line">      MessageBoxA(<span class="number">0</span>i64, <span class="string">&quot;CreateLxProcess failed&quot;</span>, <span class="string">&quot;Error&quot;</span>, <span class="number">0x10</span>u);</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">      v4 = <span class="number">1</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> ( v13 )</span><br><span class="line">    (*(*v13 + <span class="number">16</span>i64))(v13);</span><br><span class="line">  <span class="keyword">if</span> ( ppv )</span><br><span class="line">    (*(*ppv + <span class="number">16</span>i64))(ppv);</span><br><span class="line">  <span class="keyword">return</span> v4;</span><br><span class="line">&#125;</span><br></pre>
+                            </td>
+                        </tr>
+                    </table>
+                </figure>
+
+                <p>Ở đây ta thấy có string “CreateLxProcess failed” nên ta thử tìm Github hàm này:</p>
+                <p><img src="/images/flareon/8/6.png"></p>
+                <p>Sau một lúc xem qua các kết quả thì mình thấy:</p>
+                <ul>
+                    <li>Tên repository này là “WSLReverse”, (WSL là “Windows Subsystem for Linux” <a target="_blank"
+                            rel="noopener" href="https://docs.microsoft.com/en-us/windows/wsl/install-win10">Link</a>).
+                    </li>
+                    <li>Link <a target="_blank" rel="noopener"
+                            href="https://github.com/Biswa96/WslReverse/tree/a6133642a7d9b0e1f033d047c96c49cb731c5abf">github</a>.
+                    </li>
+                </ul>
+                <p>Vậy khả năng cao file bị lỗi là do chưa cài đặt WSL, nên ta cài đặt <a target="_blank" rel="noopener"
+                        href="https://docs.microsoft.com/en-us/windows/wsl/install-win10">WSL</a> trên Windows 10 , rồi
+                    chạy lại file:</p>
+                <p><img src="/images/flareon/8/7.png"></p>
+                <p>Ta được 1 game Tic-tac-toe, mà computer đã đi trước 1 nước ở ngay giữa, tức là gần như chúng ta chỉ
+                    có thể hòa hoặc thua, chơi thử 1 vài trận, điều ở trên được xác nhận.</p>
+                <p>Quay lại IDA để phân tích code.</p>
+                <p>Đầu tiên, chương trình tạo ra 1 <code>socket(AF_UNIX, ...)</code> để lắng nghe:</p>
+                <figure class="highlight c++">
+                    <table>
+                        <tr>
+                            <td class="gutter">
+                                <pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre>
+                            </td>
+                            <td class="code">
+                                <pre><span class="line">v8 = socket(<span class="number">1</span>, <span class="number">1</span>, <span class="number">0</span>);</span><br><span class="line"> v6 = v8;</span><br><span class="line"> <span class="keyword">if</span>...</span><br><span class="line"> <span class="keyword">if</span> ( bind(v8, &amp;name, <span class="number">110</span>) == <span class="number">-1</span> )</span><br><span class="line">   v10 = <span class="string">&quot;bind failed&quot;</span>;</span><br><span class="line"> <span class="keyword">else</span></span><br><span class="line"> &#123;</span><br><span class="line">   <span class="keyword">if</span> ( listen(v6, <span class="number">0x7FFFFFFF</span>) != <span class="number">-1</span> )</span><br><span class="line">     <span class="keyword">goto</span> LABEL_12;</span><br><span class="line">   v10 = <span class="string">&quot;listen failed&quot;</span>;</span><br><span class="line"> &#125;</span><br></pre>
+                            </td>
+                        </tr>
+                    </table>
+                </figure>
+
+                <p>Tiếp theo chương trình thực hiện hàm <code>sub_140012B0</code>, trong hàm này, nó lấy resource ra và
+                    ghi ra thư mục “%tmp%”.</p>
+                <figure class="highlight c++">
+                    <table>
+                        <tr>
+                            <td class="gutter">
+                                <pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre>
+                            </td>
+                            <td class="code">
+                                <pre><span class="line"><span class="function">__int64 <span class="title">sub_1400012B0</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="comment">// [COLLAPSED LOCAL DECLARATIONS. PRESS KEYPAD CTRL-&quot;+&quot; TO EXPAND]</span></span><br><span class="line"></span><br><span class="line">  v11 = &amp;v13;</span><br><span class="line">  v12 = <span class="number">0</span>i64;</span><br><span class="line">  NumberOfBytesWritten[<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line">  v0 = <span class="number">0</span>;</span><br><span class="line">  v1 = <span class="number">-1</span>i64;</span><br><span class="line">  <span class="keyword">if</span> ( !GetTempFileNameA(<span class="string">&quot;.&quot;</span>, PrefixString, <span class="number">0</span>, &amp;FileName) )</span><br><span class="line"><span class="comment">// ...</span></span><br><span class="line">  wsprintfA(&amp;v13, <span class="string">&quot;%s&quot;</span>, &amp;FileName);</span><br><span class="line">  *sub_140003268((__int64)&amp;v13, <span class="string">&#x27;\\&#x27;</span>) = <span class="string">&#x27;/&#x27;</span>;</span><br><span class="line">  v1 = (__int64)CreateFileA(&amp;FileName, <span class="number">0x40000000</span>u, <span class="number">0</span>, <span class="number">0</span>i64, <span class="number">3u</span>, <span class="number">0x80</span>u, <span class="number">0</span>i64); <span class="comment">// GENERIC_WRITE</span></span><br><span class="line"><span class="comment">// ....</span></span><br><span class="line">  v3 = FindResourceA(<span class="number">0</span>i64, (LPCSTR)<span class="number">0x12C</span>, (LPCSTR)<span class="number">0x100</span>);</span><br><span class="line">  v4 = v3;</span><br><span class="line"> <span class="comment">// ...</span></span><br><span class="line">  v6 = SizeofResource(<span class="number">0</span>i64, v3);</span><br><span class="line">  v7 = LoadResource(<span class="number">0</span>i64, v4);</span><br><span class="line">  v5 = v7;</span><br><span class="line"> <span class="comment">// ...</span></span><br><span class="line">  v8 = LockResource(v7);</span><br><span class="line">  <span class="keyword">if</span> ( WriteFile((HANDLE)v1, v8, v6, NumberOfBytesWritten, <span class="number">0</span>i64) &amp;&amp; NumberOfBytesWritten[<span class="number">0</span>] == v6 )</span><br><span class="line">  &#123;</span><br><span class="line">    CloseHandle((HANDLE)v1);</span><br><span class="line">    FreeResource(v5);</span><br><span class="line">    sub_140001930((__int64)&amp;v13, <span class="number">1u</span>, (__int64)&amp;v11); <span class="comment">// &lt;---- here</span></span><br><span class="line">    v0 = <span class="number">1</span>;</span><br><span class="line">  &#125;</span><br><span class="line"> <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre>
+                            </td>
+                        </tr>
+                    </table>
+                </figure>
+
+                <p>Tiếp theo chương trình nhảy vào hàm <code>sub_140001930</code>, hàm này sẽ dựa vào số build của
+                    Windows để tiếp tục thực thi:</p>
+                <figure class="highlight c++">
+                    <table>
+                        <tr>
+                            <td class="gutter">
+                                <pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre>
+                            </td>
+                            <td class="code">
+                                <pre><span class="line"><span class="keyword">if</span> ( GetVersionExA(&amp;VersionInformation) )</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="keyword">if</span> ( VersionInformation.dwBuildNumber &gt;= <span class="number">0x42EE</span> )</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="keyword">if</span> ( VersionInformation.dwBuildNumber == <span class="number">17134</span> )</span><br><span class="line">      &#123;</span><br><span class="line">        sub_140001AB0();</span><br><span class="line">        sub_140001B10(v3, v5, v4, <span class="number">0</span>i64);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>i64;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">if</span> ( VersionInformation.dwBuildNumber == <span class="number">17763</span> )</span><br><span class="line">      &#123;</span><br><span class="line">        sub_140001AB0();</span><br><span class="line">        sub_140001D60(v3, v5, v4);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>i64;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">if</span> ( VersionInformation.dwBuildNumber - <span class="number">18362</span> &lt;= <span class="number">1</span> )</span><br><span class="line">      &#123;</span><br><span class="line">        sub_140001AB0();</span><br><span class="line">        sub_140001FB0(v3, v5, v4);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>i64;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">if</span> ( VersionInformation.dwBuildNumber - <span class="number">19041</span> &lt;= <span class="number">1</span> || VersionInformation.dwBuildNumber &gt; <span class="number">0x4A62</span> )</span><br><span class="line">      &#123;</span><br><span class="line">        sub_140001AB0();</span><br><span class="line">        sub_1400021E0(v3, v5, v4);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>i64;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br></pre>
+                            </td>
+                        </tr>
+                    </table>
+                </figure>
+
+                <p>Máy mình là Windows 10 build 18363, nên mình sẽ tiếp tục đi vào hàm <code>sub_140001FB0</code>:</p>
+                <figure class="highlight c++">
+                    <table>
+                        <tr>
+                            <td class="gutter">
+                                <pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre>
+                            </td>
+                            <td class="code">
+                                <pre><span class="line"><span class="function">__int64 __fastcall <span class="title">sub_140001FB0</span><span class="params">(__int64 a1, <span class="keyword">unsigned</span> <span class="keyword">int</span> a2, __int64 a3)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  v3 = <span class="number">0</span>;</span><br><span class="line">  v4 = a3;</span><br><span class="line">  ppv = <span class="number">0</span>i64;</span><br><span class="line">  v5 = a2;</span><br><span class="line">  v6 = a1;</span><br><span class="line">  <span class="keyword">if</span> ( CoCreateInstance(&amp;rclsid, <span class="number">0</span>i64, <span class="number">4u</span>, &amp;riid, &amp;ppv) )</span><br><span class="line">  &#123;</span><br><span class="line">    MessageBoxA(<span class="number">0</span>i64, <span class="string">&quot;CoCreateInstance failed&quot;</span>, <span class="string">&quot;Error&quot;</span>, <span class="number">0x10</span>u);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span> <span class="keyword">if</span> ( (*(*ppv + <span class="number">88</span>i64))(ppv, &amp;v18) )</span><br><span class="line">  &#123;</span><br><span class="line">    MessageBoxA(<span class="number">0</span>i64, <span class="string">&quot;GetDefaultDistribution failed&quot;</span>, <span class="string">&quot;Error&quot;</span>, <span class="number">0x10</span>u);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">  &#123;</span><br><span class="line">    v17 = <span class="number">0</span>i64;</span><br><span class="line">    v16 = <span class="number">0</span>i64;</span><br><span class="line">    v20 = <span class="number">0</span>i64;</span><br><span class="line">    v19 = <span class="number">0</span>i64;</span><br><span class="line">    v15 = <span class="number">0</span>i64;</span><br><span class="line">    v14 = <span class="number">0</span>i64;</span><br><span class="line">    v13 = <span class="number">0</span>i64;</span><br><span class="line">    v12 = <span class="number">0</span>i64;</span><br><span class="line">    v7 = *(*(*(__readgsqword(<span class="number">0x30</span>u) + <span class="number">96</span>) + <span class="number">32</span>i64) + <span class="number">16</span>i64);</span><br><span class="line">    GetCurrentDirectoryW(<span class="number">0x105</span>u, &amp;Buffer);</span><br><span class="line">    v10 = <span class="number">0</span>;</span><br><span class="line">    v9 = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">if</span> ( (*(*ppv + <span class="number">112</span>i64))(ppv,&amp;v18,v6,v5,v4,&amp;Buffer,<span class="number">0</span>i64,<span class="number">0</span>i64,<span class="number">0</span>,<span class="string">L&quot;root&quot;</span>,</span><br><span class="line">           v9,v10,v7,&amp;v19,&amp;v22,&amp;v21,&amp;v17,&amp;v16,&amp;v15,&amp;v14,&amp;v13,&amp;v12) )</span><br><span class="line">    &#123;</span><br><span class="line">      MessageBoxA(<span class="number">0</span>i64, <span class="string">&quot;CreateLxProcess failed&quot;</span>, <span class="string">&quot;Error&quot;</span>, <span class="number">0x10</span>u);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">      v3 = <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> ( ppv )</span><br><span class="line">  &#123;</span><br><span class="line">    (*(*ppv + <span class="number">16</span>i64))(ppv);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> v3;</span><br><span class="line">&#125;</span><br></pre>
+                            </td>
+                        </tr>
+                    </table>
+                </figure>
+
+                <p>Trong đoạn code trên:</p>
+                <figure class="highlight c++">
+                    <table>
+                        <tr>
+                            <td class="gutter">
+                                <pre><span class="line">1</span><br><span class="line">2</span><br></pre>
+                            </td>
+                            <td class="code">
+                                <pre><span class="line"><span class="keyword">if</span> ( (*(*ppv + <span class="number">112</span>i64))(ppv,&amp;v18,v6,v5,v4,&amp;Buffer,<span class="number">0</span>i64,<span class="number">0</span>i64,<span class="number">0</span>,<span class="string">L&quot;root&quot;</span>,</span><br><span class="line">       v9,v10,v7,&amp;v19,&amp;v22,&amp;v21,&amp;v17,&amp;v16,&amp;v15,&amp;v14,&amp;v13,&amp;v12) )</span><br></pre>
+                            </td>
+                        </tr>
+                    </table>
+                </figure>
+
+                <p>Đoạn code này gọi hàm trong vtable của object C++, ta vào link respository trên, đọc file <a
+                        target="_blank" rel="noopener"
+                        href="https://github.com/Biswa96/WslReverse/blob/a6133642a7d9b0e1f033d047c96c49cb731c5abf/common/LxssUserSession.h">LxssUserSession.h</a>
+                </p>
+                <p><img src="/images/flareon/8/8.png"></p>
+                <p>Ta có thể thấy sự tương đồng, vậy ta có thể kết luận đây là hàm <code>CreateLxProcess</code>.</p>
+                <p>Vậy hàm <code>CreateLxProcess</code> làm gì ?</p>
+                <p>Ở windows 10, khi WSL ra đời, ta đã có thể chạy các file executable (ELF) trên hệ điều hành linux, ví
+                    dụ như cat, ls, …</p>
+                <p>Nhưng đường dẫn tới file này nằm ở đâu ? Ta nhớ lại lúc nãy chương trình có lấy resource của nó rồi
+                    ghi ra “%tmp%”, nên ta dùng “Resource hacker” extract resource này ra xem thử:</p>
+                <blockquote>
+                    <p>Resource hacker là tool dùng để xem và sửa phần resource của file PE, tải ở <a target="_blank"
+                            rel="noopener" href="http://www.angusj.com/resourcehacker/">đây</a>.</p>
+                </blockquote>
+                <p><img src="/images/flareon/8/9.png"></p>
+                <p>Ta thấy 1 file bắt đầu với <code>\x7FELF</code>, chính là file executable của hệ điều hành linux. Ta
+                    extract file này ra và bỏ vào IDA:</p>
+                <figure class="highlight c++">
+                    <table>
+                        <tr>
+                            <td class="gutter">
+                                <pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre>
+                            </td>
+                            <td class="code">
+                                <pre><span class="line"><span class="function">__int64 __fastcall <span class="title">main</span><span class="params">(__int64 a1, <span class="keyword">char</span> **a2, <span class="keyword">char</span> **a3)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="comment">// [COLLAPSED LOCAL DECLARATIONS. PRESS KEYPAD CTRL-&quot;+&quot; TO EXPAND]</span></span><br><span class="line"></span><br><span class="line">  addr.sa_data[<span class="number">13</span>] = <span class="number">0</span>;</span><br><span class="line">  v47 = __readfsqword(<span class="number">0x28</span>u);</span><br><span class="line">  v43 = <span class="number">0L</span>L;</span><br><span class="line">  <span class="built_in">memset</span>(&amp;v42, <span class="number">0</span>, <span class="number">0x58</span>uLL);</span><br><span class="line">  addr.sa_family = <span class="number">1</span>;</span><br><span class="line">  <span class="built_in">strcpy</span>(addr.sa_data, <span class="string">&quot;496b9b4b.ed5&quot;</span>);</span><br><span class="line">  v3 = socket(<span class="number">1</span>, <span class="number">1</span>, <span class="number">0</span>);</span><br><span class="line">  fd = v3;</span><br><span class="line">  <span class="keyword">if</span> ( v3 &lt; <span class="number">0</span> )</span><br><span class="line">  &#123;</span><br><span class="line">    perror(<span class="string">&quot;socket&quot;</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">  &#123;</span><br><span class="line">    v4 = &amp;addr;</span><br><span class="line">    v5 = (<span class="keyword">unsigned</span> <span class="keyword">int</span>)v3;</span><br><span class="line">    <span class="keyword">if</span> ( connect(v3, &amp;addr, <span class="number">0x6E</span>u) &gt;= <span class="number">0</span> )</span><br><span class="line">      <span class="comment">// ...</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre>
+                            </td>
+                        </tr>
+                    </table>
+                </figure>
+
+                <p>Vậy chương trình mới được drop ra sẽ <code>connect</code> tới socket được tạo bởi file .exe.</p>
+                <p>Phân tích cả 2 file .exe và file ELF, ta có thể thấy đây là 1 game Tic-tac-toe theo cấu trúc
+                    Client-Server, nếu Server thắng, Client sẽ bắt đầu tạo 1 message từ /proc/modules, /proc/mounts,
+                    /proc/version_signature, … rồi gửi cho Server. </p>
+                <p>Nhưng như phân tích ở ban đầu, thì Server không bao giờ thắng được vì Client đã đi trước 1 nước ở
+                    ngay chính giữa, cách duy nhất để thắng chính là bằng cách nào đó patch Client để Server có cơ hội
+                    thắng.</p>
+                <p>Ở Server, khi ta click vào 1 ô, nó sẽ gửi tọa độ của ô đó (x,y) cho Client (hàm
+                    <code>DialogFunc</code> ở 0x140001000):
+                </p>
+                <figure class="highlight c++">
+                    <table>
+                        <tr>
+                            <td class="gutter">
+                                <pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre>
+                            </td>
+                            <td class="code">
+                                <pre><span class="line"><span class="keyword">if</span> ( qword_14001EA78[v22] == <span class="number">32</span> )</span><br><span class="line">&#123;</span><br><span class="line">  ::buf = a3 &gt;&gt; <span class="number">4</span>;</span><br><span class="line">  v23 = s;</span><br><span class="line">  byte_14001EA71 = a3 &amp; <span class="number">0xF</span>;</span><br><span class="line">  qword_14001EA78[v22] = <span class="number">79</span>;</span><br><span class="line">  send(v23, &amp;::buf, <span class="number">2</span>, <span class="number">0</span>); <span class="comment">// &lt;----- send X,Y here</span></span><br><span class="line">  recv(s, qword_14001EA78, <span class="number">10</span>, <span class="number">0</span>);</span><br><span class="line">  sub_140001520(v4);</span><br><span class="line">  <span class="keyword">if</span> ( byte_14001EA81 )</span><br><span class="line">  &#123;</span><br><span class="line">    recv(s, &amp;buf, <span class="number">64</span>, <span class="number">0</span>);</span><br><span class="line">    MessageBoxA(v4, &amp;buf, <span class="string">&quot;Game Over&quot;</span>, <span class="number">0</span>);</span><br><span class="line">    sub_1400014E0();</span><br><span class="line">    sub_140001520(v4);</span><br><span class="line">  &#125;</span><br></pre>
+                            </td>
+                        </tr>
+                    </table>
+                </figure>
+
+                <p>Ở Client, trước khi gửi trạng thái của game cho Server, nó sẽ kiểm tra xem với nước đi đó thì có ai
+                    “thắng” không (trạng thái của game là 1 chuỗi 10 ký tự, trong đó 9 ký tự đầu là “XXOOXO…” tùy vào
+                    các nước đi, ký tự cuối để xác định xem ai là người thắng với trạng thái hiện tại)</p>
+                <figure class="highlight c++">
+                    <table>
+                        <tr>
+                            <td class="gutter">
+                                <pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre>
+                            </td>
+                            <td class="code">
+                                <pre><span class="line"><span class="comment">// function &quot;main&quot; on Client</span></span><br><span class="line">v4[<span class="number">3</span> * v6 + i] = <span class="number">88</span>;</span><br><span class="line">byte_2020A9 = sub_14B0();</span><br><span class="line">send(fd, &amp;byte_2020A0, <span class="number">0xA</span>uLL, <span class="number">0</span>); <span class="comment">// send state</span></span><br><span class="line">v5 = byte_2020A9;</span><br><span class="line"><span class="keyword">if</span> ( byte_2020A9 )</span><br><span class="line">  <span class="keyword">break</span>;</span><br><span class="line">recv(fd, &amp;unk_2020AA, <span class="number">2u</span>LL, <span class="number">0</span>);</span><br><span class="line">v15 = &amp;v4[<span class="number">3</span> * unk_2020AA + byte_2020AB];</span><br><span class="line"><span class="keyword">if</span> ( *v15 != <span class="number">32</span> )</span><br><span class="line">  <span class="keyword">goto</span> LABEL_5;</span><br><span class="line">*v15 = <span class="number">79</span>;</span><br><span class="line">v5 = sub_14B0();   <span class="comment">// check if someone wins, return &#x27;X&#x27;, &#x27;O&#x27;, or 0</span></span><br></pre>
+                            </td>
+                        </tr>
+                    </table>
+                </figure>
+
+                <p>Vậy ta chỉ cần breakpoint ngay tại hàm <code>send</code> của Client, sửa State lại trước khi nó gửi
+                    để lừa Client.</p>
+                <p>Đầu tiên, mình dùng plugin gef cho gdb, tải ở <a target="_blank" rel="noopener"
+                        href="https://gef.readthedocs.io/en/master/">đây</a>.</p>
+                <p>Cách debug process chạy bởi WSL:</p>
+                <ul>
+                    <li>
+                        <p>Chạy ttt2.exe.</p>
+                    </li>
+                    <li>
+                        <p>Mở 1 windows terminal khác lên, gõ WSL để truy cập vào Linux Subsystem.</p>
+                    </li>
+                    <li>
+                        <p>Gõ ps -aux để lấy list các process trong Linux Subsystem.</p>
+                        <p><img src="/images/flareon/8/10.png"></p>
+                    </li>
+                    <li>
+                        <p>Ta thấy process đang chạy dưới tên “XXXX.tmp”, giờ ta attach debugger vào bằng lệnh “sudo gdb
+                            -p 9”, vì PID của nó là 9. (xem ở cột PID).</p>
+                    </li>
+                    <li>
+                        <p>Gõ “vmmap” trong gdb để tìm base address của “XXXX.tmp”.</p>
+                        <p><img src="/images/flareon/8/11.png"></p>
+                    </li>
+                    <li>
+                        <p>Như hình trên, base address sẽ là 0x00007fe9e6200000.</p>
+                    </li>
+                    <li>
+                        <p>Vào IDA lấy Offset:</p>
+                        <figure class="highlight plain">
+                            <table>
+                                <tr>
+                                    <td class="gutter">
+                                        <pre><span class="line">1</span><br></pre>
+                                    </td>
+                                    <td class="code">
+                                        <pre><span class="line">.text:0000000000000D47                 call    sub_14B0        ; check</span><br></pre>
+                                    </td>
+                                </tr>
+                            </table>
+                        </figure>
+                    </li>
+                    <li>
+                        <p>Vậy Offset là 0xD47, ta gõ “b *0x00007fe9e6200000+0xD47” để đặt breakpoint ngay tại chỗ này.
+                        </p>
+                    </li>
+                    <li>
+                        <p>Gõ c để chương trình tiếp tục chạy.</p>
+                    </li>
+                    <li>
+                        <p>Bên Server, ta click vào bất kỳ ô nào (trừ ô giữa), khi đó Client đã dừng lại ngay tại
+                            breakpoint.</p>
+                    </li>
+                    <li>
+                        <p>State ở Client là 1 mảng char, global, offset tại 0x2020A0, ta dùng lệnh sau để patch state:
+                            <code>patch string 0x00007fe9e6200000+0x2020A0 &quot;OOOOOOOOO&quot;</code> (9 chữ “O”).
+                        </p>
+                    </li>
+                    <li>
+                        <p>Bấm c để cho Client chạy tiếp, ở Server ta nhận được 1 message.</p>
+                        <p><img src="/images/flareon/8/12.png"></p>
+                    </li>
+                </ul>
+                <figure class="highlight plain">
+                    <table>
+                        <tr>
+                            <td class="gutter">
+                                <pre><span class="line">1</span><br></pre>
+                            </td>
+                            <td class="code">
+                                <pre><span class="line">c1ArF&#x2F;P2CjiDXQIZ@flare-on.com</span><br></pre>
+                            </td>
+                        </tr>
+                    </table>
+                </figure>
+
+                <p>–</p>
+
+            </div>
+        </article>
+
+
+
+
+        <div id="footer-post-container">
+            <div id="footer-post">
+
+                <div id="nav-footer" style="display: none">
+                    <ul>
+
+                        <li><a href="/">home</a></li>
+
+                        <li><a href="/about/">about</a></li>
+
+                        <li><a href="/archives/">articles</a></li>
+
+                        <li><a target="_blank" rel="noopener"
+                                href="https://cyberjutsu.io/publications/">publications</a></li>
+
+                    </ul>
+                </div>
+
+                <div id="toc-footer" style="display: none">
+                    <ol class="toc">
+                        <li class="toc-item toc-level-2"><a class="toc-link" href="#Phan-2"><span
+                                    class="toc-number">1.</span> <span class="toc-text">Phần 2</span></a></li>
+                    </ol>
+                    </li>
+                    <li class="toc-item toc-level-1"><a class="toc-link" href="#4-report"><span
+                                class="toc-number"></span> <span class="toc-text">4 - report</span></a></li>
+                    <li class="toc-item toc-level-1"><a class="toc-link" href="#5-TKApp"><span
+                                class="toc-number"></span> <span class="toc-text">5 - TKApp</span></a></li>
+                    <li class="toc-item toc-level-1"><a class="toc-link" href="#6-codeit"><span
+                                class="toc-number"></span> <span class="toc-text">6 - codeit</span></a></li>
+                    <li class="toc-item toc-level-1"><a class="toc-link" href="#7-re-crowd"><span
+                                class="toc-number"></span> <span class="toc-text">7 - re_crowd</span></a></li>
+                    <li class="toc-item toc-level-1"><a class="toc-link" href="#8-Aardvark"><span
+                                class="toc-number"></span> <span class="toc-text">8 - Aardvark</span></a>
+                </div>
+
+                <div id="share-footer" style="display: none">
+                    <ul>
+                        <li><a class="icon" target="_blank" rel="noopener"
+                                href="http://www.facebook.com/sharer.php?u=https://blog.cyberjutsu.io/2020/12/24/flareon-phan-2/"><i
+                                    class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+                        <li><a class="icon" target="_blank" rel="noopener"
+                                href="https://twitter.com/share?url=https://blog.cyberjutsu.io/2020/12/24/flareon-phan-2/&text=FLAREON 2020 - WRITEUP PHẦN 2"><i
+                                    class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+                        <li><a class="icon" target="_blank" rel="noopener"
+                                href="http://www.linkedin.com/shareArticle?url=https://blog.cyberjutsu.io/2020/12/24/flareon-phan-2/&title=FLAREON 2020 - WRITEUP PHẦN 2"><i
+                                    class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+                        <li><a class="icon" target="_blank" rel="noopener"
+                                href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.cyberjutsu.io/2020/12/24/flareon-phan-2/&is_video=false&description=FLAREON 2020 - WRITEUP PHẦN 2"><i
+                                    class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+                        <li><a class="icon"
+                                href="mailto:?subject=FLAREON 2020 - WRITEUP PHẦN 2&body=Check out this article: https://blog.cyberjutsu.io/2020/12/24/flareon-phan-2/"><i
+                                    class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+                        <li><a class="icon" target="_blank" rel="noopener"
+                                href="https://getpocket.com/save?url=https://blog.cyberjutsu.io/2020/12/24/flareon-phan-2/&title=FLAREON 2020 - WRITEUP PHẦN 2"><i
+                                    class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+                        <li><a class="icon" target="_blank" rel="noopener"
+                                href="http://reddit.com/submit?url=https://blog.cyberjutsu.io/2020/12/24/flareon-phan-2/&title=FLAREON 2020 - WRITEUP PHẦN 2"><i
+                                    class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+                        <li><a class="icon" target="_blank" rel="noopener"
+                                href="http://www.stumbleupon.com/submit?url=https://blog.cyberjutsu.io/2020/12/24/flareon-phan-2/&title=FLAREON 2020 - WRITEUP PHẦN 2"><i
+                                    class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+                        <li><a class="icon" target="_blank" rel="noopener"
+                                href="http://digg.com/submit?url=https://blog.cyberjutsu.io/2020/12/24/flareon-phan-2/&title=FLAREON 2020 - WRITEUP PHẦN 2"><i
+                                    class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+                        <li><a class="icon" target="_blank" rel="noopener"
+                                href="http://www.tumblr.com/share/link?url=https://blog.cyberjutsu.io/2020/12/24/flareon-phan-2/&name=FLAREON 2020 - WRITEUP PHẦN 2&description="><i
+                                    class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+                        <li><a class="icon" target="_blank" rel="noopener"
+                                href="https://news.ycombinator.com/submitlink?u=https://blog.cyberjutsu.io/2020/12/24/flareon-phan-2/&t=FLAREON 2020 - WRITEUP PHẦN 2"><i
+                                    class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+                    </ul>
+
+                </div>
+
+                <div id="actions-footer">
+                    <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i
+                            class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+                    <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i
+                            class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+                    <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i
+                            class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+                    <a id="top" style="display:none" class="icon" href="#"
+                        onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg"
+                            aria-hidden="true"></i> Top</a>
+                </div>
+
+            </div>
+        </div>
+
+
+        <footer id="footer">
+            <div class="footer-left">
+                Copyright &copy;
+
+
+                2020-2021 -
+                CyberJutsu Team
+            </div>
+            <div class="footer-right">
+                <nav>
+                    <ul>
+
+                        <li><a href="/">home</a></li>
+
+                        <li><a href="/about/">about</a></li>
+
+                        <li><a href="/archives/">articles</a></li>
+
+                        <li><a target="_blank" rel="noopener"
+                                href="https://cyberjutsu.io/publications/">publications</a></li>
+
+                    </ul>
+                </nav>
+            </div>
+        </footer>
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-50645715-1"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag() { dataLayer.push(arguments); }
+            gtag('js', new Date());
+
+            gtag('config', 'UA-50645715-1');
+        </script>
+
+    </div>
+    <!-- styles -->
+
+    <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
+    <link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+    <!-- jquery -->
+
+    <script src="/lib/jquery/jquery.min.js"></script>
+
+
+    <script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+    <!-- clipboard -->
+
+
+    <script src="/lib/clipboard/clipboard.min.js"></script>
+
+    <script type="text/javascript">
+        $(function () {
+            // copy-btn HTML
+            var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+            btn += '<i class="far fa-clone"></i>';
+            btn += '</span>';
+            // mount it!
+            $(".highlight table").before(btn);
+            var clip = new ClipboardJS('.btn-copy', {
+                text: function (trigger) {
+                    return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str, it) => str + it.innerText + '\n', '')
+                }
+            });
+            clip.on('success', function (e) {
+                e.trigger.setAttribute('aria-label', "Copied!");
+                e.clearSelection();
+            })
+        })
+    </script>
+
+
+    <script src="/js/main.js"></script>
+
+    <!-- search -->
+
+    <!-- Google Analytics -->
+
+    <!-- Baidu Analytics -->
+
+    <!-- Umami Analytics -->
+
+    <!-- Disqus Comments -->
+
+
+</body>
+
+</html>
